@@ -1,0 +1,5 @@
+{{0},{Emma.Taylor@unito.it},{user1@unito.it},{null},{"peni"},{"Questa è una mail minatoria 1"},{11/09/2001},{""}}
+{{1},{Emma.Taylor@unito.it},{user2@unito.it},{null},{"baleni"},{"Questa è una mail minatoria 2"},{06/05/1990},{""}}
+{{2},{Emma.Taylor@unito.it},{user3@unito.it},{null},{"porcelli"},{"Questa è una mail minatoria 3"},{18/07/2007},{""}}
+{{3},{Emma.Taylor@unito.it},{user4@unito.it},{null},{"peduncoli"},{"Questa è una mail minatoria 4"},{18/12/2010},{""}}
+{{4},{Emma.Taylor@unito.it},{user5@unito.it},{null},{"tua mamma puttana"},{"Questa è una mail minatoria 5"},{15/07/2017},{""}}
