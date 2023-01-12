@@ -38,6 +38,7 @@ public class MailClient extends Application {
         String username = "";
 
         Random r = new Random();
+        /*S*/
         //username = firstNames[r.nextInt(0, firstNames.length-1)] + "." + lastNames[r.nextInt(0, lastNames.length-1)] + "@unito.it";
         username = "Emma.Taylor@unito.it";
         return username;

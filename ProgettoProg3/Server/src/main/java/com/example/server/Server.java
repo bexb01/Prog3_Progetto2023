@@ -1,7 +1,6 @@
 package com.example.server;
 
 import controller.ServerController;
-import javafx.application.Platform;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -15,13 +14,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Server implements Runnable{
 
-    //Server: gestisce le connessioni con i client
+    //Server: handles connection with clients
     private static int PORT;
     private ServerSocket serverSocket;
-    private AtomicBoolean exit = new AtomicBoolean(true);    //togliere static
+    public ServerController controller;
+    private AtomicBoolean up = new AtomicBoolean(true);
     ExecutorService executor = Executors.newFixedThreadPool(10);
 
-    public ServerController controller;
 
     public Server(int port, ServerController controller){
         this.PORT = port;
@@ -34,30 +33,28 @@ public class Server implements Runnable{
             serverSocket = new ServerSocket(PORT);
             this.controller.stampaLog("Server in ascolto sulla porta " + PORT);
             //create thread
-            while (exit.get()) { //cambia parte thread
+            while (up.get()) {
                 Socket clientSocket = serverSocket.accept();
                 ClientHandler clientH = new ClientHandler(clientSocket, this.controller);
                 Thread t = new Thread(clientH);
                 executor.execute(t);
-                //Platform.runLater(() -> {this.controller.stampaLog("Nuovo client connesso");});
-
                 //crea metodo shutdown server che parte con la exit on close (premi x) e cambia l'atomic boolean a false
             }
         } catch (Exception e) {
             System.err.println("Error while accepting client connection: " + e.getMessage());
         }finally {
             try {
-                if (exit.get()){
+                if (up.get()){
                     serverSocket.close();
                 }
             } catch (IOException e) {
                 System.out.println("Error while stopping server: " + e.getMessage());
             }
         }
-        //AGGIUNGI EXIT ON CLOSE
+
     }
 
-    private static void handleClient(Socket clientSocket) { //task
+    private static void handleClient(Socket clientSocket) { //task maybe delete
         try{
             ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -77,11 +74,11 @@ public class Server implements Runnable{
         }
     }
 
-    public void shutdownServer() throws IOException {    //roba da gestire dopo
+    public void shutdownServer() throws IOException {     //Add exitonclose operations and how to handle when the server is closed but the client stays open
 
         try {
             // Stop accepting new requests
-            exit.set(false);
+            up.set(false);
             // Wait termination of all tasks running
             executor.shutdown();
             executor.awaitTermination(10, TimeUnit.SECONDS);
