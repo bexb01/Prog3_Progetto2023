@@ -82,6 +82,7 @@ public class ClientController {
         txtDateSent.setEditable(false);
         txtDateSent.setVisible(false);
         btnDiscard.setVisible(false);
+        btnDelete.setVisible(false);
 
         /*emptyEmail = new Email();*/
         emptyEmail = null;
@@ -103,6 +104,7 @@ public class ClientController {
         btnDelete.setVisible(false);
         btnNewEmail.setDisable(true);
         txtDateSent.setVisible(false);
+        //lstEmails.;
     }
 
     @FXML
@@ -132,7 +134,7 @@ public class ClientController {
 
                 btnSendEmail.setVisible(false);
                 btnDiscard.setVisible(false);
-                btnDelete.setVisible(true);
+                btnDelete.setVisible(false);
                 btnNewEmail.setDisable(false);
                 lstEmails.getSelectionModel().select(-1);
             }else System.out.println("La mail deve avere un oggetto!");
@@ -154,7 +156,7 @@ public class ClientController {
         lblFrom.setText("");
 
         btnDiscard.setVisible(false);
-        btnDelete.setVisible(true);
+        btnDelete.setVisible(false);
         btnNewEmail.setDisable(false);
         btnSendEmail.setVisible(false);
         lstEmails.getSelectionModel().select(-1);
@@ -165,7 +167,7 @@ public class ClientController {
         inbxHandler.deleteEmail(selectedEmail);
         updateDetailView(emptyEmail);
         txtDateSent.setVisible(false);
-
+        btnDelete.setVisible(false);
         ClientComm.sendEmailToServer(selectedEmail.getSender(), selectedEmail.getReceivers().toString(), null, selectedEmail.getSubject(), selectedEmail.getText(), selectedEmail.getDate(), "delete");
     }
 
@@ -173,8 +175,8 @@ public class ClientController {
      * Mostra la mail selezionata nella vista
      */
     protected void showSelectedEmail(MouseEvent mouseEvent) {
+        btnDelete.setVisible(true);
         Email email = lstEmails.getSelectionModel().getSelectedItem();
-
         selectedEmail = email;
         updateDetailView(email);
     }
@@ -205,6 +207,7 @@ public class ClientController {
             lblTo.setText("");
             lblSubject.setText("");
             txtEmailContent.setText("");
+
         }
     }
 }
