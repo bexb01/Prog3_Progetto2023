@@ -92,6 +92,8 @@ public class ClientController {
 
     @FXML
     protected void onCreateNewEmailButton(){
+        //lstEmails.setDisable(true); //funziona
+        lstEmails.setMouseTransparent(true); //funziona anche meglio
         lblFrom.setText(username);
         txtNewEmailReceivers.setVisible(true);
         txtNewEmailReceivers.setDisable(false);
@@ -115,11 +117,14 @@ public class ClientController {
 
         if(txtNewEmailReceivers.getText() != ""){
             if(txtNewEmailSubject.getText() != ""){
-                inbxHandler.addNewEmail(lblFrom.getText(), txtNewEmailReceivers.getText(), null, txtNewEmailSubject.getText(), txtEmailContent.getText(), new Date());
+                double idd=0;
+                idd=(Math.random()*10000);
+                int id=(int)idd;            //creo il paramentro id dove vengono creati anche gli altri paramentri
+                inbxHandler.addNewEmail(id, lblFrom.getText(), txtNewEmailReceivers.getText(), null, txtNewEmailSubject.getText(), txtEmailContent.getText(), new Date());
                 System.out.println("Nuova email aggiunta alla inbox!");
                 //Inviare email a server
-                ClientComm.sendEmailToServer(lblFrom.getText(), txtNewEmailReceivers.getText(), null, txtNewEmailSubject.getText(), txtEmailContent.getText(), new Date(), "send");
-
+                ClientComm.sendEmailToServer(id, lblFrom.getText(), txtNewEmailReceivers.getText(), null, txtNewEmailSubject.getText(), txtEmailContent.getText(), new Date(), "send");
+                                   //cosi qui^ non devo usare getId()
                 txtNewEmailReceivers.setVisible(false);
                 txtNewEmailReceivers.setDisable(true);
                 txtNewEmailReceivers.setText("");
@@ -136,6 +141,7 @@ public class ClientController {
                 btnDiscard.setVisible(false);
                 btnDelete.setVisible(false);
                 btnNewEmail.setDisable(false);
+                lstEmails.setMouseTransparent(false);
                 lstEmails.getSelectionModel().select(-1);
             }else System.out.println("La mail deve avere un oggetto!");
         }else System.out.println("Il receiver non può essere vuoto!");
@@ -159,6 +165,7 @@ public class ClientController {
         btnDelete.setVisible(false);
         btnNewEmail.setDisable(false);
         btnSendEmail.setVisible(false);
+        lstEmails.setMouseTransparent(false);
         lstEmails.getSelectionModel().select(-1);
     }
 
@@ -168,7 +175,7 @@ public class ClientController {
         updateDetailView(emptyEmail);
         txtDateSent.setVisible(false);
         btnDelete.setVisible(false);
-        ClientComm.sendEmailToServer(selectedEmail.getSender(), selectedEmail.getReceivers().toString(), null, selectedEmail.getSubject(), selectedEmail.getText(), selectedEmail.getDate(), "delete");
+        ClientComm.sendEmailToServer(selectedEmail.getId(), selectedEmail.getSender(), selectedEmail.getReceivers().toString(), null, selectedEmail.getSubject(), selectedEmail.getText(), selectedEmail.getDate(), "delete");
     }
 
      /**

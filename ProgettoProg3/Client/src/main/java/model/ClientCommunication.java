@@ -77,11 +77,11 @@ public class ClientCommunication implements Runnable{
         }
     }
 
-    public void sendEmailToServer(String sender, String receivers, Email e, String subject, String text, Date d, String options){
+    public void sendEmailToServer(int id, String sender, String receivers, Email e, String subject, String text, Date d, String options){
         ArrayList<String> list = new ArrayList<>();  //gestire ciclo per aggiungere molteplici receivers
         list.add(receivers);
         //mettere controllo se esiste email forwarded (?)
-        Email newEmail = new Email(0, sender, list, null, subject, text, d, options);
+        Email newEmail = new Email( id, sender, list, null, subject, text, d, options);
         try {
             out.writeObject(newEmail);
         }catch (Exception ex){
