@@ -2,9 +2,12 @@ package com.example.server;
 
 import controller.ServerController;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
@@ -23,9 +26,24 @@ public class MailServer extends Application {
         stage.show();
 
         try {
-            Thread pServer = new Thread(new Server(8189, controller));
+            Server server = new Server(8189, controller);
+            Thread pServer = new Thread(server);
             pServer.setDaemon(true);
             pServer.start();
+            //Shutdown the server on close button click
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent e) {
+                    try {
+                        server.shutdownServer();
+                    } catch (IOException ex) {
+                        System.err.println("Error while exiting server: ");
+                        throw new RuntimeException(ex);
+                    }
+                    Platform.exit();
+                    System.exit(0);
+                }
+            });
         }catch (Exception e){
             System.err.println("Error while creating server thread: " + e.getMessage());
         }

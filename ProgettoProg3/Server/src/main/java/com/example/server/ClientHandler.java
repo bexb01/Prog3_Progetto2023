@@ -36,7 +36,6 @@ public class ClientHandler implements Runnable {
         } catch (IOException e) {
             System.out.println("Error while creating input/output streams for client: " + e.getMessage());
         }
-        //this.running = true;
     }
 
     @Override
@@ -50,10 +49,18 @@ public class ClientHandler implements Runnable {
                         Email e = (Email) clientObject;
                         switch (e.getOptions()) {
                             case "send":
-                                Platform.runLater(() -> {
-                                    this.serverCont.printLog("Inviata email da " + e.getSender() + " a " + e.getReceivers());  //gestore arraylist dei receivers
-                                });
-                                //invia email al/ai receiver/s
+                                for(String s: e.getReceivers())
+                                    Platform.runLater(() -> {
+                                        this.serverCont.printLog("Inviata email da " + e.getSender() + " a " + s);
+                                    });
+                                //send email to receiver/s
+
+                                for(String s: e.getReceivers()){
+                                    Platform.runLater(() -> {
+                                        this.serverCont.printLog(s + " ha ricevuto una email da " + e.getSender());
+                                    });
+                                }
+
                                 break;
                             case "delete":
                                 Platform.runLater(() -> {

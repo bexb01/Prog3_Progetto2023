@@ -1,9 +1,12 @@
 package com.example.client;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import model.ClientCommunication;
 import model.InboxHandler;
 import ui.ClientController;
@@ -32,11 +35,21 @@ public class MailClient extends Application {
         }catch (Exception e){
             System.err.println("Error while creating client Thread: " + e.getMessage());
         }
-            /* Aggiungere qualcosa tipo questo per gestire quando chiudi client
-            finally{
-                stage.setOnCloseRequest();
+        // Shutdown event
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {   //method exitonclose
+            @Override
+            public void handle(WindowEvent e) {
+               /* try {
+                    clientComm.shutdown();
+                } catch (IOException ex) {
+                    System.err.println("Error while exiting server: ");
+                    throw new RuntimeException(ex);
+                }
+                Platform.exit();
+                System.exit(0);
+                */
             }
-            */
+        });
     }
 
     private String generaUsername() {
@@ -46,8 +59,8 @@ public class MailClient extends Application {
 
         Random r = new Random();
         /*Switch up to set everyone different or everyone EmmaTaylor*/
-        //username = firstNames[r.nextInt(0, firstNames.length-1)] + "." + lastNames[r.nextInt(0, lastNames.length-1)] + "@unito.it";
-        username = "Emma.Taylor@unito.it";
+        username = firstNames[r.nextInt(0, firstNames.length-1)] + "." + lastNames[r.nextInt(0, lastNames.length-1)] + "@unito.it";
+        //username = "Emma.Taylor@unito.it";
         return username;
     }
 

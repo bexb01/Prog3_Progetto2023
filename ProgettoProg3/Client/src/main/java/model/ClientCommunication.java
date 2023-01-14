@@ -1,9 +1,12 @@
 package model;
 
+import javafx.application.Platform;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ClientCommunication implements Runnable{
@@ -35,7 +38,7 @@ public class ClientCommunication implements Runnable{
 
             //inboxMail = new InboxHandler();
             sendUsername();  //sends their username to server
-            requestEmail();  //richiede al server tutte le sue mail
+            requestEmail();  //asks all emails to server
 
             while(running.get()) {
                 try {
@@ -46,7 +49,22 @@ public class ClientCommunication implements Runnable{
                             for(int i = 0; i < list.size(); i++){
                                 inboxMail.addEmailToInbox(list.get(i));
                             }
+                        /*} else if(clientObject instanceof Email){
+                            Email e = (Email) clientObject;
+                            switch (e.getOptions()) {
+                                case "receive":
+                                    //deve ricevere e inserire nella inbox la mail
+                                    for(String s: e.getReceivers())
+                                        //MAYBE ERROR IS HERE
+                                        //trova un modo per mandare un messaggio da un utente ad un altro utente
+                                        if(s==username){
+                                            inboxMail.addEmailToInbox(e);
+                                            out.writeObject(s + " ha ricevuto un email da " + e.getSender());
+                                        }
+
+                            }*/
                         }
+
                     }
                 }catch(IOException e) {
                     System.err.println("Error while loading email to inbox: " + e.getMessage());
@@ -61,17 +79,17 @@ public class ClientCommunication implements Runnable{
         }
 
         /*try {      //close connection DA RIMETTERE?
-            inputStream.close();
-            outputStream.close();
+            out.close();
+            in.close();
             socket.close();
         } catch (Exception ex) {
+            System.err.println("Error while closing client socket: " + ex);
         }*/
     }
 
     private void requestEmail() {
         try {
-            Object obj = "get";
-            out.writeObject(obj);
+            out.writeObject("get");
         }catch (Exception ex){
             System.err.println("Error while requesting emails from the server: " + ex.getMessage());
         }
@@ -97,4 +115,16 @@ public class ClientCommunication implements Runnable{
             System.err.println("Error while sending username to the server: " + ex.getMessage());
         }
     }
+
+    private void loadEmailToInbox(){
+
+    }
+    /* needs something like this
+    public void shutdown() throws IOException {     //Add exitonclose operations and how to handle when the server is closed but the client stays open
+            // Stop accepting new requests
+            running.set(false);
+            //close client socket
+            socket.close();
+    }
+    */
 }
