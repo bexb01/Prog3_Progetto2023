@@ -1,7 +1,6 @@
 package model;
 
 import java.io.Serializable;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,7 +31,7 @@ public class Email implements Serializable {
         this.options = options;
     }
 
-    public int geId() {
+    public int getId() {
         return id;
     }
 

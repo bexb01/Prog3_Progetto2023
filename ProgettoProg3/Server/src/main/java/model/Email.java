@@ -31,7 +31,7 @@ public class Email implements Serializable {
         this.options = options;
     }
 
-    public int geId() {
+    public int getId() {
         return id;
     }
 

@@ -26,7 +26,9 @@ public class MailServer extends Application {
             Thread pServer = new Thread(new Server(8189, controller));
             pServer.setDaemon(true);
             pServer.start();
-        }catch (Exception e){}
+        }catch (Exception e){
+            System.err.println("Error while creating server thread: " + e.getMessage());
+        }
     }
 
     public static void main(String[] args) {

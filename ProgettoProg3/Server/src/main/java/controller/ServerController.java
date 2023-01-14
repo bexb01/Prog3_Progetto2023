@@ -23,7 +23,7 @@ public class ServerController implements Initializable {
         //messagesListView.getItems().addAll(messages);
     }
 
-    public void stampaLog(String s){
+    public void printLog(String s){
         messagesListView.getItems().add(s);
     }
     private List<String> retrieveMessagesFromServer() {

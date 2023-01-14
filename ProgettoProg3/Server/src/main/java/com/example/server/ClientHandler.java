@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import controller.ServerController;
 import javafx.application.Platform;
@@ -20,10 +21,11 @@ public class ClientHandler implements Runnable {
     private ObjectInputStream in;
     private ObjectOutputStream out;
     //private PrintWriter out;
-    private boolean running;
+    private AtomicBoolean running = new AtomicBoolean(true);
+    //private boolean running;
     private ServerController serverCont;
     private String usernameClient;
-    private String clientInboxFile;    //path della inbox del client
+    private String clientInboxFile;    //client inbox's path
 
     public ClientHandler(Socket clientSocket, ServerController controller) {
         this.clientSocket = clientSocket;
@@ -34,14 +36,13 @@ public class ClientHandler implements Runnable {
         } catch (IOException e) {
             System.out.println("Error while creating input/output streams for client: " + e.getMessage());
         }
-        this.running = true;
+        //this.running = true;
     }
 
     @Override
     public synchronized void run() {
         // Start listening for client messages
-
-        while (running) {
+        while (running.get()) {
             try {
                 Object clientObject;
                 if((clientObject = in.readObject()) != null) {
@@ -50,13 +51,13 @@ public class ClientHandler implements Runnable {
                         switch (e.getOptions()) {
                             case "send":
                                 Platform.runLater(() -> {
-                                    this.serverCont.stampaLog("Inviata email da " + e.getSender() + " a " + e.getReceivers());  //gestore arraylist dei receivers
+                                    this.serverCont.printLog("Inviata email da " + e.getSender() + " a " + e.getReceivers());  //gestore arraylist dei receivers
                                 });
                                 //invia email al/ai receiver/s
                                 break;
                             case "delete":
                                 Platform.runLater(() -> {
-                                    this.serverCont.stampaLog("Elimino email di " + e.getSender());
+                                    this.serverCont.printLog("Elimino email " + e.getId() + " di " + e.getSender());
                                 });
                                 //elimina email del sender
                                 break;
@@ -66,12 +67,12 @@ public class ClientHandler implements Runnable {
                         if(!mex.equals("get")) {
                             this.usernameClient = mex;
                             Platform.runLater(() -> {
-                                this.serverCont.stampaLog(mex + " si è connesso.");
+                                this.serverCont.printLog(mex + " si è connesso.");
                             });
                             clientInboxFile = createFileInbox(mex);   //per creare il cazzo di file dell'inbox
                         }else{
                             Platform.runLater(() -> {
-                                this.serverCont.stampaLog("Quel coglione di " + usernameClient + " mi ha chiesto tutte le sue mail");
+                                this.serverCont.printLog( usernameClient + " ha richiesto tutte le sue mail");
                             });
                             getAllEmails();
                         }
@@ -83,10 +84,10 @@ public class ClientHandler implements Runnable {
             } catch (IOException e) {
                 // If an IOException is thrown, it means that the connection with the client has been lost
                 // Stop the client handler and log the event
-                Platform.runLater(() -> {this.serverCont.stampaLog(e.getMessage());});
-                running = false;
+                Platform.runLater(() -> {this.serverCont.printLog(e.getMessage());});
+                running.set(false);
             } catch (ClassNotFoundException e) {
-                System.out.println("Error while reading object from client: " + e.getMessage());
+                Platform.runLater(() -> {this.serverCont.printLog("Error while reading object from client: " + e.getMessage());});
             }
         }
 
@@ -95,7 +96,7 @@ public class ClientHandler implements Runnable {
             clientSocket.close();
             in.close();
             out.close();
-            Platform.runLater(() -> {this.serverCont.stampaLog("Client disconnected");});
+            Platform.runLater(() -> {this.serverCont.printLog("Client disconnected");});
         } catch (IOException e) {
             System.out.println("Error while closing client socket and streams: " + e.getMessage());
         }
@@ -146,13 +147,13 @@ public class ClientHandler implements Runnable {
             try {
                 out.writeObject(listaEmail);
                 Platform.runLater(() -> {
-                    this.serverCont.stampaLog("Ho inviato tutte le mail a " + usernameClient+ ".");
+                    this.serverCont.printLog("Ho inviato tutte le mail a " + usernameClient+ ".");
                 });
             }catch (Exception ex){
-                System.err.println("3 - Error while communicating with the server: " + ex.getMessage());
+                System.err.println("Errore nella ricezione della lista email " + ex.getMessage());
             }
         }catch(IOException | ParseException e){
-            System.out.println(e.getMessage());
+            System.out.println("Errore nella chiusura del file-reader" + e.getMessage());
         }
     }
 }

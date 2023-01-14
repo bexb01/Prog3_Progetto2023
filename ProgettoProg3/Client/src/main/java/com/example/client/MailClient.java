@@ -14,8 +14,8 @@ import java.util.Random;
 public class MailClient extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        String username = generaUsername();
         FXMLLoader fxmlLoader = new FXMLLoader(MailClient.class.getResource("client.fxml"));
+        String username = generaUsername();
         InboxHandler inbx = new InboxHandler(username);
         ClientCommunication clientComm = new ClientCommunication(username, inbx);
         ClientController controller = new ClientController(username, clientComm, inbx);
@@ -29,7 +29,14 @@ public class MailClient extends Application {
             Thread cThread = new Thread(clientComm);
             cThread.setDaemon(true);
             cThread.start();
-        }catch (Exception e){}
+        }catch (Exception e){
+            System.err.println("Error while creating client Thread: " + e.getMessage());
+        }
+            /* Aggiungere qualcosa tipo questo per gestire quando chiudi client
+            finally{
+                stage.setOnCloseRequest();
+            }
+            */
     }
 
     private String generaUsername() {
@@ -38,11 +45,13 @@ public class MailClient extends Application {
         String username = "";
 
         Random r = new Random();
-        /*S*/
+        /*Switch up to set everyone different or everyone EmmaTaylor*/
         //username = firstNames[r.nextInt(0, firstNames.length-1)] + "." + lastNames[r.nextInt(0, lastNames.length-1)] + "@unito.it";
         username = "Emma.Taylor@unito.it";
         return username;
     }
+
+
 
     public static void main(String[] args) {
         launch();

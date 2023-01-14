@@ -116,7 +116,7 @@ public class ClientController {
                 inbxHandler.addNewEmail(lblFrom.getText(), txtNewEmailReceivers.getText(), null, txtNewEmailSubject.getText(), txtEmailContent.getText(), new Date());
                 System.out.println("Nuova email aggiunta alla inbox!");
                 //Inviare email a server
-                ClientComm.inviaEmailServer(lblFrom.getText(), txtNewEmailReceivers.getText(), null, txtNewEmailSubject.getText(), txtEmailContent.getText(), new Date(), "send");
+                ClientComm.sendEmailToServer(lblFrom.getText(), txtNewEmailReceivers.getText(), null, txtNewEmailSubject.getText(), txtEmailContent.getText(), new Date(), "send");
 
                 txtNewEmailReceivers.setVisible(false);
                 txtNewEmailReceivers.setDisable(true);
@@ -166,7 +166,7 @@ public class ClientController {
         updateDetailView(emptyEmail);
         txtDateSent.setVisible(false);
 
-        ClientComm.inviaEmailServer(selectedEmail.getSender(), selectedEmail.getReceivers().toString(), null, selectedEmail.getSubject(), selectedEmail.getText(), selectedEmail.getDate(), "delete");
+        ClientComm.sendEmailToServer(selectedEmail.getSender(), selectedEmail.getReceivers().toString(), null, selectedEmail.getSubject(), selectedEmail.getText(), selectedEmail.getDate(), "delete");
     }
 
      /**

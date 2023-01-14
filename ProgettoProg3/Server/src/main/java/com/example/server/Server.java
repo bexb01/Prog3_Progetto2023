@@ -3,8 +3,6 @@ package com.example.server;
 import controller.ServerController;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
@@ -18,7 +16,7 @@ public class Server implements Runnable{
     private static int PORT;
     private ServerSocket serverSocket;
     public ServerController controller;
-    private AtomicBoolean up = new AtomicBoolean(true);
+    private AtomicBoolean running = new AtomicBoolean(true);
     ExecutorService executor = Executors.newFixedThreadPool(10);
 
 
@@ -31,9 +29,9 @@ public class Server implements Runnable{
         try {
             //set-up
             serverSocket = new ServerSocket(PORT);
-            this.controller.stampaLog("Server in ascolto sulla porta " + PORT);
+            this.controller.printLog("Server in ascolto sulla porta " + PORT);
             //create thread
-            while (up.get()) {
+            while (running.get()) {
                 Socket clientSocket = serverSocket.accept();
                 ClientHandler clientH = new ClientHandler(clientSocket, this.controller);
                 Thread t = new Thread(clientH);
@@ -44,7 +42,7 @@ public class Server implements Runnable{
             System.err.println("Error while accepting client connection: " + e.getMessage());
         }finally {
             try {
-                if (up.get()){
+                if (running.get()){
                     serverSocket.close();
                 }
             } catch (IOException e) {
@@ -54,35 +52,16 @@ public class Server implements Runnable{
 
     }
 
-    private static void handleClient(Socket clientSocket) { //task maybe delete
-        try{
-            ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
-            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-            System.out.println("TEST SERVER");
-            // Read serialized object from the client
-            Object clientObject = in.readObject();
-
-            // Print object to the console
-            System.out.println("Received object from client: " + clientObject.toString());
-
-            // Send response to the client
-            out.println("Ciao dal server! Bella email, grazie");
-        } catch (IOException /*| ClassNotFoundException */ex) {
-            throw new RuntimeException(ex);
-        } catch (Exception e) {
-            System.err.println("Error while handling client connection: " + e.getMessage());
-        }
-    }
-
     public void shutdownServer() throws IOException {     //Add exitonclose operations and how to handle when the server is closed but the client stays open
 
         try {
             // Stop accepting new requests
-            up.set(false);
+            running.set(false);
             // Wait termination of all tasks running
             executor.shutdown();
             executor.awaitTermination(10, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
+            System.err.println("Error while closing server connection: ");
             e.printStackTrace();
         }finally{
             serverSocket.close();
