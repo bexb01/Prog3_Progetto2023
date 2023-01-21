@@ -1,4 +1,4 @@
-package controller;
+package com.example.server.controller;
 
 import java.net.URL;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import model.Model;
 
 public class ServerController implements Initializable {
     @FXML
@@ -13,8 +14,11 @@ public class ServerController implements Initializable {
 
     @FXML
     private Button btnProva;
-
-    private int i;
+    private Model model;
+    public void initModel(Model m){
+        this.model = m;
+        messagesListView.setItems(model.getLogList());
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -24,7 +28,7 @@ public class ServerController implements Initializable {
     }
 
     public void printLog(String s){
-        messagesListView.getItems().add(s);
+
     }
     private List<String> retrieveMessagesFromServer() {
         // Replace this with a method that retrieves the messages from the server

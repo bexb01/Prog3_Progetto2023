@@ -1,6 +1,6 @@
 package com.example.server;
 
-import controller.ServerController;
+import model.Model;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -15,25 +15,26 @@ public class Server implements Runnable{
     //Server: handles connection with clients
     private static int PORT;
     private ServerSocket serverSocket;
-    public ServerController controller;
+   // public ServerController controller; //rimuovi
     private AtomicBoolean running = new AtomicBoolean(true);
     ExecutorService executor = Executors.newFixedThreadPool(10);
+    private Model model;
 
-
-    public Server(int port, ServerController controller){
+    public Server(int port , Model model) {   //togli controller
         this.PORT = port;
-        this.controller = controller;
+        this.model = model;
     }
 
     public void run() {
         try {
             //set-up
             serverSocket = new ServerSocket(PORT);
-            this.controller.printLog("Server in ascolto sulla porta " + PORT);
+            //SBAGLIATO AGGIORNARE LISTA MODEL COLLEGATA CON IL CONTROLLER PER POI STAMPARE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+            this.model.printLog("Server in ascolto sulla porta " + PORT);
             //create thread
             while (running.get()) {
                 Socket clientSocket = serverSocket.accept();
-                ClientHandler clientH = new ClientHandler(clientSocket, this.controller);
+                ClientHandler clientH = new ClientHandler(clientSocket, this.model);
                 Thread t = new Thread(clientH);
                 executor.execute(t);
                 //crea metodo shutdown server che parte con la exit on close (premi x) e cambia l'atomic boolean a false
@@ -57,7 +58,7 @@ public class Server implements Runnable{
         try {
             // Stop accepting new requests
             running.set(false);
-            // Wait termination of all tasks running
+            // Wait termination
             executor.shutdown();
             executor.awaitTermination(10, TimeUnit.SECONDS);
         } catch (InterruptedException e) {

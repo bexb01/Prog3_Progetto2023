@@ -1,6 +1,6 @@
 package com.example.server;
 
-import controller.ServerController;
+import com.example.server.controller.ServerController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import model.Model;
 
 import java.io.IOException;
 
@@ -16,26 +17,19 @@ public class MailServer extends Application {
     public void start(Stage stage) throws IOException {
         //FmxLLoader
         FXMLLoader fxmlLoader = new FXMLLoader(MailServer.class.getResource("server.fxml"));
-        ServerController controller = new ServerController();
-        fxmlLoader.setController(controller);
-        //Scene set-up
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setResizable(false);
-        stage.setTitle("Server UI");
-        stage.setScene(scene);
-        stage.show();
+        //server set up
+        Model model = new Model();
+        model.startServer();
+        ServerController controller = fxmlLoader.getController();
+        controller.initModel(model);
 
-        try {
-            Server server = new Server(8189, controller);
-            Thread pServer = new Thread(server);
-            pServer.setDaemon(true);
-            pServer.start();
             //Shutdown the server on close button click
             stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent e) {
                     try {
-                        server.shutdownServer();
+                        model.getServer().shutdownServer();
                     } catch (IOException ex) {
                         System.err.println("Error while exiting server: ");
                         throw new RuntimeException(ex);
@@ -44,9 +38,14 @@ public class MailServer extends Application {
                     System.exit(0);
                 }
             });
-        }catch (Exception e){
-            System.err.println("Error while creating server thread: " + e.getMessage());
-        }
+
+        //Stage set-up
+        stage.setResizable(false);
+        stage.setTitle("Server UI");
+        stage.setScene(scene);
+        stage.show();
+
+
     }
 
     public static void main(String[] args) {

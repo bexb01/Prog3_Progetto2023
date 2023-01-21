@@ -64,6 +64,7 @@ public class ClientCommunication implements Runnable{
 
                             }*/
                         }
+                        //task sen
 
                     }
                 }catch(IOException e) {
