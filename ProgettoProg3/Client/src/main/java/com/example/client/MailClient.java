@@ -20,9 +20,9 @@ public class MailClient extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(MailClient.class.getResource("client.fxml"));
         String username = generaUsername();
         InboxHandler inbx = new InboxHandler(username);
-        ClientCommunication clientComm = new ClientCommunication(username, inbx);
-        ClientController controller = new ClientController(username, clientComm, inbx);
-        fxmlLoader.setController(controller);
+        ClientCommunication clientComm = new ClientCommunication(username, inbx);   //
+        ClientController controller = new ClientController(username, clientComm, inbx); //
+        fxmlLoader.setController(controller);   //
         Scene scene = new Scene(fxmlLoader.load(), 900, 600);
         stage.setTitle("Email client");
         stage.setResizable(false);
@@ -60,7 +60,7 @@ public class MailClient extends Application {
         Random r = new Random();
         /*Switch up to set everyone different or everyone EmmaTaylor*/
         username = firstNames[r.nextInt(0, firstNames.length-1)] + "." + lastNames[r.nextInt(0, lastNames.length-1)] + "@unito.it";
-        //username = "Emma.Taylor@unito.it";
+        //username = "Mattia.Liberatore@unito.it";
         return username;
     }
 

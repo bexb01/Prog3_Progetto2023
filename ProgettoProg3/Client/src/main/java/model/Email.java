@@ -11,11 +11,11 @@ public class Email implements Serializable {
     private int id;
     private String sender;
     private ArrayList<String> receivers;
-    private Email forwarded;
+    private Email forwarded;    //
     private String subject;
     private String text;
     private Date date;
-    private String options;
+    private String options; //
 
     public Email() {
     }
