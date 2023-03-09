@@ -15,12 +15,11 @@ public class Server implements Runnable{
     //Server: handles connection with clients
     private static int PORT;
     private ServerSocket serverSocket;
-   // public ServerController controller; //rimuovi
     private AtomicBoolean running = new AtomicBoolean(true);
     ExecutorService executor = Executors.newFixedThreadPool(10);
     private Model model;
 
-    public Server(int port , Model model) {   //togli controller
+    public Server(int port , Model model) {
         this.PORT = port;
         this.model = model;
     }

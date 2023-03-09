@@ -39,33 +39,50 @@ public class ClientHandler implements Runnable {
     }
 
     @Override
-    public synchronized void run() {
-        // Start listening for client messages
-        while (running.get()) { //togli il while perchè protocollo connectionless
+    public void run() {
+        // listening for only one request
             try {
                 Object clientObject;
                 if((clientObject = in.readObject()) != null) {
-                    if(clientObject instanceof Email) {
-                        Email e = (Email) clientObject;
-                        switch (e.getOptions()) {
-                            case "send":
-                                for(String s: e.getReceivers())
-                                    Platform.runLater(() -> {
-                                        this.model.printLog("Inviata email da " + e.getSender() + " a " + s);
-                                    });
-                                //send email to receiver/s
+                    if(clientObject instanceof Integer) {
+                        int mex = (Integer) clientObject;
+                        switch (mex) {
+                            case 1: //send
+                                Object addEmail;
+                                if((addEmail = in.readObject()) != null) {
+                                    if(addEmail instanceof Email) {
+                                        Email e = (Email) clientObject;
+                                        for (String s : e.getReceivers()) { //sending emails to every receiver
+                                            //implement the send function and send email to every receiver
 
-                                for(String s: e.getReceivers()){
-                                    //Platform.runLater(() -> {
-                                        this.model.printLog(s + " ha ricevuto una email da " + e.getSender());
-                                    //});
+                                            Platform.runLater(() -> {
+                                                this.model.printLog("Inviata email da " + e.getSender() + " a " + s);
+                                            });
+                                        }
+                                    }
                                 }
-
                                 break;
-                            case "delete":
-                                Platform.runLater(() -> {
-                                    this.model.printLog("Elimino email " + e.getId() + " di " + e.getSender());
-                                });
+
+                            /*case 2: //receive
+                                //IDK
+                                        for (String s : e.getReceivers()) {
+                                            Platform.runLater(() -> {
+                                            this.model.printLog(s + " ha ricevuto una email da " + e.getSender());
+                                            });
+                                        }
+                                break;
+                             */
+                            case 3: //delete
+                                Object deleteEmail;
+                                if((deleteEmail = in.readObject()) != null) {
+                                    if(deleteEmail instanceof Email) {
+                                        Email e = (Email) clientObject;
+                                        //implement function to delete email
+                                        Platform.runLater(() -> {
+                                            this.model.printLog("Elimino email " + e.getId() + " di " + e.getSender());
+                                        });
+                                    }
+                                }
                                 //elimina email del sender
                                 break;
                         }
@@ -96,7 +113,6 @@ public class ClientHandler implements Runnable {
             } catch (ClassNotFoundException e) {
                 Platform.runLater(() -> {this.model.printLog("Error while reading object from client: " + e.getMessage());});
             }
-        }
 
         // Close the client socket and streams
         try {

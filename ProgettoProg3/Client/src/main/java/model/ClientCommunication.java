@@ -15,7 +15,6 @@ public class ClientCommunication implements Runnable{
     //private static BufferedReader in;
     private static ObjectOutputStream out;
     private static ObjectInputStream in;
-    private AtomicBoolean running = new AtomicBoolean(true);
     private String username;
     private InboxHandler inboxMail;
 
@@ -40,9 +39,9 @@ public class ClientCommunication implements Runnable{
             sendUsername();  //sends their username to server
             requestEmail();  //asks all emails to server
 
-            while(running.get()) {
                 try {
                     Object clientObject;
+                    //IMPLEMENT server sends array of emails on opening
                     if ((clientObject = in.readObject()) != null) {
                         if (clientObject instanceof ArrayList<?>){
                             ArrayList<Email> list = (ArrayList<Email>)clientObject;
@@ -52,7 +51,7 @@ public class ClientCommunication implements Runnable{
                         /*} else if(clientObject instanceof Email){
                             Email e = (Email) clientObject;
                             switch (e.getOptions()) {
-                                case "receive":
+                                case 1:     //receive
                                     //deve ricevere e inserire nella inbox la mail
                                     for(String s: e.getReceivers())
                                         //MAYBE ERROR IS HERE
@@ -74,7 +73,6 @@ public class ClientCommunication implements Runnable{
                 // Read response from the server
                 //String serverResponse = in.readLine();
                 //System.out.println("Received response from server: " + serverResponse);
-            }
         } catch (Exception e) { //FORSE NON SERVE
             System.err.println("2 - Error while communicating with the server: " + e.getMessage());
         }
