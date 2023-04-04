@@ -39,16 +39,15 @@ public class ClientCommunication implements Runnable{
             sendUsername();  //sends their username to server
             requestEmail();  //asks all emails to server
 
-                try {
-                    Object clientObject;
-                    //IMPLEMENT server sends array of emails on opening
-                    if ((clientObject = in.readObject()) != null) {
-                        if (clientObject instanceof ArrayList<?>){
-                            ArrayList<Email> list = (ArrayList<Email>)clientObject;
-                            for(int i = 0; i < list.size(); i++){
-                                inboxMail.addEmailToInbox(list.get(i));
-                            }
-                        /*} else if(clientObject instanceof Email){
+            try {
+                Object clientObject;
+                //IMPLEMENT server sends array of emails on opening
+                if ((clientObject = in.readObject()) != null) {
+                    if (clientObject instanceof ArrayList<?>){
+                        ArrayList<Email> list = (ArrayList<Email>)clientObject;
+                        for(int i = 0; i < list.size(); i++){
+                            inboxMail.addEmailToInbox(list.get(i));
+                        }/*} else if(clientObject instanceof Email){
                             Email e = (Email) clientObject;
                             switch (e.getOptions()) {
                                 case 1:     //receive
@@ -62,17 +61,16 @@ public class ClientCommunication implements Runnable{
                                         }
 
                             }*/
-                        }
-                        //task sen
-
                     }
-                }catch(IOException e) {
-                    System.err.println("Error while loading email to inbox: " + e.getMessage());
+                    //task sen
                 }
+            }catch(IOException e) {
+                System.err.println("Error while loading email to inbox: " + e.getMessage());
+            }
 
-                // Read response from the server
-                //String serverResponse = in.readLine();
-                //System.out.println("Received response from server: " + serverResponse);
+            // Read response from the server
+            //String serverResponse = in.readLine();
+            //System.out.println("Received response from server: " + serverResponse);
         } catch (Exception e) { //FORSE NON SERVE
             System.err.println("2 - Error while communicating with the server: " + e.getMessage());
         }

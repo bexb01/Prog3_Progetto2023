@@ -4,6 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+
 
 public class Email implements Serializable {
 
@@ -91,6 +96,20 @@ public class Email implements Serializable {
 
     public void setOptions(String options) { this.options = options; }
 
+    public String toJson() { //trasforma l'oggetto Email in una stringa json
+        Gson gson = new Gson(); //istanzio oggetto gson di tipo Gson
+        Type fooType = new TypeToken<Email>() {}.getType(); //definisco il tipo di oggetto da serializzare tramite classe Type, specificando tra <> la classe del nostro oggetto
+        String json = gson.toJson(this,fooType); //lancio metodo gson.toJson(mio_ogetto,ogetto_tipo) con nostro oggetto instanziato e il tipo, ci restituirà la stringa JSON.
+        return json;
+    }
+
+    public Email fromJson(String jsString){
+        Gson gson = new Gson();
+        String jsStr = jsString;
+        Type fooType =  new TypeToken() {}.getType();
+        Email email = gson.fromJson(jsString,fooType);
+        return email;
+    }
     @Override
     public String toString() {
         return String.join(" - ", List.of(this.sender,this.subject));

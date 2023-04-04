@@ -1,15 +1,15 @@
 package com.example.server;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
-
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import javafx.application.Platform;
 import model.Email;
 import model.Model;
@@ -51,16 +51,26 @@ public class ClientHandler implements Runnable {
                                 Object addEmail;
                                 if((addEmail = in.readObject()) != null) {
                                     if(addEmail instanceof Email) {
-                                        Email e = (Email) clientObject;
-                                        for (String s : e.getReceivers()) { //sending emails to every receiver
+                                        Email email = (Email) clientObject;
+                                        for (String s : email.getReceivers()) { //sending emails to every receiver
                                             //implement the send function and send email to every receiver
 
                                             Platform.runLater(() -> {
-                                                this.model.printLog("Inviata email da " + e.getSender() + " a " + s);
+                                                this.model.printLog("Inviata email da " + email.getSender() + " a " + s);
                                             });
+                                        }
+                                        String fileSander = "files/" + email.getSender() + "/inbox.txt";
+                                        try (FileWriter writer = new FileWriter(fileSander, true)) {
+                                            writer.write(email.toJson()+"\n");
+                                            writer.close();//rilascio la risorsa utilizzata dal writer, inoltre notifica al so che il  file non e' piu in uso
+                                            System.out.println("email scritta su file del sander: " + fileSander);
+                                        } catch (IOException e) {
+                                            System.out.println("An error occurred while writing to the file.");
+                                            e.printStackTrace();
                                         }
                                     }
                                 }
+                                closeConnection();
                                 break;
 
                             /*case 2: //receive
@@ -76,14 +86,15 @@ public class ClientHandler implements Runnable {
                                 Object deleteEmail;
                                 if((deleteEmail = in.readObject()) != null) {
                                     if(deleteEmail instanceof Email) {
-                                        Email e = (Email) clientObject;
+                                        Email email = (Email) clientObject;
                                         //implement function to delete email
                                         Platform.runLater(() -> {
-                                            this.model.printLog("Elimino email " + e.getId() + " di " + e.getSender());
+                                            this.model.printLog("Elimino email " + email.getId() + " di " + email.getSender());
                                         });
                                     }
                                 }
                                 //elimina email del sender
+                                closeConnection();
                                 break;
                         }
                     }else if(clientObject instanceof String){
@@ -115,14 +126,23 @@ public class ClientHandler implements Runnable {
             }
 
         // Close the client socket and streams
+    }
+
+    private void closeConnection(){
+
         try {
+            // Log the closure of connection
+            Platform.runLater(() -> {this.model.printLog("Client disconnected");});
+            // Close connection with client
             clientSocket.close();
+
+            //close input-output streams:
             in.close();
             out.close();
-            Platform.runLater(() -> {this.model.printLog("Client disconnected");});
         } catch (IOException e) {
             System.out.println("Error while closing client socket and streams: " + e.getMessage());
         }
+
     }
 
     public static String createFileInbox(String username)
@@ -146,23 +166,18 @@ public class ClientHandler implements Runnable {
             FileReader fr = new FileReader(clientInboxFile);
             Scanner reader = new Scanner(fr);
             String data;
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-            ArrayList<String> list = new ArrayList<>();
             ArrayList<Email> listaEmail = new ArrayList<>();
             while (reader.hasNextLine()) {
                 data = reader.nextLine();
-                list.add(data.split(",")[2].replaceAll("[{-}]", ""));
-                Email e = new Email(Integer.parseInt(data.split(",")[0].replaceAll("[{-}]", "")),
-                        data.split(",")[1].replaceAll("[{-}]", ""),
-                        list,
-                        new Email(),    //???
-                        data.split(",")[4].replaceAll("[{-}]", ""),
-                        data.split(",")[5].replaceAll("[{-}]", ""),
-                        formatter.parse(data.split(",")[6].replaceAll("[{-}]", "")),
-                        data.split(",")[7].replaceAll("[{-}]", ""));
-                listaEmail.add(e);
-                list.clear();
-                //System.out.println(e.getSender() + " " + e.getReceivers() + " " + e.getSubject() + " " + e.getText() + " " + e.getDate());
+                if(data!=null) {
+                    Gson gson = new Gson();
+                    String jsStr = data;
+                    Type fooType = new TypeToken<Email>() {
+                    }.getType();
+                    Email e = gson.fromJson(data, fooType);
+                    listaEmail.add(e);
+                    System.out.println(e.getSender() + " " + e.getReceivers() + " " + e.getSubject() + " " + e.getText() + " " + e.getDate());
+                }
             }
             reader.close();
             fr.close();
@@ -175,9 +190,11 @@ public class ClientHandler implements Runnable {
             }catch (Exception ex){
                 System.err.println("Errore nella ricezione della lista email " + ex.getMessage());
             }
-        }catch(IOException | ParseException e){
+        }catch(IOException e){
             System.out.println("Errore nella chiusura del file-reader" + e.getMessage());
         }
     }
 }
+
+
 
