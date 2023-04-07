@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -93,10 +94,19 @@ public class ClientCommunication implements Runnable{
     }
 
     public void sendEmailToServer(int id, String sender, String receivers, Email e, String subject, String text, Date d, String options){
-        ArrayList<String> list = new ArrayList<>();  //gestire ciclo per aggiungere molteplici receivers
-        list.add(receivers);
+        //qui mi arriva una string contenete tutti i receivers non distinti
+        ArrayList<String> arrLReceivers = new ArrayList<>(); //creo arrayList
+        if (receivers.endsWith(";")) {
+            receivers = receivers.substring(0, receivers.length() - 1);  // rimuove l'ultimo carattere solo se è ";"
+        }else if (receivers.endsWith("; ")) {
+            receivers = receivers.substring(0, receivers.length() - 2);  // rimuove ultimi caratteri solo se è "; "
+        }
+        String[] arrReceivers = receivers.split("(; |;)"); //creo e popolo array di stringhe coin i receivers divisi con "; " o ";"
+        arrLReceivers.addAll(Arrays.asList(arrReceivers)); //aggiuno all'arrL l'array come Lista
+        System.out.println("clientCommunication sendEmailToServer email inviata"); //da togliere
+
         //mettere controllo se esiste email forwarded (?)
-        Email newEmail = new Email( id, sender, list, null, subject, text, d, options);
+        Email newEmail = new Email( id, sender, arrLReceivers, null, subject, text, d, options);
         try {
             out.writeObject(newEmail);
         }catch (Exception ex){

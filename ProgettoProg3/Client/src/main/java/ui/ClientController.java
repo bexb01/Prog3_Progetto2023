@@ -116,7 +116,7 @@ public class ClientController {
         // manca controllo sul testo della mail (?)
         // controllare se la mail esiste (?)
 
-        if(txtNewEmailReceivers.getText() != "" && Pattern.matches("[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}", txtNewEmailReceivers.getText())){ //controllo sintattico dell'indirizzo email del receiver (non controlla se esiste)
+        if(txtNewEmailReceivers.getText() != "" && Pattern.matches("^([\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,})(;\\s?[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,})*(;\\s*|$)", txtNewEmailReceivers.getText())){ //controllo sintattico dell'indirizzo email del receiver (non controlla se esiste)
             if(txtNewEmailSubject.getText() != ""){
                 double idd=0;
                 idd=(Math.random()*10000);
