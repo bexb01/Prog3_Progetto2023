@@ -1,6 +1,9 @@
 module com.example.client {
     requires javafx.controls;
     requires javafx.fxml;
+    requires gson;
+    requires java.sql;
+    requires java.desktop;
 
 
     opens com.example.client to javafx.fxml;

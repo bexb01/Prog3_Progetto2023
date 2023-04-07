@@ -1,0 +1,5 @@
+{"id":8396,"sender":"Emma.Brown@unito.it","receivers":["Amelia.Brown@unito.it"],"subject":"rage","text":"\"; \" finale","date":"Apr 6, 2023, 1:01:40 AM","options":"send"}
+{"id":1331,"sender":"Emma.Brown@unito.it","receivers":["Amelia.Brown@unito.it","Amelia.Davis@unito.it"],"subject":"rege2","text":"2 \"; \"","date":"Apr 6, 2023, 1:02:15 AM","options":"send"}
+{"id":9477,"sender":"Emma.Brown@unito.it","receivers":["Amelia.Brown@unito.it"],"subject":"","text":"","date":"Apr 6, 2023, 1:02:40 AM","options":"send"}
+{"id":456,"sender":"Emma.Brown@unito.it","receivers":["Amelia.Brown@unito.it"],"subject":"panpncnpans","text":"qlnap","date":"Apr 6, 2023, 1:06:41 AM","options":"send"}
+{"id":8448,"sender":"Emma.Brown@unito.it","receivers":["Amelia.Brown@unito.it","Amelia.Davis@unito.it"],"subject":"","text":"","date":"Apr 6, 2023, 1:07:29 AM","options":"send"}

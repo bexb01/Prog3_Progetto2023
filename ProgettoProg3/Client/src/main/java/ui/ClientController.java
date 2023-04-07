@@ -8,6 +8,8 @@ import javafx.scene.input.MouseEvent;
 import model.Email;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
 
 /**
  * Classe Controller 
@@ -112,10 +114,9 @@ public class ClientController {
     @FXML
     protected void onSendNewEmail(){
         // manca controllo sul testo della mail (?)
-        // manca controllo con regular expression della sintassi delle mail ---> [a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}
         // controllare se la mail esiste (?)
-
-        if(txtNewEmailReceivers.getText() != ""){
+        String ragexEmail="^([\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,})(;\\s?[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,})*(;\\s*|$)"; //"; " finale non va ";" separatore ";" finale "; " separatore ";" finale "; " separatore "; " finale non va sempre per il finale ";" separatore "; " finale non va sempre per il finale
+        if(txtNewEmailReceivers.getText() != "" && Pattern.matches(ragexEmail, txtNewEmailReceivers.getText())){ //controllo sintattico dell'indirizzo email del receiver (non controlla se esiste)
             if(txtNewEmailSubject.getText() != ""){
                 double idd=0;
                 idd=(Math.random()*10000);
@@ -143,8 +144,12 @@ public class ClientController {
                 btnNewEmail.setDisable(false);
                 lstEmails.setMouseTransparent(false);
                 lstEmails.getSelectionModel().select(-1);
-            }else System.out.println("La mail deve avere un oggetto!");
-        }else System.out.println("Il receiver non può essere vuoto!");
+            }else System.out.println("La mail deve avere un oggetto!"); //implementare un pannello di errore?s
+        }else {
+            JOptionPane.showMessageDialog(null, "indirizzo email del receiver sintatticamente scorretto o inesistente",
+                    "Errore", JOptionPane.ERROR_MESSAGE);
+            System.out.println("indirizzo email del receiver sintatticamente scorretto o inesistente");
+        } //implementare un pannello di errore?
     }
 
     @FXML

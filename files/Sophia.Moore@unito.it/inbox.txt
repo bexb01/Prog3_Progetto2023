@@ -1,0 +1,7 @@
+{"id":7272,"sender":"Sophia.Moore@unito.it","receivers":["Sophia.Moore@unto.it;"],"subject":"dava","text":"advadvav","date":"Apr 5, 2023, 9:55:19 PM","options":"send"}
+{"id":596,"sender":"Sophia.Moore@unito.it","receivers":["spopoo.loll@unito.it; seconda@unito.it;"],"subject":"regex prova","text":"prova regex","date":"Apr 5, 2023, 9:56:20 PM","options":"send"}
+{"id":6373,"sender":"Sophia.Moore@unito.it","receivers":["finalmente@unito.it;"],"subject":"regex prova 2","text":"","date":"Apr 5, 2023, 9:57:06 PM","options":"send"}
+{"id":9658,"sender":"Sophia.Moore@unito.it","receivers":["regex@unito.it; prova@unito.it;"],"subject":"prov a","text":"spazio tra un email e un altra obbligatorio\npunto e virgola finale obbligatorio, spazio finale non obbligatorio","date":"Apr 5, 2023, 9:58:39 PM","options":"send"}
+{"id":421,"sender":"Sophia.Moore@unito.it","receivers":["Soso.lo@uni.lo; Giorgino.quattrino@uno.pol; iosonolegenda@noo.it;"],"subject":"prova 3  email","text":"regex 3 email prova se va","date":"Apr 5, 2023, 9:59:39 PM","options":"send"}
+{"id":6585,"sender":"Sophia.Moore@unito.it","receivers":["Sophia.Moore@Unito.it;"],"subject":"sasa","text":"prova","date":"Apr 5, 2023, 10:04:10 PM","options":"send"}
+{"id":8292,"sender":"Sophia.Moore@unito.it","receivers":["funonzia@unito.it; lolololo@io.lollo;"],"subject":"funonzia","text":"prova pnvpndv","date":"Apr 5, 2023, 10:04:55 PM","options":"send"}

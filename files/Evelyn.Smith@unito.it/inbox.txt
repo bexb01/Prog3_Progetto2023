@@ -1,0 +1,3 @@
+{"id":10,"sender":"Evelyn.Wilson@unito.it","receivers":["Evelyn.Wilson@unito"],"subject":"anpnap","text":"nkapv anfpan pnafpncpn","date":"Mar 14, 2023, 6:48:48 PM","options":"send"}
+{"id":626,"sender":"Evelyn.Wilson@unito.it","receivers":["Easncpa@nsvaksn"],"subject":"knan","text":"22222222","date":"Mar 14, 2023, 6:49:38 PM","options":"send"}
+{"id":3257,"sender":"Evelyn.Smith@unito.it","receivers":["Amelia.Brown@unito.it","Amelia.Davis@unito.it"],"subject":"prova ","text":"\"; \" finale non va\n\";\" separatore non va","date":"Apr 5, 2023, 11:56:16 PM","options":"send"}

@@ -34,6 +34,7 @@ public class InboxHandler {
 
     public void deleteEmail(Email email) {
         inboxContent.remove(email);
+        //aggiungere richiesta al server di eliminare la mail dal file ?
     }
 
     /*public void generateRandomEmails(int n) {

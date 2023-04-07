@@ -1,0 +1,2 @@
+{"id":5084,"sender":"Mia.Johnson@unito.it","receivers":["Amelia.Brown@unito.it"],"subject":"altre prove regex","text":"\";\" finale","date":"Apr 6, 2023, 12:36:16 AM","options":"send"}
+{"id":2234,"sender":"Mia.Johnson@unito.it","receivers":["Amelia.Davis@unito.it;Amelia.Brown@unito.it"],"subject":"regex 2","text":"\": \" finale non va\n\";\" separatore \";\" finale\n\";\" separatore \"; \" finale non va\n\"; \" separatore \"; \" finale non va\n\";\" separatore \";\" finale non va","date":"Apr 6, 2023, 12:41:36 AM","options":"send"}

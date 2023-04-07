@@ -1,0 +1,3 @@
+{"id":1744,"sender":"Ava.Davis@unito.it","receivers":["prova@unito.it; divisione@unito.it;"],"subject":"degli indirizzi","text":"email","date":"Apr 5, 2023, 10:35:11 PM","options":"send"}
+{"id":5186,"sender":"Ava.Davis@unito.it","receivers":["Amelia.Brown@unito.it"],"subject":"","text":"","date":"Apr 6, 2023, 2:56:07 PM","options":"send"}
+{"id":4647,"sender":"Ava.Davis@unito.it","receivers":["Amelia.Brown@unito.it"],"subject":"","text":"","date":"Apr 6, 2023, 2:56:16 PM","options":"send"}

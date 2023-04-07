@@ -1,0 +1,1 @@
+{"id":6117,"sender":"Evelyn.Davis@unito.it","receivers":["prova@unito.it; invio@unito.it;"],"subject":"email d parte del client al server","text":"vedamo","date":"Apr 5, 2023, 10:12:39 PM","options":"send"}

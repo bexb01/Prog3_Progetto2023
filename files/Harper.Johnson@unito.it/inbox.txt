@@ -1,0 +1,2 @@
+{"id":10,"sender":"Evelyn.Wilson@unito.it","receivers":["Evelyn.Wilson@unito"],"subject":"anpnap","text":"nkapv anfpan pnafpncpn","date":"Mar 14, 2023, 6:48:48 PM","options":"send"}
+{"id":626,"sender":"Evelyn.Wilson@unito.it","receivers":["Easncpa@nsvaksn"],"subject":"knan","text":"22222222","date":"Mar 14, 2023, 6:49:38 PM","options":"send"}{"id":9751,"sender":"Harper.Johnson@unito.it","receivers":["zdvzdvzvz@dvadv"],"subject":"dva","text":"dvadvadvava","date":"Mar 28, 2023, 6:47:48 PM","options":"send"}

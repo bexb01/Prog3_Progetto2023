@@ -1,0 +1,1 @@
+{"id":7659,"sender":"Ava.Brown@unito.it","receivers":["prova@unito.it; invio@unito.it;"],"subject":"email","text":"proviamo se tutti i receiver vengono divisi correttamente dlla stringa in arrayList\u003cString\u003e","date":"Apr 5, 2023, 10:24:14 PM","options":"send"}

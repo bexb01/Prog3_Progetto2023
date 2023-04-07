@@ -1,0 +1,8 @@
+{"id":626,"sender":"Evelyn.Wilson@unito.it","receivers":["Easncpa@nsvaksn"],"subject":"knan","text":"22222222","date":"Mar 14, 2023, 6:49:38 PM","options":"send"}{"id":5459,"sender":"Isabella.Smith@unito.it","receivers":["Amelia.Brown@unito.it"],"subject":"","text":"","date":"Apr 6, 2023, 1:24:55 AM","options":"send"}
+{"id":2720,"sender":"Isabella.Smith@unito.it","receivers":["Amelia.Brown@unito.it"],"subject":"","text":"","date":"Apr 6, 2023, 1:25:03 AM","options":"send"}
+{"id":3499,"sender":"Isabella.Smith@unito.it","receivers":["Amelia.Brown@unito.it","Amelia.Davis@unito.it"],"subject":"","text":"","date":"Apr 6, 2023, 1:25:12 AM","options":"send"}
+{"id":897,"sender":"Isabella.Smith@unito.it","receivers":["Amelia.Brown@unito.it","Amelia.Davis@unito.it"],"subject":"","text":"","date":"Apr 6, 2023, 1:25:21 AM","options":"send"}
+{"id":3130,"sender":"Isabella.Smith@unito.it","receivers":["Amelia.Brown@unito.it","Amelia.Davis@unito.it"],"subject":"","text":"","date":"Apr 6, 2023, 1:25:48 AM","options":"send"}
+{"id":4690,"sender":"Isabella.Smith@unito.it","receivers":["Amelia.Brown@unito.it","Amelia.Davis@unito.it"],"subject":"","text":"","date":"Apr 6, 2023, 1:25:58 AM","options":"send"}
+{"id":8992,"sender":"Isabella.Smith@unito.it","receivers":["Amelia.Brown@unito.it","Amelia.Davis@unito.it"],"subject":"","text":"","date":"Apr 6, 2023, 1:26:19 AM","options":"send"}
+{"id":5170,"sender":"Isabella.Smith@unito.it","receivers":["Amelia.Brown@unito.it Amelia.Davis@unito.it"],"subject":"","text":"","date":"Apr 6, 2023, 1:26:44 AM","options":"send"}
