@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import model.Email;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
@@ -116,40 +117,50 @@ public class ClientController {
         // manca controllo sul testo della mail (?)
         // controllare se la mail esiste (?)
 
-        if(txtNewEmailReceivers.getText() != "" && Pattern.matches("^([\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,})(;\\s?[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,})*(;\\s*|$)", txtNewEmailReceivers.getText())){ //controllo sintattico dell'indirizzo email del receiver (non controlla se esiste)
-            if(txtNewEmailSubject.getText() != ""){
-                double idd=0;
-                idd=(Math.random()*10000);
-                int id=(int)idd;            //creo il paramentro id dove vengono creati anche gli altri paramentri
-                inbxHandler.addNewEmail(id, lblFrom.getText(), txtNewEmailReceivers.getText(), null, txtNewEmailSubject.getText(), txtEmailContent.getText(), new Date());
-                System.out.println("Nuova email aggiunta alla inbox!");
-                //Inviare email a server
-                ClientComm.sendEmailToServer(id, lblFrom.getText(), txtNewEmailReceivers.getText(), null, txtNewEmailSubject.getText(), txtEmailContent.getText(), new Date(), "send");
-                //cosi qui^ non devo usare getId()
-                txtNewEmailReceivers.setVisible(false);
-                txtNewEmailReceivers.setDisable(true);
-                txtNewEmailReceivers.setText("");
-                txtNewEmailSubject.setVisible(false);
-                txtNewEmailSubject.setDisable(true);
-                txtNewEmailSubject.setText("");
-                txtEmailContent.setText("");
-                txtEmailContent.setEditable(false);
-                lblTo.setText("");
-                lblSubject.setText("");
-                lblFrom.setText("");
+        String ragexEmail="^([\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,})(;\\s?[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,})*(;\s?|$)";
+        if(!Objects.equals(txtNewEmailReceivers.getText(), "")){ //controllo indirizzo email non vuoto
+            if(Pattern.matches(ragexEmail, txtNewEmailReceivers.getText())){ //controllo sintattico dell'indirizzo email del receiver (non controlla se esiste)
+                if(!Objects.equals(txtNewEmailSubject.getText(), "")){
+                    double idd=0;
+                    idd=(Math.random()*10000);
+                    int id=(int)idd;            //creo il paramentro id dove vengono creati anche gli altri paramentri
+                    inbxHandler.addNewEmail(id, lblFrom.getText(), txtNewEmailReceivers.getText(), null, txtNewEmailSubject.getText(), txtEmailContent.getText(), new Date());
+                    System.out.println("Nuova email aggiunta alla inbox!");
+                    //Inviare email a server
+                    ClientComm.sendEmailToServer(id, lblFrom.getText(), txtNewEmailReceivers.getText(), null, txtNewEmailSubject.getText(), txtEmailContent.getText(), new Date(), "send");
+                    //cosi qui^ non devo usare getId()
+                    txtNewEmailReceivers.setVisible(false);
+                    txtNewEmailReceivers.setDisable(true);
+                    txtNewEmailReceivers.setText("");
+                    txtNewEmailSubject.setVisible(false);
+                    txtNewEmailSubject.setDisable(true);
+                    txtNewEmailSubject.setText("");
+                    txtEmailContent.setText("");
+                    txtEmailContent.setEditable(false);
+                    lblTo.setText("");
+                    lblSubject.setText("");
+                    lblFrom.setText("");
 
-                btnSendEmail.setVisible(false);
-                btnDiscard.setVisible(false);
-                btnDelete.setVisible(false);
-                btnNewEmail.setDisable(false);
-                lstEmails.setMouseTransparent(false);
-                lstEmails.getSelectionModel().select(-1);
-            }else System.out.println("La mail deve avere un oggetto!"); //implementare un pannello di errore?s
-        }else {
-            JOptionPane.showMessageDialog(null, "indirizzo email del receiver sintatticamente scorretto o inesistente",
-                    "Errore", JOptionPane.ERROR_MESSAGE);
-            System.out.println("indirizzo email del receiver sintatticamente scorretto o inesistente");
-        } //implementare un pannello di errore?
+                    btnSendEmail.setVisible(false);
+                    btnDiscard.setVisible(false);
+                    btnDelete.setVisible(false);
+                    btnNewEmail.setDisable(false);
+                    lstEmails.setMouseTransparent(false);
+                    lstEmails.getSelectionModel().select(-1);
+                }else {
+                    JOptionPane.showMessageDialog(null, "L'oggetto della mail non deve essere vuoto" ,
+                            "Attenzione!", JOptionPane.WARNING_MESSAGE);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Controllare che l'indirizzo mail del receiver sia scritto correttamente e che rispetti i seguenti passi:\n " +
+                                "- non deve terminare con spazi vuoti. \n" +
+                                "- In caso di indirizzi multipli, devono essere divisi da '';'' o da ''; '' e non terminare con spazi vuoti.",
+                        "Attenzione!", JOptionPane.WARNING_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "indirizzo email del receiver inesistente",
+                    "Attenzione!", JOptionPane.WARNING_MESSAGE);
+        }
     }
 
     @FXML
