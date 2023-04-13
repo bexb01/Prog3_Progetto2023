@@ -1,0 +1,8 @@
+{"id":1000,"sender":"Sarah.Walker@unito.it","receivers":["Tony.Stark@unito.it"],"subject":"first try","text":"prova 1","date":"Apr 13, 2023, 7:02:19 PM"}
+{"id":2000,"sender":"Sarah.Walker@unito.it","receivers":["Jake.Peralta@unito.it"],"subject":"second try","text":"prova 2","date":"Apr 13, 2023, 7:03:19 PM"}
+{"id":3000,"sender":"Sarah.Walker@unito.it","receivers":["Edward.Elric@unito.it"],"subject":"third try","text":"prova 3","date":"Apr 13, 2023, 7:04:19 PM"}
+{"id":4000,"sender":"Sarah.Walker@unito.it","receivers":["Amy.Santiago@unito.it"],"subject":"forth try","text":"prova 4","date":"Apr 13, 2023, 7:05:19 PM"}
+{"id":9417,"sender":"Sarah.Walker@unito.it","receivers":["Alphonse.Elric@unito.it"],"subject":"c","text":"c","date":"Apr 13, 2023, 8:02:19 PM"}
+{"id":5418,"sender":"Sarah.Walker@unito.it","receivers":["Jake.Peralta@unito.it"],"subject":"f","text":"f","date":"Apr 13, 2023, 11:03:10 PM"}
+{"id":7401,"sender":"Edward.Elric@unito.it","receivers":["Sarah.Walker@unito.it"],"subject":"Re: third try","text":"prova 3\nEmail inviata in data: Thu Apr 13 19:04:19 CEST 2023\n\tREPLY\n","date":"Apr 13, 2023, 11:49:39 PM"}
+{"id":8250,"sender":"Alphonse.Elric@unito.it","receivers":["Sarah.Walker@unito.it"],"subject":"Re: c","text":"c\nEmail inviata in data: Thu Apr 13 20:02:19 CEST 2023\n","date":"Apr 14, 2023, 12:57:53 AM"}

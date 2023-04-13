@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="528.0" prefWidth="722.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="528.0" prefWidth="722.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <SplitPane dividerPositions="0.36785119378123265" prefHeight="638.0" prefWidth="595.0" BorderPane.alignment="CENTER">
          <items>
@@ -64,25 +75,48 @@
                         </GridPane>
                      </top>
                      <bottom>
-                        <SplitPane dividerPositions="0.3466666666666667, 0.6355555555555555" prefHeight="53.0" prefWidth="456.0" BorderPane.alignment="CENTER">
-                          <items>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="135.0" prefWidth="131.0">
-                                 <children>
-                                    <Button fx:id="btnNewEmail" layoutX="24.0" layoutY="4.0" mnemonicParsing="false" onMouseClicked="#onCreateNewEmailButton" prefHeight="43.0" prefWidth="106.0" text="Nuova Email" />
-                                 </children>
-                              </AnchorPane>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                                 <children>
-                                    <Button fx:id="btnSendEmail" layoutX="9.0" layoutY="4.0" mnemonicParsing="false" onMouseClicked="#onSendNewEmail" prefHeight="43.0" prefWidth="106.0" text="Invia Email" visible="false" />
-                                 </children>
-                              </AnchorPane>
-                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                                 <children>
-                                    <Button fx:id="btnDelete" alignment="CENTER" contentDisplay="RIGHT" layoutX="24.0" layoutY="3.0" mnemonicParsing="false" onMouseClicked="#onDeleteButtonClick" prefHeight="43.0" prefWidth="111.0" text="Elimina" AnchorPane.topAnchor="3.0" />
-                                    <Button fx:id="btnDiscard" alignment="CENTER" contentDisplay="RIGHT" layoutX="25.0" layoutY="3.0" mnemonicParsing="false" onMouseClicked="#onDiscardMouseClick" prefHeight="43.0" prefWidth="111.0" text="Annulla" />
-                                 </children>
-                              </AnchorPane>
-                          </items>
+                        <SplitPane dividerPositions="0.5" orientation="VERTICAL" BorderPane.alignment="CENTER">
+                           <items>
+                              <SplitPane dividerPositions="0.34569732937685466, 0.663946587537092" prefHeight="53.0" prefWidth="456.0">
+                                <items>
+                                  <AnchorPane prefHeight="135.0" prefWidth="131.0">
+                                       <children>
+                                          <Button fx:id="btnNewEmail" alignment="CENTER" contentDisplay="CENTER" layoutX="23.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#onCreateNewEmailButton" prefHeight="43.0" prefWidth="106.0" text="Nuova Email" />
+                                       </children>
+                                    </AnchorPane>
+                                  <AnchorPane prefHeight="135.0" prefWidth="131.0">
+                                       <children>
+                                          <Button fx:id="btnSendEmail" alignment="CENTER" contentDisplay="CENTER" layoutX="15.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#onSendNewEmail" prefHeight="43.0" prefWidth="106.0" text="Invia Email" visible="false" />
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane prefHeight="135.0" prefWidth="131.0">
+                                       <children>
+                                          <Button fx:id="btnDelete" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#onDeleteButtonClick" prefHeight="43.0" prefWidth="111.0" text="Elimina" visible="false" AnchorPane.topAnchor="5.0" />
+                                          <Button fx:id="btnDiscard" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#onDiscardMouseClick" prefHeight="43.0" prefWidth="111.0" text="Annulla" visible="false" />
+                                       </children>
+                                    </AnchorPane>
+                                </items>
+                              </SplitPane>
+                              <SplitPane dividerPositions="0.3479228486646885, 0.663946587537092" prefHeight="53.0" prefWidth="456.0">
+                                 <items>
+                                    <AnchorPane prefHeight="135.0" prefWidth="131.0">
+                                       <children>
+                                          <Button fx:id="btnReply" alignment="CENTER" contentDisplay="CENTER" layoutX="24.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#onReplyButtonClick" prefHeight="43.0" prefWidth="106.0" text="Rispondi" visible="false" />
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane prefHeight="135.0" prefWidth="131.0">
+                                       <children>
+                                          <Button fx:id="btnReplyAll" alignment="CENTER" contentDisplay="CENTER" layoutX="15.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#onReplyAllButtonClick" prefHeight="43.0" prefWidth="106.0" text="Rispondi a tutti" visible="false" />
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane prefHeight="135.0" prefWidth="131.0">
+                                       <children>
+                                          <Button fx:id="btnForward" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#onForwardButtonClick" prefHeight="43.0" prefWidth="111.0" text="Inoltra" visible="false" />
+                                       </children>
+                                    </AnchorPane>
+                                 </items>
+                              </SplitPane>
+                           </items>
                         </SplitPane>
                      </bottom>
                      <center>

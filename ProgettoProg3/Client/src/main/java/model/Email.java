@@ -11,24 +11,20 @@ public class Email implements Serializable {
     private int id;
     private String sender;
     private ArrayList<String> receivers;
-    private Email forwarded;    //
     private String subject;
     private String text;
     private Date date;
-    private String options; //
 
     public Email() {
     }
 
-    public Email(int id, String sender, ArrayList<String> receivers, Email forwarded, String subject, String text, Date date, String options) {
+    public Email(int id, String sender, ArrayList<String> receivers, String subject, String text, Date date) {
         this.id = id;
         this.sender = sender;
         this.receivers = receivers;
-        this.forwarded = forwarded;
         this.subject = subject;
         this.text = text;
         this.date = date;
-        this.options = options;
     }
 
     public int getId() {
@@ -55,13 +51,6 @@ public class Email implements Serializable {
         this.receivers = receivers;
     }
 
-    public Email getForwarded() {
-        return forwarded;
-    }
-
-    public void setForwarded(Email forwarded) {
-        this.forwarded = forwarded;
-    }
 
     public String getSubject() {
         return subject;
@@ -86,10 +75,6 @@ public class Email implements Serializable {
     public void setDate(Date date) {
         this.date = date;
     }
-
-    public String getOptions() { return options; }
-
-    public void setOptions(String options) { this.options = options; }
 
     @Override
     public String toString() {

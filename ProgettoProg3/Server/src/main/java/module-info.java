@@ -7,8 +7,8 @@ module com.example.server {
 
     opens com.example.server to javafx.fxml;
     opens model to javafx.fxml, gson;
-    opens com.example.server.controller to javafx.fxml;
-    exports com.example.server.controller;
+    opens controller to javafx.fxml;
+    exports controller;
     exports com.example.server;
     exports model;
 }

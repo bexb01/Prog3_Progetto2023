@@ -10,6 +10,6 @@ module com.example.client {
     exports com.example.client;
     exports model;
     opens model to javafx.fxml;
-    exports ui;
-    opens ui to javafx.fxml;
+    exports controller;
+    opens controller to javafx.fxml;
 }

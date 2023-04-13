@@ -62,17 +62,15 @@ public class InboxHandler {
         }
     }*/
 
-    public void addNewEmail(int id,String sender, String receivers, Email e, String subject, String text, Date d){
+    public void addNewEmail(int id,String sender, String receivers, String subject, String text, Date d){
         ArrayList<String> list = new ArrayList<>();  //gestire ciclo per aggiungere molteplici receivers
         list.add(receivers);
-        //mettere controllo se esiste email forwarded (?)
-
-        Email newEmail = new Email(id, sender, list, null, subject, text, d, "");
+        Email newEmail = new Email(id, sender, list, subject, text, d);
         inboxContent.add(newEmail);
     }
 
     public void addEmailToInbox(Email e){     //TEMPORANEO!!!!!
-        inboxContent.add(e);
+        inboxContent.add(e);    //DA ERRORE: CORREGGERE
     }
 }
 

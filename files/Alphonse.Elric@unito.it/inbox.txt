@@ -1,0 +1,3 @@
+{"id":9417,"sender":"Sarah.Walker@unito.it","receivers":["Alphonse.Elric@unito.it"],"subject":"c","text":"c","date":"Apr 13, 2023, 8:02:19 PM"}
+{"id":8187,"sender":"Tony Stark@unito.it","receivers":["Alphonse.Elric@unito.it","Sara.Walker@unito.it","Edward.Elric@unito.it"],"subject":"reply all try","text":"vedemo se va","date":"Apr 13, 2023, 11:54:22 PM"}
+{"id":8250,"sender":"Alphonse.Elric@unito.it","receivers":["Sarah.Walker@unito.it"],"subject":"Re: c","text":"c\nEmail inviata in data: Thu Apr 13 20:02:19 CEST 2023\n","date":"Apr 14, 2023, 12:57:53 AM"}

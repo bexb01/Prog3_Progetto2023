@@ -1,24 +1,19 @@
 package model;
 
-import javafx.application.Platform;
-
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ClientCommunication implements Runnable{
 
     private Socket socket;
-    //private static BufferedReader in;
-    private static ObjectOutputStream out;
-    private static ObjectInputStream in;
+    private ObjectOutputStream out;
+    private ObjectInputStream in;
     private String username;
     private InboxHandler inboxMail;
 
-    //ClientCommunication: handles the connection with the server
     public ClientCommunication(String username, InboxHandler inbx) {
         this.username = username;
         this.inboxMail = inbx;
@@ -29,99 +24,79 @@ public class ClientCommunication implements Runnable{
 
     @Override
     public void run() {
-        try {
-            this.socket = new Socket("127.0.0.1", 8189);    //gestire connessione in assenza del server
-            //in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new ObjectOutputStream(socket.getOutputStream());
-            in = new ObjectInputStream(socket.getInputStream());
-
-            //inboxMail = new InboxHandler();
-            sendUsername();  //sends their username to server
-            requestEmail();  //asks all emails to server
-
-            try {
-                Object clientObject;
-                //IMPLEMENT server sends array of emails on opening
-                if ((clientObject = in.readObject()) != null) {
-                    if (clientObject instanceof ArrayList<?>){
-                        ArrayList<Email> list = (ArrayList<Email>)clientObject;
-                        for(int i = 0; i < list.size(); i++){
-                            inboxMail.addEmailToInbox(list.get(i));
-                        }/*} else if(clientObject instanceof Email){
-                            Email e = (Email) clientObject;
-                            switch (e.getOptions()) {
-                                case 1:     //receive
-                                    //deve ricevere e inserire nella inbox la mail
-                                    for(String s: e.getReceivers())
-                                        //MAYBE ERROR IS HERE
-                                        //trova un modo per mandare un messaggio da un utente ad un altro utente
-                                        if(s==username){
-                                            inboxMail.addEmailToInbox(e);
-                                            out.writeObject(s + " ha ricevuto un email da " + e.getSender());
-                                        }
-
-                            }*/
-                    }
-                    //task sen
-                }
-            }catch(IOException e) {
-                System.err.println("Error while loading email to inbox: " + e.getMessage());
-            }
-
-            // Read response from the server
-            //String serverResponse = in.readLine();
-            //System.out.println("Received response from server: " + serverResponse);
-        } catch (Exception e) { //FORSE NON SERVE
-            System.err.println("2 - Error while communicating with the server: " + e.getMessage());
-        }
-
-        /*try {      //close connection DA RIMETTERE?
-            out.close();
-            in.close();
-            socket.close();
-        } catch (Exception ex) {
-            System.err.println("Error while closing client socket: " + ex);
-        }*/
+        //sends their username to server
+        requestEmail();  //asks all emails to server
     }
 
-    private void requestEmail() {
+    private boolean openConnection(){
+        try {
+            this.socket = new Socket("127.0.0.1", 8189);    //gestire connessione in assenza del server
+            out = new ObjectOutputStream(socket.getOutputStream());
+            in = new ObjectInputStream(socket.getInputStream());
+            return true;
+        }catch (Exception e) {
+            System.err.println("Error while opening clientcommunication connection: " + e.getMessage());
+            return false;
+        }
+    }
+
+    private void requestEmail() {   //SISTEMA (carica sempre la lista completa)
+        if(!openConnection())
+            return;
         try {
             out.writeObject("get");
+            out.writeObject(username);
         }catch (Exception ex){
             System.err.println("Error while requesting emails from the server: " + ex.getMessage());
         }
+        try {
+            Object serverObject;
+            //IMPLEMENT server sends array of emails on opening
+            if ((serverObject = in.readObject()) != null) {
+                if (serverObject instanceof ArrayList<?>){
+                    ArrayList<Email> list = (ArrayList<Email>)serverObject;
+                    for(int i = 0; i < list.size(); i++){
+                        inboxMail.addEmailToInbox(list.get(i)); //non deve aggiungere tutta la lista ma 1a volta lista altre volte solo mail nuove
+                    }
+                }
+            }
+        }catch(IOException e) {
+            System.err.println("Error while loading email to inbox: " + e.getMessage());
+        } catch (ClassNotFoundException e) {
+            System.err.println("Error while reading object from server: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
-    public void sendEmailToServer(int id, String sender, String receivers, Email e, String subject, String text, Date d, String options){
-        ArrayList<String> list = new ArrayList<>();  //gestire ciclo per aggiungere molteplici receivers
-        list.add(receivers);
-        //mettere controllo se esiste email forwarded (?)
-        Email newEmail = new Email( id, sender, list, null, subject, text, d, options);
+    public boolean sendEmailToServer(int id, String sender, String receivers, String subject, String text, Date d){
+        if(!openConnection())
+            return false;
+        //qui mi arriva una string contenete tutti i receivers non distinti
+        ArrayList<String> arrLReceivers = new ArrayList<>(); //creo arrayList
+        if (receivers.endsWith(";")) {
+            receivers = receivers.substring(0, receivers.length() - 1);  // rimuove l'ultimo carattere solo se è ";"
+        }else if (receivers.endsWith("; ")) {
+            receivers = receivers.substring(0, receivers.length() - 2);  // rimuove ultimi caratteri solo se è "; "
+        }
+        String[] arrReceivers = receivers.split("(; |;)"); //creo e popolo array di stringhe coin i receivers divisi con "; " o ";"
+        arrLReceivers.addAll(Arrays.asList(arrReceivers)); //aggiuno all'arrL l'array come Lista
+        System.out.println("clientCommunication sendEmailToServer email inviata"); //da togliere
+        Email newEmail = new Email(id, sender, arrLReceivers, subject, text, d);
         try {
+            out.writeObject("send");
             out.writeObject(newEmail);
+            return true;
         }catch (Exception ex){
             System.err.println("Error while sending email to the server: " + ex.getMessage());
+            return false;
         }
     }
 
-    public void sendUsername(){
-        try {
-            Object obj = username;
-            out.writeObject(obj);
-        }catch (Exception ex){
-            System.err.println("Error while sending username to the server: " + ex.getMessage());
-        }
+    public boolean deleteEmail(int id, String sender, String receivers, String subject, String text, Date d){   //COMPLETA
+        return true;
     }
 
     private void loadEmailToInbox(){
 
     }
-    /* needs something like this
-    public void shutdown() throws IOException {     //Add exitonclose operations and how to handle when the server is closed but the client stays open
-            // Stop accepting new requests
-            running.set(false);
-            //close client socket
-            socket.close();
-    }
-    */
 }

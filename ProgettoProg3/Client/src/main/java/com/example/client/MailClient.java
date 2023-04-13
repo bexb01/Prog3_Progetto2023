@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.ClientCommunication;
 import model.InboxHandler;
-import ui.ClientController;
+import controller.ClientController;
 
 import java.io.*;
 import java.util.Random;
@@ -28,39 +28,22 @@ public class MailClient extends Application {
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
-        try {
-            Thread cThread = new Thread(clientComm);
-            cThread.setDaemon(true);
-            cThread.start();
-        }catch (Exception e){
-            System.err.println("Error while creating client Thread: " + e.getMessage());
-        }
-        // Shutdown event
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {   //method exitonclose
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent e) {
-               /* try {
-                    clientComm.shutdown();
-                } catch (IOException ex) {
-                    System.err.println("Error while exiting server: ");
-                    throw new RuntimeException(ex);
-                }
                 Platform.exit();
                 System.exit(0);
-                */
             }
         });
     }
 
     private String generaUsername() {
-        String[] firstNames = {"Emma", "Olivia", "Ava", "Isabella", "Sophia", "Mia", "Charlotte", "Amelia", "Harper", "Evelyn", "Giorgio"};
-        String[] lastNames = {"Smith", "Johnson", "Williams", "Jones", "Brown", "Davis", "Miller", "Wilson", "Moore", "Taylor", "Cussa"};
+        String[] Names = {"Jake.Peralta", "Alphonse.Elric", "Amy.Santiago", "Chuck.Bartowski", "Sarah.Walker", "Tony Stark", "Edward.Elric", "Pepper.Potts"};
         String username = "";
 
         Random r = new Random();
-        /*Switch up to set everyone different or everyone EmmaTaylor*/
-        username = firstNames[r.nextInt(0, firstNames.length-1)] + "." + lastNames[r.nextInt(0, lastNames.length-1)] + "@unito.it";
-        //username = "Mattia.Liberatore@unito.it";
+        username = Names[r.nextInt(0, Names.length-1)] + "@unito.it";
+        //username = "Alphonse.Elric@unito.it";
         return username;
     }
 

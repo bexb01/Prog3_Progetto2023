@@ -1,0 +1,3 @@
+{"id":681,"sender":"Chuck.Bartowski@unito.it","receivers":["Jake.Peralta@unito.it"],"subject":"vsv","text":"svdv","date":"Apr 13, 2023, 7:54:08 PM"}
+{"id":934,"sender":"Chuck.Bartowski@unito.it","receivers":["Chuck.Bartowski@unito.it"],"subject":"Re: vsv","text":"svdv\nEmail inviata in data: Thu Apr 13 19:54:08 CEST 2023\n","date":"Apr 14, 2023, 12:56:11 AM"}
+{"id":934,"sender":"Chuck.Bartowski@unito.it","receivers":["Chuck.Bartowski@unito.it"],"subject":"Re: vsv","text":"svdv\nEmail inviata in data: Thu Apr 13 19:54:08 CEST 2023\n","date":"Apr 14, 2023, 12:56:11 AM"}
