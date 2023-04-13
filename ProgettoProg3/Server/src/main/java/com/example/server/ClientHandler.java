@@ -52,24 +52,14 @@ public class ClientHandler implements Runnable {
                                 if((addEmail = in.readObject()) != null) {
                                     if(addEmail instanceof Email) {
                                         Email email = (Email) clientObject;
-                                        String fileSander = "files/" + email.getSender() + "/inbox.txt";
-                                        for (String s : email.getReceivers()) {
+                                        for (String s : email.getReceivers()) { //sending emails to every receiver
+                                            //implement the send function and send email to every receiver
+
                                             Platform.runLater(() -> {
                                                 this.model.printLog("Inviata email da " + email.getSender() + " a " + s);
                                             });
-                                            //send email to receivers (scrive email sul file del receiver)
-                                            System.out.println(s);//da togliere
-                                            String FileReceiver = "files/" + s + "/inbox.txt";
-                                            try (FileWriter writer = new FileWriter(FileReceiver, true)) {
-                                                writer.write(email.toJson()+"\n");
-                                                writer.close();//rilascio la risorsa utilizzata dal writer, inoltre notifica al so che il  file non e' piu in uso
-                                                System.out.println("email scritta su file del receiver: " + FileReceiver);
-                                            } catch (IOException e) {
-                                                System.out.println("An error occurred while writing to the file.");
-                                                e.printStackTrace();//manipolare l'errore nell'invio di una mail al sander che dice l'accaduto cosi ch potra reinviare la mai con indirizzo email corretto
-                                            }
                                         }
-
+                                        String fileSander = "files/" + email.getSender() + "/inbox.txt";
                                         try (FileWriter writer = new FileWriter(fileSander, true)) {
                                             writer.write(email.toJson()+"\n");
                                             writer.close();//rilascio la risorsa utilizzata dal writer, inoltre notifica al so che il  file non e' piu in uso
