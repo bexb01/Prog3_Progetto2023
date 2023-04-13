@@ -74,7 +74,7 @@ public class ClientHandler implements Runnable {
                                             writer.write(email.toJson()+"\n");
                                             writer.close();//rilascio la risorsa utilizzata dal writer, inoltre notifica al so che il  file non e' piu in uso
                                             System.out.println("email scritta su file del sander: " + fileSander);
-                                        } catch (FileNotFoundException e) {
+                                        } catch (IOException e) {
                                             System.out.println("An error occurred while writing to the file.");
                                             e.printStackTrace();
                                         }
