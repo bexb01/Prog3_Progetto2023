@@ -66,7 +66,6 @@ public class InboxHandler {
         ArrayList<String> list = new ArrayList<>();  //gestire ciclo per aggiungere molteplici receivers
         list.add(receivers);
         Email newEmail = new Email(id, sender, list, subject, text, d);
-        inboxContent.add(newEmail);
     }
 
     public void addEmailToInbox(Email e){     //TEMPORANEO!!!!!

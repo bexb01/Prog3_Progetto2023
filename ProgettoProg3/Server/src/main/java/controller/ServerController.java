@@ -56,7 +56,7 @@ public class ServerController implements Initializable {
         }
         btnClose.setDisable(true);
         btnStart.setDisable(false);
-        logList.add("[WARNING] Server closed...");
+        Platform.runLater(() -> {logList.add("[WARNING] Server closed...");});
     }
 
     public class ClientHandler implements Runnable {
@@ -94,7 +94,7 @@ public class ServerController implements Initializable {
                             case "get":
                                 getUsername();
                                 clientInboxFile = createFileInbox(usernameClient);
-                                logList.add( usernameClient + " ha richiesto tutte le sue mail");
+                                Platform.runLater(() -> {logList.add( usernameClient + " ha richiesto tutte le sue mail");});
                                 getAllEmails();
                                 break;
                         }
@@ -128,7 +128,6 @@ public class ServerController implements Initializable {
                     for (String s : email.getReceivers()) {
                         logList.add("Inviata email da " + email.getSender() + " a " + s);
                         //send email to receivers (scrive email sul file del receiver)
-                        System.out.println(s);//da togliere
                         String FileReceiver = "files/" + s + "/inbox.txt";
                         try (FileWriter writer = new FileWriter(FileReceiver, true)) {
                             writer.write(email.toJson() + "\n");
@@ -163,31 +162,42 @@ public class ServerController implements Initializable {
             }
         }
 
-        private void getAllEmails() {   //MODIFICARE: deve caricare non tutta la lista di mail ma la lista la prima volta e poi solo gli aggiornamenti
+        private void getAllEmails() throws IOException, ClassNotFoundException{   //MODIFICARE: deve caricare non tutta la lista di mail ma la lista la prima volta e poi solo gli aggiornamenti
             try {
-                FileReader fr = new FileReader(clientInboxFile);
-                Scanner reader = new Scanner(fr);
-                String data;
-                ArrayList<Email> listaEmail = new ArrayList<>();
-                while (reader.hasNextLine()) {
-                    data = reader.nextLine();
-                    if(data!=null) {
-                        Gson gson = new Gson();
-                        String jsStr = data;
-                        Type fooType = new TypeToken<Email>() {
-                        }.getType();
-                        Email e = gson.fromJson(data, fooType);
-                        listaEmail.add(e);
-                        System.out.println(e.getSender() + " " + e.getReceivers() + " " + e.getSubject() + " " + e.getText() + " " + e.getDate());
+                Object numberEmail;
+                if((numberEmail = in.readObject()) != null) {
+                    if(numberEmail instanceof Integer) {
+                        int num = (Integer)numberEmail;
+                        FileReader fr = new FileReader(clientInboxFile);
+                        Scanner reader = new Scanner(fr);
+                        String data;
+                        ArrayList<Email> listaEmail = new ArrayList<>();
+                        // Skip the first num lines
+                        for (int i = 0; i < num; i++) {
+                            if (reader.hasNextLine()) {
+                                reader.nextLine();
+                            }
+                        }
+                        while (reader.hasNextLine()) {
+                            data = reader.nextLine();
+                            if(data!=null) {
+                               Gson gson = new Gson();
+                                String jsStr = data;
+                                Type fooType = new TypeToken<Email>() {
+                                }.getType();
+                                Email e = gson.fromJson(data, fooType);
+                                listaEmail.add(e);
+                            }
+                        }
+                        reader.close();
+                        fr.close();
+                        try {
+                            out.writeObject(listaEmail);
+                            Platform.runLater(() -> {logList.add("Ho inviato tutte le mail a " + usernameClient+ ".");});
+                        }catch (Exception ex){
+                            System.err.println("Errore nella ricezione della lista email " + ex.getMessage());
+                        }
                     }
-                }
-                reader.close();
-                fr.close();
-                try {
-                    out.writeObject(listaEmail);
-                    logList.add("Ho inviato tutte le mail a " + usernameClient+ ".");
-                }catch (Exception ex){
-                    System.err.println("Errore nella ricezione della lista email " + ex.getMessage());
                 }
             }catch(IOException e){
                 System.out.println("Errore nella chiusura del file-reader" + e.getMessage());

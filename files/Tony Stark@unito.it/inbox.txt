@@ -1,1 +1,0 @@
-{"id":1000,"sender":"Sarah.Walker@unito.it","receivers":["Tony.Stark@unito.it"],"subject":"first try","text":"prova 1","date":"Apr 13, 2023, 7:02:19 PM"}{"id":8187,"sender":"Tony Stark@unito.it","receivers":["Alphonse.Elric@unito.it","Sara.Walker@unito.it","Edward.Elric@unito.it"],"subject":"reply all try","text":"vedemo se va","date":"Apr 13, 2023, 11:54:22 PM"}

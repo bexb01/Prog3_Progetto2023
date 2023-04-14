@@ -1,0 +1,116 @@
+/* Impostazioni di base */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+/* Stili per il pannello della lista delle email */
+#pnlEmailList {
+    border: 1px solid #ccc;
+}
+
+#pnlEmailList .HBox {
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #ccc;
+}
+
+#pnlEmailList .HBox img {
+    margin-right: 10px;
+}
+
+#pnlEmailList .HBox label {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#lstEmails {
+    border: none;
+    padding: 10px;
+}
+
+#lstEmails .list-cell {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+#lstEmails .list-cell:selected {
+    background-color: #f5f5f5;
+}
+
+/* Stili per il pannello di lettura delle email */
+#pnlReadMessage {
+    border: 1px solid #ccc;
+}
+
+#pnlReadMessage .GridPane {
+    padding: 10px;
+}
+
+#pnlReadMessage .GridPane label {
+    font-weight: bold;
+}
+
+#pnlReadMessage .GridPane .text-field {
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+
+#pnlReadMessage .TextArea {
+    border: none;
+    padding: 10px;
+    height: 400px;
+}
+
+
+#pnlReadMessage .AnchorPane {
+    padding: 10px;
+}
+
+#pnlReadMessage .AnchorPane button {
+    margin-right: 10px;
+    font-weight: bold;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+#pnlReadMessage .AnchorPane button:hover {
+    background-color: #e5e5e5;
+}
+
+
+#pnlReadMessage .AnchorPane button:disabled {
+    background-color: #f5f5f5;
+    border-color: #ccc;
+    color: #ccc;
+    cursor: default;
+}
+
+/* Stili per i bottoni */
+button {
+    font-weight: bold;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #e5e5e5;
+}
+
+button:disabled {
+    background-color: #f5f5f5;
+    border-color: #ccc;
+    color: #ccc;
+    cursor: default;
+}

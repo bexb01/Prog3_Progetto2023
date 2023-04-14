@@ -1,3 +1,5 @@
 {"id":2000,"sender":"Sarah.Walker@unito.it","receivers":["Jake.Peralta@unito.it"],"subject":"second try","text":"prova 2","date":"Apr 13, 2023, 7:03:19 PM"}
 {"id":681,"sender":"Chuck.Bartowski@unito.it","receivers":["Jake.Peralta@unito.it"],"subject":"vsv","text":"svdv","date":"Apr 13, 2023, 7:54:08 PM"}
 {"id":5418,"sender":"Sarah.Walker@unito.it","receivers":["Jake.Peralta@unito.it"],"subject":"f","text":"f","date":"Apr 13, 2023, 11:03:10 PM"}
+{"id":1204,"sender":"Amy.Santiago@unito.it","receivers":["Jake.Peralta@unito.it"],"subject":"acab","text":"acab","date":"Apr 14, 2023, 8:32:04 PM"}
+{"id":1496,"sender":"Jake.Peralta@unito.it","receivers":["Alphonse.Elric@unito.it"],"subject":"v","text":"v","date":"Apr 14, 2023, 8:40:14 PM"}

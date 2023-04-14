@@ -1,1 +1,6 @@
 {"id":4000,"sender":"Sarah.Walker@unito.it","receivers":["Amy.Santiago@unito.it"],"subject":"forth try","text":"prova 4","date":"Apr 13, 2023, 7:05:19 PM"}
+{"id":1204,"sender":"Amy.Santiago@unito.it","receivers":["Jake.Peralta@unito.it"],"subject":"acab","text":"acab","date":"Apr 14, 2023, 8:32:04 PM"}
+{"id":3815,"sender":"Sarah.Walker@unito.it","receivers":["Amy.Santiago@unito.it"],"subject":"zz","text":"zz","date":"Apr 14, 2023, 8:53:59 PM"}
+{"id":4388,"sender":"Sarah.Walker@unito.it","receivers":["Amy.Santiago@unito.it"],"subject":"Try 2","text":"try","date":"Apr 14, 2023, 10:05:24 PM"}
+{"id":9963,"sender":"Alphonse.Elric@unito.it","receivers":["Chuck.Bartowski@unito.it","Amy.Santiago@unito.it"],"subject":"test replyAll","text":"test 1 replyAll","date":"Apr 14, 2023, 10:11:03 PM"}
+{"id":511,"sender":"Chuck.Bartowski@unito.it","receivers":["Alphonse.Elric@unito.it","Amy.Santiago@unito.it"],"subject":"Re: test replyAll","text":"test 1 replyAll\nEmail inviata in data: Fri Apr 14 22:11:03 CEST 2023\n","date":"Apr 14, 2023, 10:13:07 PM"}

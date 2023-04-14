@@ -253,12 +253,25 @@ public class ClientController {
         txtNewEmailReceivers.setVisible(true);
         txtNewEmailReceivers.setDisable(false);
         String receivers = lblTo.getText();
-        int index = receivers.indexOf(username);
-        String before = receivers.substring(0,index);
-        int nextIndex = receivers.indexOf(",",index);
-        String after = receivers.substring(nextIndex+1);
-        receivers = before + after;
-        txtNewEmailReceivers.setText(lblFrom.getText() + "; " + receivers);    //DEVI PRENDERE TUTTI I receivers escluso te stesso
+        if(!username.equals(lblFrom.getText())) {
+            System.out.println(username);
+            System.out.println(lblFrom.getText());
+            int index = receivers.indexOf(username);
+            if(index>=0){
+                int nextIndex = receivers.indexOf(";", index);
+                if(nextIndex>=0){
+                    String before = receivers.substring(0, index);
+                    String after = receivers.substring(nextIndex + 1);
+                    receivers = before + after;
+                }
+            }  else{
+                int nextIndex = receivers.indexOf(";", index);
+                String after = receivers.substring(nextIndex + 1);
+                receivers = after;
+            }
+            txtNewEmailReceivers.setText(lblFrom.getText() + ";" + receivers + ";"); //DEVI PRENDERE TUTTI I receivers escluso te stesso
+        } else
+            txtNewEmailReceivers.setText(lblTo.getText());
         lblFrom.setText(username);
         txtNewEmailSubject.setVisible(true);
         txtNewEmailSubject.setDisable(false);
@@ -322,8 +335,8 @@ public class ClientController {
             for(int i = 0; i < list.size(); i++){
                 if(list.size() > 1) {
                     if (i != list.size() - 1)
-                        lblTo.setText(lblTo.getText() + list.get(i) + ", ");
-                    else lblTo.setText(lblTo.getText() + "e " + list.get(i));
+                        lblTo.setText(lblTo.getText() + list.get(i) + ";");
+                    else lblTo.setText(lblTo.getText() + " " + list.get(i));
                 }else lblTo.setText(list.get(i));
             }
             lblSubject.setText(email.getSubject());

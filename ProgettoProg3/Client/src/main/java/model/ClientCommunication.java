@@ -1,5 +1,7 @@
 package model;
 
+import javafx.application.Platform;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -12,11 +14,13 @@ public class ClientCommunication implements Runnable{
     private ObjectOutputStream out;
     private ObjectInputStream in;
     private String username;
+    private int numberEmail;
     private InboxHandler inboxMail;
 
     public ClientCommunication(String username, InboxHandler inbx) {
         this.username = username;
         this.inboxMail = inbx;
+        this.numberEmail = 0;
     }
 
     public ClientCommunication() {
@@ -25,7 +29,8 @@ public class ClientCommunication implements Runnable{
     @Override
     public void run() {
         //sends their username to server
-        requestEmail();  //asks all emails to server
+        requestEmail();       //manda idmail o numero di mail che ho già server manda lista di mail che mi mancano
+        //asks all emails to server
     }
 
     private boolean openConnection(){
@@ -46,6 +51,7 @@ public class ClientCommunication implements Runnable{
         try {
             out.writeObject("get");
             out.writeObject(username);
+            out.writeObject(numberEmail);
         }catch (Exception ex){
             System.err.println("Error while requesting emails from the server: " + ex.getMessage());
         }
@@ -56,7 +62,9 @@ public class ClientCommunication implements Runnable{
                 if (serverObject instanceof ArrayList<?>){
                     ArrayList<Email> list = (ArrayList<Email>)serverObject;
                     for(int i = 0; i < list.size(); i++){
-                        inboxMail.addEmailToInbox(list.get(i)); //non deve aggiungere tutta la lista ma 1a volta lista altre volte solo mail nuove
+                        numberEmail++;
+                        Email e = list.get(i);
+                        Platform.runLater(() -> {inboxMail.addEmailToInbox(e);}); //non deve aggiungere tutta la lista ma 1a volta lista altre volte solo mail nuove
                     }
                 }
             }
