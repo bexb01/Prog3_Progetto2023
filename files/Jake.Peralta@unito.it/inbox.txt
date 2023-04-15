@@ -3,3 +3,4 @@
 {"id":5418,"sender":"Sarah.Walker@unito.it","receivers":["Jake.Peralta@unito.it"],"subject":"f","text":"f","date":"Apr 13, 2023, 11:03:10 PM"}
 {"id":1204,"sender":"Amy.Santiago@unito.it","receivers":["Jake.Peralta@unito.it"],"subject":"acab","text":"acab","date":"Apr 14, 2023, 8:32:04 PM"}
 {"id":1496,"sender":"Jake.Peralta@unito.it","receivers":["Alphonse.Elric@unito.it"],"subject":"v","text":"v","date":"Apr 14, 2023, 8:40:14 PM"}
+{"id":6276,"sender":"Tony.Stark@unito.it","receivers":["Jake.Peralta@unito.it"],"subject":"Delete","text":"vediamo se cancella","date":"Apr 15, 2023, 1:54:40 AM"}

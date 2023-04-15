@@ -4,3 +4,5 @@
 {"id":5687,"sender":"Sarah.Walker@unito.it","receivers":["Edward.Elric@unito.it"],"subject":"sd","text":"sd","date":"Apr 14, 2023, 8:38:25 PM"}
 {"id":900,"sender":"Edward.Elric@unito.it","receivers":["Sarah.Walker@unito.it"],"subject":"cccc","text":"cccc","date":"Apr 14, 2023, 8:50:17 PM"}
 {"id":7644,"sender":"Alphonse.Elric@unito.it","receivers":["Sarah.Walker@unito.it","Edward.Elric@unito.it"],"subject":"prova day 2","text":"prova1","date":"Apr 14, 2023, 10:00:46 PM"}
+{"id":6432,"sender":"Edward.Elric@unito.it","receivers":["Tony.Stark@unito.it","Alphonse.Elric@unito.it","Sara.Walker@unito.it","Edward.Elric@unito.it"],"subject":"Re: reply all try","text":"vedemo se va\nEmail inviata in data: Thu Apr 13 23:54:22 CEST 2023\n\nrisposta","date":"Apr 14, 2023, 10:41:49 PM"}
+{"id":6432,"sender":"Edward.Elric@unito.it","receivers":["Tony.Stark@unito.it","Alphonse.Elric@unito.it","Sara.Walker@unito.it","Edward.Elric@unito.it"],"subject":"Re: reply all try","text":"vedemo se va\nEmail inviata in data: Thu Apr 13 23:54:22 CEST 2023\n\nrisposta","date":"Apr 14, 2023, 10:41:49 PM"}

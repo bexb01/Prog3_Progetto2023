@@ -89,6 +89,7 @@ public class ServerController implements Initializable {
                                 sendEmail();
                                 break;
                             case "delete":
+                                getUsername();
                                 deleteEmail();
                                 break;
                             case "get":
@@ -150,19 +151,41 @@ public class ServerController implements Initializable {
                 }
             }
         }
-        private void deleteEmail()
+        private void deleteEmail()  //DA MODIFICARE SOLO PARTE CHE CANCELLA EFFETTIVAMENTE DA FILE
                 throws IOException, ClassNotFoundException{
             Object deleteEmail;
             if((deleteEmail = in.readObject()) != null) {
                 if(deleteEmail instanceof Email) {
                     Email email = (Email) deleteEmail;
                     //implement method to delete email
-                    logList.add("Elimino email " + email.getId() + " di " + email.getSender());
+                    String filePath = "files/" + email.getSender() + "/inbox.txt";
+                    try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+                        String line = reader.readLine();
+                        StringBuilder builder = new StringBuilder();
+                        while (line != null) {
+                            if (!line.equals(deleteEmail)) {
+                                builder.append(line).append("\n");
+                            }
+                            line = reader.readLine();
+                        }
+                        String newContent = builder.toString();
+                        try (FileWriter writer = new FileWriter(filePath)) {
+                            writer.write(newContent);
+                            System.out.println("Stringa " + deleteEmail + " eliminata dal file " + filePath);
+                        } catch (IOException e) {
+                            System.out.println("An error occurred while writing to the file.");
+                            e.printStackTrace();
+                        }
+                    } catch (IOException e) {
+                        System.out.println("An error occurred while reading the file.");
+                        e.printStackTrace();
+                    }
+                    logList.add(usernameClient + " ha eliminato la mail " + email.getId() + " mandata da " + email.getSender());
                 }
             }
         }
 
-        private void getAllEmails() throws IOException, ClassNotFoundException{   //MODIFICARE: deve caricare non tutta la lista di mail ma la lista la prima volta e poi solo gli aggiornamenti
+        private void getAllEmails() throws IOException, ClassNotFoundException{
             try {
                 Object numberEmail;
                 if((numberEmail = in.readObject()) != null) {

@@ -29,8 +29,7 @@ public class ClientCommunication implements Runnable{
     @Override
     public void run() {
         //sends their username to server
-        requestEmail();       //manda idmail o numero di mail che ho già server manda lista di mail che mi mancano
-        //asks all emails to server
+        requestEmail(); //asks all emails to server
     }
 
     private boolean openConnection(){
@@ -45,8 +44,8 @@ public class ClientCommunication implements Runnable{
         }
     }
 
-    private void requestEmail() {   //SISTEMA (carica sempre la lista completa)
-        if(!openConnection())
+    private void requestEmail() {
+        while(!openConnection())
             return;
         try {
             out.writeObject("get");
@@ -75,10 +74,7 @@ public class ClientCommunication implements Runnable{
             throw new RuntimeException(e);
         }
     }
-
-    public boolean sendEmailToServer(int id, String sender, String receivers, String subject, String text, Date d){
-        if(!openConnection())
-            return false;
+    public ArrayList<String> parseReceivers(String receivers){
         //qui mi arriva una string contenete tutti i receivers non distinti
         ArrayList<String> arrLReceivers = new ArrayList<>(); //creo arrayList
         if (receivers.endsWith(";")) {
@@ -87,8 +83,14 @@ public class ClientCommunication implements Runnable{
             receivers = receivers.substring(0, receivers.length() - 2);  // rimuove ultimi caratteri solo se è "; "
         }
         String[] arrReceivers = receivers.split("(; |;)"); //creo e popolo array di stringhe coin i receivers divisi con "; " o ";"
-        arrLReceivers.addAll(Arrays.asList(arrReceivers)); //aggiuno all'arrL l'array come Lista
-        System.out.println("clientCommunication sendEmailToServer email inviata"); //da togliere
+        arrLReceivers.addAll(Arrays.asList(arrReceivers));  //aggiuno all'arrL l'array come Lista
+        return arrLReceivers;
+    }
+    public boolean sendEmailToServer(int id, String sender, String receivers, String subject, String text, Date d){
+
+        if(!openConnection())
+            return false;
+        ArrayList<String> arrLReceivers = parseReceivers(receivers);
         Email newEmail = new Email(id, sender, arrLReceivers, subject, text, d);
         try {
             out.writeObject("send");
@@ -100,11 +102,21 @@ public class ClientCommunication implements Runnable{
         }
     }
 
-    public boolean deleteEmail(int id, String sender, String receivers, String subject, String text, Date d){   //COMPLETA
+    public boolean deleteEmail(int id, String sender, String receivers, String subject, String text, Date d){   //COMPLETA parte server
+        if(!openConnection())
+            return false;
+        ArrayList<String> arrLReceivers = parseReceivers(receivers);
+        System.out.println("clientCommunication deleteEmail email inviata al server per cancellare"); //da togliere
+        Email newEmail = new Email(id, sender, arrLReceivers, subject, text, d);
+        try {
+            out.writeObject("delete");
+            out.writeObject(username);
+            out.writeObject(newEmail);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         return true;
     }
 
-    private void loadEmailToInbox(){
-
-    }
 }

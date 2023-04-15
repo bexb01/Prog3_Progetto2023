@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="528.0" prefWidth="722.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="528.0" prefWidth="800.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <SplitPane dividerPositions="0.36785119378123265" prefHeight="638.0" prefWidth="595.0" BorderPane.alignment="CENTER">
          <items>
@@ -81,18 +81,18 @@
                                 <items>
                                   <AnchorPane prefHeight="135.0" prefWidth="131.0">
                                        <children>
-                                          <Button fx:id="btnNewEmail" alignment="CENTER" contentDisplay="CENTER" layoutX="23.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#onCreateNewEmailButton" prefHeight="43.0" prefWidth="106.0" text="Nuova Email" />
+                                          <Button fx:id="btnNewEmail" alignment="CENTER" contentDisplay="CENTER" layoutX="23.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#onCreateNewEmailButton" prefHeight="43.0" prefWidth="120.0" text="Nuova Email" />
                                        </children>
                                     </AnchorPane>
                                   <AnchorPane prefHeight="135.0" prefWidth="131.0">
                                        <children>
-                                          <Button fx:id="btnSendEmail" alignment="CENTER" contentDisplay="CENTER" layoutX="15.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#onSendNewEmail" prefHeight="43.0" prefWidth="106.0" text="Invia Email" visible="false" />
+                                          <Button fx:id="btnSendEmail" alignment="CENTER" contentDisplay="CENTER" layoutX="15.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#onSendNewEmail" prefHeight="43.0" prefWidth="120.0" text="Invia Email" visible="false" />
                                        </children>
                                     </AnchorPane>
                                     <AnchorPane prefHeight="135.0" prefWidth="131.0">
                                        <children>
-                                          <Button fx:id="btnDelete" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#onDeleteButtonClick" prefHeight="43.0" prefWidth="111.0" text="Elimina" visible="false" AnchorPane.topAnchor="5.0" />
-                                          <Button fx:id="btnDiscard" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#onDiscardMouseClick" prefHeight="43.0" prefWidth="111.0" text="Annulla" visible="false" />
+                                          <Button fx:id="btnDelete" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#onDeleteButtonClick" prefHeight="43.0" prefWidth="120.0" text="Elimina" visible="false" AnchorPane.topAnchor="5.0" />
+                                          <Button fx:id="btnDiscard" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#onDiscardMouseClick" prefHeight="43.0" prefWidth="120.0" text="Annulla" visible="false" />
                                        </children>
                                     </AnchorPane>
                                 </items>
@@ -101,17 +101,17 @@
                                  <items>
                                     <AnchorPane prefHeight="135.0" prefWidth="131.0">
                                        <children>
-                                          <Button fx:id="btnReply" alignment="CENTER" contentDisplay="CENTER" layoutX="24.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#onReplyButtonClick" prefHeight="43.0" prefWidth="106.0" text="Rispondi" visible="false" />
+                                          <Button fx:id="btnReply" alignment="CENTER" contentDisplay="CENTER" layoutX="24.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#onReplyButtonClick" prefHeight="43.0" prefWidth="120.0" text="Reply" visible="false" />
                                        </children>
                                     </AnchorPane>
                                     <AnchorPane prefHeight="135.0" prefWidth="131.0">
                                        <children>
-                                          <Button fx:id="btnReplyAll" alignment="CENTER" contentDisplay="CENTER" layoutX="15.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#onReplyAllButtonClick" prefHeight="43.0" prefWidth="106.0" text="Rispondi a tutti" visible="false" />
+                                          <Button fx:id="btnReplyAll" alignment="CENTER" contentDisplay="CENTER" layoutX="15.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#onReplyAllButtonClick" prefHeight="43.0" prefWidth="120.0" text="Reply All" visible="false" />
                                        </children>
                                     </AnchorPane>
                                     <AnchorPane prefHeight="135.0" prefWidth="131.0">
                                        <children>
-                                          <Button fx:id="btnForward" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#onForwardButtonClick" prefHeight="43.0" prefWidth="111.0" text="Inoltra" visible="false" />
+                                          <Button fx:id="btnForward" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#onForwardButtonClick" prefHeight="43.0" prefWidth="120.0" text="Forward" visible="false" />
                                        </children>
                                     </AnchorPane>
                                  </items>

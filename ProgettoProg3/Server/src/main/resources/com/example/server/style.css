@@ -1,0 +1,36 @@
+/* Imposta lo sfondo dell'interfaccia grafica */
+Pane {
+    -fx-background-color: #f2f2f2;
+}
+
+/* Imposta il colore del testo dell'interfaccia grafica */
+Label, Button {
+    -fx-text-fill: #333333;
+}
+
+/* Imposta lo stile della lista dei messaggi */
+ListView {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+}
+
+/* Imposta lo stile dei pulsanti */
+Button {
+    -fx-background-color: #4CAF50;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 14px;
+    -fx-padding: 8px 16px;
+}
+
+/* Imposta lo stile del pulsante 'START' */
+#btnStart {
+    -fx-background-color: #2196F3;
+}
+
+/* Imposta lo stile del pulsante 'STOP' */
+#btnClose {
+    -fx-background-color: #f44336;
+}

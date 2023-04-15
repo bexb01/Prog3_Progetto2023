@@ -1,116 +1,69 @@
-/* Impostazioni di base */
-* {
-    box-sizing: border-box;
+/* Imposta lo sfondo dell'interfaccia grafica */
+BorderPane {
+    -fx-background-color: #f2f2f2;
 }
 
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
+/* Imposta il colore del testo dell'interfaccia grafica */
+Label, Button, TextField, TextArea {
+    -fx-text-fill: #333333;
 }
 
-/* Stili per il pannello della lista delle email */
-#pnlEmailList {
-    border: 1px solid #ccc;
+/* Imposta lo stile della lista delle email */
+ListView {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
 }
 
-#pnlEmailList .HBox {
-    background-color: #f5f5f5;
-    border-bottom: 1px solid #ccc;
-}
-
-#pnlEmailList .HBox img {
-    margin-right: 10px;
-}
-
-#pnlEmailList .HBox label {
-    font-weight: bold;
-    font-size: 16px;
-}
-
-#lstEmails {
-    border: none;
-    padding: 10px;
-}
-
-#lstEmails .list-cell {
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-}
-
-#lstEmails .list-cell:selected {
-    background-color: #f5f5f5;
-}
-
-/* Stili per il pannello di lettura delle email */
+/* Imposta lo stile del pannello di lettura delle email */
 #pnlReadMessage {
-    border: 1px solid #ccc;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
 }
 
-#pnlReadMessage .GridPane {
-    padding: 10px;
+/* Imposta lo stile dei pulsanti */
+Button {
+    -fx-background-color: #4CAF50;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 14px;
+    -fx-padding: 8px 16px;
 }
 
-#pnlReadMessage .GridPane label {
-    font-weight: bold;
+/* Imposta lo stile del pulsante 'Nuova Email' */
+#btnNewEmail {
+    -fx-background-color: #2196F3;
 }
 
-#pnlReadMessage .GridPane .text-field {
-    border: 1px solid #ccc;
-    padding: 5px;
+/* Imposta lo stile del pulsante 'Invia Email' */
+#btnSendEmail {
+    -fx-background-color: #4CAF50;
 }
 
-#pnlReadMessage .TextArea {
-    border: none;
-    padding: 10px;
-    height: 400px;
+/* Imposta lo stile del pulsante 'Elimina' */
+#btnDelete {
+    -fx-background-color: #f44336;
 }
 
-
-#pnlReadMessage .AnchorPane {
-    padding: 10px;
+/* Imposta lo stile del pulsante 'Annulla' */
+#btnDiscard {
+    -fx-background-color: #f44336;
 }
 
-#pnlReadMessage .AnchorPane button {
-    margin-right: 10px;
-    font-weight: bold;
-    background-color: #f5f5f5;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
+/* Imposta lo stile del pulsante 'Rispondi' */
+#btnReply {
+    -fx-background-color: #2C3E50;
 }
 
-#pnlReadMessage .AnchorPane button:hover {
-    background-color: #e5e5e5;
+/* Imposta lo stile del pulsante 'Rispondi a tutti' */
+#btnReplyAll {
+    -fx-background-color: #2C3E50;
 }
 
-
-#pnlReadMessage .AnchorPane button:disabled {
-    background-color: #f5f5f5;
-    border-color: #ccc;
-    color: #ccc;
-    cursor: default;
+/* Imposta lo stile del pulsante 'Inoltra' */
+#btnForward {
+    -fx-background-color: #2C3E50;
 }
 
-/* Stili per i bottoni */
-button {
-    font-weight: bold;
-    background-color: #f5f5f5;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #e5e5e5;
-}
-
-button:disabled {
-    background-color: #f5f5f5;
-    border-color: #ccc;
-    color: #ccc;
-    cursor: default;
-}
