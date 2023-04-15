@@ -112,6 +112,7 @@ public class ClientCommunication implements Runnable{
             out.writeObject("delete");
             out.writeObject(username);
             out.writeObject(newEmail);
+            numberEmail--;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

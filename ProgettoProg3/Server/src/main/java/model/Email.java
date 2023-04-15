@@ -88,11 +88,11 @@ public class Email implements Serializable {
         return json;
     }
 
-    public Email fromJson(String jsString){
+    public static Email fromJson(String jsString){
         Gson gson = new Gson();
         String jsStr = jsString;
-        Type fooType =  new TypeToken() {}.getType();
-        Email email = gson.fromJson(jsString,fooType);
+        Type fooType =  new TypeToken<Email>() {}.getType();
+        Email email = gson.fromJson(jsStr,fooType);
         return email;
     }
     @Override

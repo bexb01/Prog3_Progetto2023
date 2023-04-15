@@ -156,14 +156,19 @@ public class ServerController implements Initializable {
             Object deleteEmail;
             if((deleteEmail = in.readObject()) != null) {
                 if(deleteEmail instanceof Email) {
-                    Email email = (Email) deleteEmail;
+                    Email ToDelEmail = (Email) deleteEmail;
+                    int idFromFile=0;
+                    int idToDelEm= ToDelEmail.getId();
+                    String jsonToDelEm= ToDelEmail.toJson();
                     //implement method to delete email
-                    String filePath = "files/" + email.getSender() + "/inbox.txt";
+                    String filePath = "files/" + usernameClient + "/inbox.txt";
                     try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
                         String line = reader.readLine();
                         StringBuilder builder = new StringBuilder();
                         while (line != null) {
-                            if (!line.equals(deleteEmail)) {
+                            Email emailTemp=Email.fromJson(line);
+                            idFromFile=emailTemp.getId();
+                            if (idToDelEm != idFromFile) {
                                 builder.append(line).append("\n");
                             }
                             line = reader.readLine();
@@ -171,7 +176,7 @@ public class ServerController implements Initializable {
                         String newContent = builder.toString();
                         try (FileWriter writer = new FileWriter(filePath)) {
                             writer.write(newContent);
-                            System.out.println("Stringa " + deleteEmail + " eliminata dal file " + filePath);
+                            System.out.println("Stringa " + jsonToDelEm + " eliminata dal file " + filePath);
                         } catch (IOException e) {
                             System.out.println("An error occurred while writing to the file.");
                             e.printStackTrace();
@@ -180,7 +185,7 @@ public class ServerController implements Initializable {
                         System.out.println("An error occurred while reading the file.");
                         e.printStackTrace();
                     }
-                    logList.add(usernameClient + " ha eliminato la mail " + email.getId() + " mandata da " + email.getSender());
+                    Platform.runLater(() -> {logList.add(usernameClient + " ha eliminato la mail " + ToDelEmail.getId() + " mandata da " + ToDelEmail.getSender());});
                 }
             }
         }
@@ -204,11 +209,7 @@ public class ServerController implements Initializable {
                         while (reader.hasNextLine()) {
                             data = reader.nextLine();
                             if(data!=null) {
-                               Gson gson = new Gson();
-                                String jsStr = data;
-                                Type fooType = new TypeToken<Email>() {
-                                }.getType();
-                                Email e = gson.fromJson(data, fooType);
+                                Email e = Email.fromJson(data);
                                 listaEmail.add(e);
                             }
                         }
