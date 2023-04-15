@@ -69,15 +69,36 @@ public class ClientCommunication implements Runnable{
             //IMPLEMENT server sends array of emails on opening
             if ((serverObject = in.readObject()) != null) {
                 if (serverObject instanceof ArrayList<?>){
+                    int oldNumEmail=numberEmail;
                     ArrayList<Email> list = (ArrayList<Email>)serverObject;
                     for(int i = 0; i < list.size(); i++){
                         numberEmail++;
                         Email e = list.get(i);
                         Platform.runLater(() -> {inboxMail.addEmailToInbox(e);});
-                    }
-                        Platform.runLater(() -> {JOptionPane.showMessageDialog(null, "Hai ricevuto nuove Email",
-                                "Attenzione!", JOptionPane.INFORMATION_MESSAGE);});
 
+                    }
+                        if(oldNumEmail!=0 && list.size()==1){ //se nella inbox c'erano piu di 0 email e ne ggiungiamo una
+                            Email es = list.get(0);
+                            if(!(es.getSender().equals(username))) {//con sander diverso dal quello del client allora nuova email
+                                Platform.runLater(() -> {
+                                    JOptionPane.showMessageDialog(null, "Hai ricevuto una nuova Email da:\n" + es.getSender(),
+                                            username, JOptionPane.INFORMATION_MESSAGE);
+                                });
+                            }
+                        }else if(oldNumEmail==0 && list.size()==1){//se nella inbox c'erano 0 email e ne riceviamo 1
+                            Email es = list.get(0);
+                            if(!(es.getSender().equals(username))) {//con sander diverso dal quello del client allora nuova email
+                                Platform.runLater(() -> {
+                                    JOptionPane.showMessageDialog(null, "Hai ricevuto una nuova Email da:\n" + es.getSender(),
+                                            username, JOptionPane.INFORMATION_MESSAGE);
+                                });
+                            }
+
+                        }else if(oldNumEmail==0 ){//se avevi 0 email e ne ricevi piu di una allora in teoria e' la prima volta che aggiorni la inbox?
+                            Platform.runLater(() -> {JOptionPane.showMessageDialog(null, "tutte le email aggiunte alla posta",
+                                    username, JOptionPane.INFORMATION_MESSAGE);});
+                        }
+                        //in ogni caso in cui il client ne invia una non fa uscire nessun messaggio
                 }
             }
         }catch(IOException e) {

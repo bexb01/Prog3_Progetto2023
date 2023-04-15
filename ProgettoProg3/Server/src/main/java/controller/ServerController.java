@@ -133,7 +133,7 @@ public class ServerController implements Initializable {
                     System.out.println(email.getId());
                     String fileSander = "files/" + email.getSender() + "/inbox.txt";
                     for (String s : email.getReceivers()) {
-                        logList.add("Inviata email da " + email.getSender() + " a " + s);
+                        logList.add("Inviata email da " + email.getSender() + " a " + s); //aggiungere platform.runlater
                         //send email to receivers (scrive email sul file del receiver)
                         this.idcounter = idcounter + random.nextInt(10);
                         email.setID(idcounter);
@@ -225,10 +225,12 @@ public class ServerController implements Initializable {
                         fr.close();
                         try {       //iniziato ad implementare finestra dialogo ricezione email. da problemi
                             if(listaEmail.size()==0){
+                                System.out.println(listaEmail.size());
                                 out.writeObject(666);
-                            }
-                            else
+                            }else {
+                                System.out.println(listaEmail.size());
                                 out.writeObject(listaEmail);
+                            }
                             Platform.runLater(() -> {logList.add("Ho inviato tutte le mail a " + usernameClient+ ".");});
                         }catch (Exception ex){
                             System.err.println("Errore nella ricezione della lista email " + ex.getMessage());
