@@ -6,3 +6,6 @@
 {"id":9963,"sender":"Alphonse.Elric@unito.it","receivers":["Chuck.Bartowski@unito.it","Amy.Santiago@unito.it"],"subject":"test replyAll","text":"test 1 replyAll","date":"Apr 14, 2023, 10:11:03 PM"}
 {"id":511,"sender":"Chuck.Bartowski@unito.it","receivers":["Alphonse.Elric@unito.it","Amy.Santiago@unito.it"],"subject":"Re: test replyAll","text":"test 1 replyAll\nEmail inviata in data: Fri Apr 14 22:11:03 CEST 2023\n","date":"Apr 14, 2023, 10:13:07 PM"}
 {"id":6432,"sender":"Edward.Elric@unito.it","receivers":["Tony.Stark@unito.it","Alphonse.Elric@unito.it","Sara.Walker@unito.it","Edward.Elric@unito.it"],"subject":"Re: reply all try","text":"vedemo se va\nEmail inviata in data: Thu Apr 13 23:54:22 CEST 2023\n\nrisposta","date":"Apr 14, 2023, 10:41:49 PM"}
+{"id":1007,"sender":"Chuck.Bartowski@unito.it","receivers":["Alphonse.Elric@unito.it"],"subject":"accccc","text":"bcd","date":"Apr 15, 2023, 6:36:12 PM"}
+{"id":1007,"sender":"Tony.Stark@unito.it","receivers":["Alphonse.Elric@unito.it"],"subject":"dff","text":"fdfafa","date":"Apr 15, 2023, 8:51:07 PM"}
+{"id":1011,"sender":"Alphonse.Elric@unito.it","receivers":["Jake.Peralta@unito.it"],"subject":"asccccccccc","text":"asccccccccccccc","date":"Apr 15, 2023, 8:58:57 PM"}

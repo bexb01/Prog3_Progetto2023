@@ -73,10 +73,10 @@ public class ClientController {
     private Email emptyEmail;
     private String username;
 
-    public ClientController(String username, ClientCommunication clientComm, InboxHandler inbx) {
+    public ClientController(String username, InboxHandler inbx) {
         this.username = username;
-        this.ClientComm = clientComm;
         this.inbxHandler = inbx;
+        this.ClientComm = new ClientCommunication(username, inbx);
     }
 
     @FXML
@@ -101,7 +101,7 @@ public class ClientController {
         updateDetailView(emptyEmail);
         //REFRESH
         RefreshClient = Executors.newSingleThreadScheduledExecutor();
-        RefreshClient.scheduleAtFixedRate(ClientComm, 0, 10, TimeUnit.SECONDS);
+        RefreshClient.scheduleAtFixedRate(new ClientCommunication(username, inbxHandler), 0, 10, TimeUnit.SECONDS);
     }
 
     @FXML
@@ -230,13 +230,14 @@ public class ClientController {
         lstEmails.setMouseTransparent(true);
         txtNewEmailReceivers.setVisible(true);
         txtNewEmailReceivers.setDisable(false);
+        txtEmailContent.setEditable(true);
+        //replaceAll(\n,\t\n); CAMBIARE COSI
+        txtEmailContent.setText("Re:" + lblFrom.getText() + "\n\t" + txtEmailContent.getText() + "\n\t" + txtDateSent.getText() + "\n");   //sistema visualizzazione testo
         txtNewEmailReceivers.setText(lblFrom.getText());    //CONTROLLARE
         lblFrom.setText(username);
         txtNewEmailSubject.setVisible(true);
         txtNewEmailSubject.setDisable(false);
         txtNewEmailSubject.setText("Re: " + lblSubject.getText());
-        txtEmailContent.setEditable(true);
-        txtEmailContent.setText(txtEmailContent.getText() + "\n" + txtDateSent.getText() + "\n");   //sistema visualizzazione testo
         btnSendEmail.setVisible(true);
         btnDiscard.setVisible(true);
         btnDelete.setVisible(false);

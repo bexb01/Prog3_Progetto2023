@@ -20,9 +20,8 @@ public class MailClient extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(MailClient.class.getResource("client.fxml"));
         String username = generaUsername();
         InboxHandler inbx = new InboxHandler(username);
-        ClientCommunication clientComm = new ClientCommunication(username, inbx);   //
-        ClientController controller = new ClientController(username, clientComm, inbx); //
-        fxmlLoader.setController(controller);   //
+        ClientController controller = new ClientController(username, inbx);
+        fxmlLoader.setController(controller);
         Scene scene = new Scene(fxmlLoader.load(), 900, 600);
         stage.setTitle("Email client");
         stage.setResizable(false);

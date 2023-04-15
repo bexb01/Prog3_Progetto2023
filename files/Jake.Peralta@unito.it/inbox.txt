@@ -4,3 +4,9 @@
 {"id":1204,"sender":"Amy.Santiago@unito.it","receivers":["Jake.Peralta@unito.it"],"subject":"acab","text":"acab","date":"Apr 14, 2023, 8:32:04 PM"}
 {"id":1496,"sender":"Jake.Peralta@unito.it","receivers":["Alphonse.Elric@unito.it"],"subject":"v","text":"v","date":"Apr 14, 2023, 8:40:14 PM"}
 {"id":6276,"sender":"Tony.Stark@unito.it","receivers":["Jake.Peralta@unito.it"],"subject":"Delete","text":"vediamo se cancella","date":"Apr 15, 2023, 1:54:40 AM"}
+{"id":1007,"sender":"Edward.Elric@unito.it","receivers":["Jake.Peralta@unito.it","Tony.Stark@unito.it"],"subject":"id prova 2","text":"vediamo se gli id sono diversi tra sender e receivers","date":"Apr 15, 2023, 2:50:33 AM"}
+{"id":1005,"sender":"Sarah.Walker@unito.it","receivers":["Jake.Peralta@unito.it"],"subject":"connessione client server","text":"connection","date":"Apr 15, 2023, 6:34:56 PM"}
+{"id":1018,"sender":"Amy.Santiago@unito.it","receivers":["Tony.Stark@unito.it","Jake.Peralta@unito.it"],"subject":"reply try 21452467","text":"zfdxgchfhj","date":"Apr 15, 2023, 8:28:22 PM"}
+{"id":1015,"sender":"Tony.Stark@unito.it","receivers":["Amy.Santiago@unito.it","Jake.Peralta@unito.it"],"subject":"Re: reply try 21452467","text":"zfdxgchfhj\nEmail inviata in data: Sat Apr 15 20:28:22 CEST 2023\n","date":"Apr 15, 2023, 8:28:45 PM"}
+{"id":1011,"sender":"Alphonse.Elric@unito.it","receivers":["Jake.Peralta@unito.it"],"subject":"asccccccccc","text":"asccccccccccccc","date":"Apr 15, 2023, 8:58:57 PM"}
+{"id":1004,"sender":"Edward.Elric@unito.it","receivers":["Jake.Peralta@unito.it"],"subject":"sdffb","text":"\u003czbn","date":"Apr 15, 2023, 9:02:22 PM"}

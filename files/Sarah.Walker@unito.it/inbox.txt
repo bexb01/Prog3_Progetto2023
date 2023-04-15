@@ -11,3 +11,5 @@
 {"id":3815,"sender":"Sarah.Walker@unito.it","receivers":["Amy.Santiago@unito.it"],"subject":"zz","text":"zz","date":"Apr 14, 2023, 8:53:59 PM"}
 {"id":7644,"sender":"Alphonse.Elric@unito.it","receivers":["Sarah.Walker@unito.it","Edward.Elric@unito.it"],"subject":"prova day 2","text":"prova1","date":"Apr 14, 2023, 10:00:46 PM"}
 {"id":4388,"sender":"Sarah.Walker@unito.it","receivers":["Amy.Santiago@unito.it"],"subject":"Try 2","text":"try","date":"Apr 14, 2023, 10:05:24 PM"}
+{"id":1005,"sender":"Sarah.Walker@unito.it","receivers":["Jake.Peralta@unito.it"],"subject":"connessione client server","text":"connection","date":"Apr 15, 2023, 6:34:56 PM"}
+{"id":1006,"sender":"Edward.Elric@unito.it","receivers":["Sarah.Walker@unito.it"],"subject":"Re: sd","text":"Re:Sarah.Walker@unito.it\n\tsd\n\tEmail inviata in data: Fri Apr 14 20:38:25 CEST 2023\n\nciao","date":"Apr 15, 2023, 8:31:42 PM"}

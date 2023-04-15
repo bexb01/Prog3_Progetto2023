@@ -2,8 +2,10 @@ package model;
 
 import javafx.application.Platform;
 
+import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -37,16 +39,24 @@ public class ClientCommunication implements Runnable{
             this.socket = new Socket("127.0.0.1", 8189);    //gestire connessione in assenza del server
             out = new ObjectOutputStream(socket.getOutputStream());
             in = new ObjectInputStream(socket.getInputStream());
+            System.out.println("returno true");
             return true;
-        }catch (Exception e) {
+        }catch (SocketException e) {
+            System.out.println("returno false");
+            System.err.println("Connection closed by server: " + e.getMessage());
+            return false;
+        } catch (Exception e) {
+            System.out.println("returno false");
             System.err.println("Error while opening clientcommunication connection: " + e.getMessage());
             return false;
         }
     }
 
     private void requestEmail() {
-        while(!openConnection())
+        if(!openConnection()){
+            System.out.println("connessione fallita: retry");
             return;
+        }
         try {
             out.writeObject("get");
             out.writeObject(username);
@@ -63,8 +73,11 @@ public class ClientCommunication implements Runnable{
                     for(int i = 0; i < list.size(); i++){
                         numberEmail++;
                         Email e = list.get(i);
-                        Platform.runLater(() -> {inboxMail.addEmailToInbox(e);}); //non deve aggiungere tutta la lista ma 1a volta lista altre volte solo mail nuove
+                        Platform.runLater(() -> {inboxMail.addEmailToInbox(e);});
                     }
+                        Platform.runLater(() -> {JOptionPane.showMessageDialog(null, "Hai ricevuto nuove Email",
+                                "Attenzione!", JOptionPane.INFORMATION_MESSAGE);});
+
                 }
             }
         }catch(IOException e) {
@@ -73,7 +86,21 @@ public class ClientCommunication implements Runnable{
             System.err.println("Error while reading object from server: " + e.getMessage());
             throw new RuntimeException(e);
         }
+        closeConnection();
     }
+
+    private void closeConnection() {
+        try{
+            this.socket.close();    //gestire connessione in assenza del server
+            out.close();
+            in.close();
+            System.out.println("connessione chiusa T_T");
+
+        } catch(IOException e){
+            System.out.println("Error while closing client socket and streams: " + e.getMessage());
+        }
+    }
+
     public ArrayList<String> parseReceivers(String receivers){
         //qui mi arriva una string contenete tutti i receivers non distinti
         ArrayList<String> arrLReceivers = new ArrayList<>(); //creo arrayList
@@ -95,11 +122,15 @@ public class ClientCommunication implements Runnable{
         try {
             out.writeObject("send");
             out.writeObject(newEmail);
-            return true;
+            numberEmail++;
+            closeConnection();
+
         }catch (Exception ex){
             System.err.println("Error while sending email to the server: " + ex.getMessage());
             return false;
         }
+        return true;
+
     }
 
     public boolean deleteEmail(int id, String sender, String receivers, String subject, String text, Date d){   //COMPLETA parte server
@@ -112,10 +143,11 @@ public class ClientCommunication implements Runnable{
             out.writeObject("delete");
             out.writeObject(username);
             out.writeObject(newEmail);
+            numberEmail--;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
+        closeConnection();
         return true;
     }
 

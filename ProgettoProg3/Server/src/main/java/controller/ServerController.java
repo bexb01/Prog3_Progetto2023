@@ -65,6 +65,7 @@ public class ServerController implements Initializable {
         private ObjectOutputStream out;
 
         private String usernameClient;
+        private  int idcounter = 1000;
         private String clientInboxFile;
 
         public ClientHandler(Socket clientSocket) {
@@ -107,7 +108,7 @@ public class ServerController implements Initializable {
                 System.out.println("Error while reading object from client: " + e.getMessage());
             }
             // Close the client socket and streams
-            closeConnection();
+            //closeConnection();
         }
         private void getUsername()
                 throws IOException, ClassNotFoundException {
@@ -125,10 +126,17 @@ public class ServerController implements Initializable {
             if((addEmail = in.readObject()) != null) {
                 if(addEmail instanceof Email) {
                     Email email = (Email) addEmail;
+                    Random random = new Random();
+                    //id impostato dal server quando mandi la mail
+                    this.idcounter = idcounter + random.nextInt(10);
+                    email.setID(idcounter);
+                    System.out.println(email.getId());
                     String fileSander = "files/" + email.getSender() + "/inbox.txt";
                     for (String s : email.getReceivers()) {
                         logList.add("Inviata email da " + email.getSender() + " a " + s);
                         //send email to receivers (scrive email sul file del receiver)
+                        this.idcounter = idcounter + random.nextInt(10);
+                        email.setID(idcounter);
                         String FileReceiver = "files/" + s + "/inbox.txt";
                         try (FileWriter writer = new FileWriter(FileReceiver, true)) {
                             writer.write(email.toJson() + "\n");
@@ -214,8 +222,12 @@ public class ServerController implements Initializable {
                         }
                         reader.close();
                         fr.close();
-                        try {
-                            out.writeObject(listaEmail);
+                        try {       //iniziato ad implementare finestra dialogo ricezione email. da problemi
+                            if(listaEmail.size()==0){
+                                out.writeObject(666);
+                            }
+                            else
+                                out.writeObject(listaEmail);
                             Platform.runLater(() -> {logList.add("Ho inviato tutte le mail a " + usernameClient+ ".");});
                         }catch (Exception ex){
                             System.err.println("Errore nella ricezione della lista email " + ex.getMessage());
@@ -268,6 +280,7 @@ public class ServerController implements Initializable {
                 serverSocket = new ServerSocket(PORT);
                 //create thread
                 while (running.get()) {
+                    System.out.println("1-Chiedo roba");
                     Socket clientSocket = serverSocket.accept();
                     ClientHandler clientH = new ClientHandler(clientSocket);
                     Thread t = new Thread(clientH);
@@ -276,6 +289,7 @@ public class ServerController implements Initializable {
                 // Wait termination
                 executor.shutdown();
                 executor.awaitTermination(10, TimeUnit.SECONDS);
+                serverSocket.close();
             } catch (Exception e) {
                 System.err.println("Error while accepting client connection: " + e.getMessage());
             }

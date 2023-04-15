@@ -2,3 +2,10 @@
 {"id":8187,"sender":"Tony.Stark@unito.it","receivers":["Alphonse.Elric@unito.it","Sara.Walker@unito.it","Edward.Elric@unito.it"],"subject":"reply all try","text":"vedemo se va","date":"Apr 13, 2023, 11:54:22 PM"}
 {"id":6432,"sender":"Edward.Elric@unito.it","receivers":["Tony.Stark@unito.it","Alphonse.Elric@unito.it","Sara.Walker@unito.it","Edward.Elric@unito.it"],"subject":"Re: reply all try","text":"vedemo se va\nEmail inviata in data: Thu Apr 13 23:54:22 CEST 2023\n\nrisposta","date":"Apr 14, 2023, 10:41:49 PM"}
 {"id":6276,"sender":"Tony.Stark@unito.it","receivers":["Jake.Peralta@unito.it"],"subject":"Delete","text":"vediamo se cancella","date":"Apr 15, 2023, 1:54:40 AM"}
+{"id":1016,"sender":"Edward.Elric@unito.it","receivers":["Jake.Peralta@unito.it","Tony.Stark@unito.it"],"subject":"id prova 2","text":"vediamo se gli id sono diversi tra sender e receivers","date":"Apr 15, 2023, 2:50:33 AM"}
+{"id":1005,"sender":"Tony.Stark@unito.it","receivers":["Amy.Santiago@unito.it"],"subject":"aaaaa","text":"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb","date":"Apr 15, 2023, 6:37:53 PM"}
+{"id":1014,"sender":"Amy.Santiago@unito.it","receivers":["Tony.Stark@unito.it","Jake.Peralta@unito.it"],"subject":"reply try 21452467","text":"zfdxgchfhj","date":"Apr 15, 2023, 8:28:22 PM"}
+{"id":1015,"sender":"Tony.Stark@unito.it","receivers":["Amy.Santiago@unito.it","Jake.Peralta@unito.it"],"subject":"Re: reply try 21452467","text":"zfdxgchfhj\nEmail inviata in data: Sat Apr 15 20:28:22 CEST 2023\n","date":"Apr 15, 2023, 8:28:45 PM"}
+{"id":1005,"sender":"Tony.Stark@unito.it","receivers":["Amy.Santiago@unito.it"],"subject":"saxsscfa","text":"cascsc","date":"Apr 15, 2023, 8:45:51 PM"}
+{"id":1007,"sender":"Tony.Stark@unito.it","receivers":["Alphonse.Elric@unito.it"],"subject":"dff","text":"fdfafa","date":"Apr 15, 2023, 8:51:07 PM"}
+{"id":1008,"sender":"Tony.Stark@unito.it","receivers":["Amy.Santiago@unito.it"],"subject":"cadvad","text":"thjjdjddj","date":"Apr 15, 2023, 8:55:00 PM"}
