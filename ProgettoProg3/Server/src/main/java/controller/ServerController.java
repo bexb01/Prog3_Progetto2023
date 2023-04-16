@@ -65,7 +65,8 @@ public class ServerController implements Initializable {
         private ObjectOutputStream out;
 
         private String usernameClient;
-        private  int idcounter = 1000;
+        private static int idcounter = 0;
+        private static final Object idLock = new Object();
         private String clientInboxFile;
 
         public ClientHandler(Socket clientSocket) {
@@ -126,27 +127,31 @@ public class ServerController implements Initializable {
             if((addEmail = in.readObject()) != null) {
                 if(addEmail instanceof Email) {
                     Email email = (Email) addEmail;
-                    Random random = new Random();
-                    //id impostato dal server quando mandi la mail
-                    this.idcounter = idcounter + random.nextInt(10);
-                    email.setID(idcounter);
                     System.out.println(email.getId());
                     String fileSander = "files/" + email.getSender() + "/inbox.txt";
                     for (String s : email.getReceivers()) {
-                        logList.add("Inviata email da " + email.getSender() + " a " + s); //aggiungere platform.runlater
+                        logList.add("Inviata email da " + email.getSender() + " a " + s);
                         //send email to receivers (scrive email sul file del receiver)
-                        this.idcounter = idcounter + random.nextInt(10);
-                        email.setID(idcounter);
                         String FileReceiver = "files/" + s + "/inbox.txt";
-                        try (FileWriter writer = new FileWriter(FileReceiver, true)) {
-                            writer.write(email.toJson() + "\n");
-                            writer.close();//rilascio la risorsa utilizzata dal writer, inoltre notifica al so che il  file non e' piu in uso
-                            System.out.println("email scritta su file del receiver: " + FileReceiver);
-                        } catch (IOException e) {
-                            System.out.println("An error occurred while writing to the file.");
-                            e.printStackTrace();//manipolare l'errore nell'invio di una mail al sander che dice l'accaduto cosi ch potra reinviare la mai con indirizzo email corretto
+                        if(!email.getSender().equals(s)) {
+                            synchronized (idLock) {
+                                idcounter= idcounter+1;
+                            }
+                            email.setID(idcounter);
+                            try (FileWriter writer = new FileWriter(FileReceiver, true)) {
+                                writer.write(email.toJson() + "\n");
+                                writer.close();//rilascio la risorsa utilizzata dal writer, inoltre notifica al so che il  file non e' piu in uso
+                                System.out.println("email scritta su file del receiver: " + FileReceiver);
+                            } catch (IOException e) {
+                                System.out.println("An error occurred while writing to the file.");
+                                e.printStackTrace();//manipolare l'errore nell'invio di una mail al sander che dice l'accaduto cosi ch potra reinviare la mai con indirizzo email corretto
+                            }
                         }
                     }
+                    synchronized (idLock) {
+                        idcounter= idcounter+1;
+                    }
+                    email.setID(idcounter);
                     try (FileWriter writer = new FileWriter(fileSander, true)) {
                         writer.write(email.toJson()+"\n");
                         writer.close();//rilascio la risorsa utilizzata dal writer, inoltre notifica al so che il  file non e' piu in uso

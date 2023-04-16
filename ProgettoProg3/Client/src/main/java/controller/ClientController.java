@@ -132,7 +132,7 @@ public class ClientController {
             if(Pattern.matches(ragexEmail, txtNewEmailReceivers.getText())){ //controllo sintattico dell'indirizzo email del receiver (non controlla se esiste)
                 if(!Objects.equals(txtNewEmailSubject.getText(), "")){
                     double idd=0;
-                    idd=(Math.random()*10000);
+                    //idd=(Math.random()*10000);
                     int id=(int)idd;            //creo il paramentro id dove vengono creati anche gli altri paramentri
                     inbxHandler.addNewEmail(id, lblFrom.getText(), txtNewEmailReceivers.getText(), txtNewEmailSubject.getText(), txtEmailContent.getText(), new Date());    //PROBLEMA LO FA PIù VOLTE
                     System.out.println("Nuova email aggiunta alla inbox!");
