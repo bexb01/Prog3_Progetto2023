@@ -12,8 +12,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -63,10 +65,8 @@ public class ServerController implements Initializable {
         private Socket clientSocket;
         private ObjectInputStream in;
         private ObjectOutputStream out;
-
         private String usernameClient;
         static int id;
-        private static final Object idLock = new Object();
         private String clientInboxFile;
 
         public ClientHandler(Socket clientSocket) {
@@ -143,26 +143,37 @@ public class ServerController implements Initializable {
                     System.out.println(email.getId());
                     String fileSander = "files/" + email.getSender() + "/inbox.txt";
                     //RECEIVERS
+                    int position = 0;
                     for (String s : email.getReceivers()) {
+                        for(int i = 0; i<= Server.users.size(); i++){
+                            if(server.users.equals(s)){
+                                position = i;
+                            }
+                        }
                         Platform.runLater(() -> {logList.add("Inviata email da " + email.getSender() + " a " + s);});
                         //send email to receivers (scrive email sul file del receiver)
                         String FileReceiver = "files/" + s + "/inbox.txt";
                         if(!email.getSender().equals(s)) {
                             email.setID(getId());
-                            try (FileWriter writer = new FileWriter(FileReceiver, true)) {
-                                writer.write(email.toJson() + "\n");
-                                writer.close();//rilascio la risorsa utilizzata dal writer, inoltre notifica al so che il  file non e' piu in uso
-                                System.out.println("email scritta su file del receiver: " + FileReceiver);
+                            server.getLocks().get(position).writeLock().lock();
+                            //lock.lock();__> lock del receiver (nel ciclo for quindi fatto per ogni receiver)
+                            try(FileWriter writer = new FileWriter(FileReceiver, true)) {
+                                    writer.write(email.toJson() + "\n");
+                                    writer.close();//rilascio la risorsa utilizzata dal writer, inoltre notifica al so che il  file non e' piu in uso
+                                    System.out.println("email scritta su file del receiver: " + FileReceiver);
                             } catch (IOException e) {
-                                System.out.println("An error occurred while writing to the file.");
-                                e.printStackTrace();//manipolare l'errore nell'invio di una mail al sander che dice l'accaduto cosi ch potra reinviare la mai con indirizzo email corretto
-                            }
+                                    System.out.println("An error occurred while writing to the file.");
+                                    e.printStackTrace();
+                            }//manipolare l'errore nell'invio di una mail al sander che dice l'accaduto cosi ch potra reinviare la mai con indirizzo email corretto
+                            server.getLocks().get(position).writeLock().unlock();
                         }
                     }
+                    //lock
                     email.setID(getId());
                     try (FileWriter writer = new FileWriter(fileSander, true)) {
                         writer.write(email.toJson()+"\n");
-                        writer.close();//rilascio la risorsa utilizzata dal writer, inoltre notifica al so che il  file non e' piu in uso
+                        writer.close();//rilascio la risorsa utilizzata dal writer, inoltre notifica al so che il file non è piu in uso
+                        //lock
                         System.out.println("email scritta su file del sender: " + fileSander);
 
                     } catch (FileNotFoundException e) {
@@ -183,6 +194,13 @@ public class ServerController implements Initializable {
                     String jsonToDelEm= ToDelEmail.toJson();
                     //implement method to delete email
                     String filePath = "files/" + usernameClient + "/inbox.txt";
+                    int position = 0 ;
+                    for(int i = 0; i<= Server.users.size(); i++){
+                        if(server.users.equals(usernameClient)){
+                            position = i;
+                        }
+                    }
+                    server.getLocks().get(position).writeLock().lock();
                     try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
                         String line = reader.readLine();
                         StringBuilder builder = new StringBuilder();
@@ -197,6 +215,7 @@ public class ServerController implements Initializable {
                         String newContent = builder.toString();
                         try (FileWriter writer = new FileWriter(filePath)) {
                             writer.write(newContent);
+                            server.getLocks().get(position).writeLock().unlock();
                             System.out.println("Stringa " + jsonToDelEm + " eliminata dal file " + filePath);
                         } catch (IOException e) {
                             System.out.println("An error occurred while writing to the file.");
@@ -217,6 +236,7 @@ public class ServerController implements Initializable {
                 if((numberEmail = in.readObject()) != null) {
                     if(numberEmail instanceof Integer) {
                         int num = (Integer)numberEmail;
+                        //lock reader
                         FileReader fr = new FileReader(clientInboxFile);
                         Scanner reader = new Scanner(fr);
                         String data;
@@ -236,6 +256,7 @@ public class ServerController implements Initializable {
                         }
                         reader.close();
                         fr.close();
+                        //unlock reader
                         try {
                             if(listaEmail.size()==0){
                                 out.writeObject(666);
@@ -275,6 +296,8 @@ public class ServerController implements Initializable {
             inbox.createNewFile();
             return "files/" + username + "/" + "inbox.txt";
         }
+
+
     }
 
 
@@ -282,11 +305,21 @@ public class ServerController implements Initializable {
         private static int PORT;
         private ServerSocket serverSocket;
         private AtomicBoolean running = new AtomicBoolean(true);
+        private static ArrayList<String> users;
+        protected final List<ReentrantReadWriteLock> locks;
         ExecutorService executor = Executors.newFixedThreadPool(10);
 
         public Server(int port) {
             this.PORT = port;
+            users = new ArrayList<>(Arrays.asList("Jake.Peralta@unito.it", "Alphonse.Elric@unito.it", "Amy.Santiago@unito.it", "Chuck.Bartowski@unito.it", "Sarah.Walker@unito.it", "Tony.Stark@unito.it", "Edward.Elric@unito.it", "Pepper.Potts@unito.it"));
+            this.locks = new ArrayList<>();
+            for(int i=0; i<= users.size(); i++){
+                locks.add(new ReentrantReadWriteLock());
+            }
+        }
 
+        public List<ReentrantReadWriteLock> getLocks(){
+            return locks;
         }
 
         public void run() {

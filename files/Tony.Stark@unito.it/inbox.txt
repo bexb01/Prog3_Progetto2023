@@ -9,3 +9,4 @@
 {"id":1005,"sender":"Tony.Stark@unito.it","receivers":["Amy.Santiago@unito.it"],"subject":"saxsscfa","text":"cascsc","date":"Apr 15, 2023, 8:45:51 PM"}
 {"id":1007,"sender":"Tony.Stark@unito.it","receivers":["Alphonse.Elric@unito.it"],"subject":"dff","text":"fdfafa","date":"Apr 15, 2023, 8:51:07 PM"}
 {"id":1008,"sender":"Tony.Stark@unito.it","receivers":["Amy.Santiago@unito.it"],"subject":"cadvad","text":"thjjdjddj","date":"Apr 15, 2023, 8:55:00 PM"}
+{"id":4,"sender":"Tony.Stark@unito.it","receivers":["Jake.Peralta@unito.it","Sarah.Walker@unito.it"],"subject":"FBI","text":"OPEN UP","date":"Apr 16, 2023, 11:07:52 PM"}

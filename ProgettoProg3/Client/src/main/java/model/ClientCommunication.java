@@ -39,7 +39,6 @@ public class ClientCommunication implements Runnable{
             this.socket = new Socket("127.0.0.1", 8189);    //gestire connessione in assenza del server
             out = new ObjectOutputStream(socket.getOutputStream());
             in = new ObjectInputStream(socket.getInputStream());
-            System.out.println("return true");
             return true;
         }catch (SocketException e) {
             System.out.println("return false");

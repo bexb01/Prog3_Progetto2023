@@ -11,4 +11,3 @@
 {"id":1011,"sender":"Edward.Elric@unito.it","receivers":["Edward.Elric@unito.it"],"subject":"Re: Re: sd","text":"Re:Edward.Elric@unito.it\n\tRe:Sarah.Walker@unito.it\n\tsd\n\tEmail inviata in data: Fri Apr 14 20:38:25 CEST 2023\n\nciao\n\tEmail inviata in data: Sat Apr 15 20:31:42 CEST 2023\n","date":"Apr 15, 2023, 8:32:25 PM"}
 {"id":1011,"sender":"Edward.Elric@unito.it","receivers":["Edward.Elric@unito.it"],"subject":"Re: Re: sd","text":"Re:Edward.Elric@unito.it\n\tRe:Sarah.Walker@unito.it\n\tsd\n\tEmail inviata in data: Fri Apr 14 20:38:25 CEST 2023\n\nciao\n\tEmail inviata in data: Sat Apr 15 20:31:42 CEST 2023\n","date":"Apr 15, 2023, 8:32:25 PM"}
 {"id":1004,"sender":"Edward.Elric@unito.it","receivers":["Jake.Peralta@unito.it"],"subject":"sdffb","text":"\u003czbn","date":"Apr 15, 2023, 9:02:22 PM"}
-{"id":0,"sender":"Chuck.Bartowski@unito.it","receivers":["Edward.Elric@unito.it"],"subject":"as","text":"saas","date":"Apr 16, 2023, 8:58:01 PM"}

@@ -102,6 +102,7 @@ public class ClientController {
         //REFRESH
         RefreshClient = Executors.newSingleThreadScheduledExecutor();
         RefreshClient.scheduleAtFixedRate(new ClientCommunication(username, inbxHandler), 0, 10, TimeUnit.SECONDS);
+
     }
 
     @FXML

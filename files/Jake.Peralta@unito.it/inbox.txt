@@ -10,3 +10,4 @@
 {"id":1015,"sender":"Tony.Stark@unito.it","receivers":["Amy.Santiago@unito.it","Jake.Peralta@unito.it"],"subject":"Re: reply try 21452467","text":"zfdxgchfhj\nEmail inviata in data: Sat Apr 15 20:28:22 CEST 2023\n","date":"Apr 15, 2023, 8:28:45 PM"}
 {"id":1011,"sender":"Alphonse.Elric@unito.it","receivers":["Jake.Peralta@unito.it"],"subject":"asccccccccc","text":"asccccccccccccc","date":"Apr 15, 2023, 8:58:57 PM"}
 {"id":1004,"sender":"Edward.Elric@unito.it","receivers":["Jake.Peralta@unito.it"],"subject":"sdffb","text":"\u003czbn","date":"Apr 15, 2023, 9:02:22 PM"}
+{"id":2,"sender":"Tony.Stark@unito.it","receivers":["Jake.Peralta@unito.it","Sarah.Walker@unito.it"],"subject":"FBI","text":"OPEN UP","date":"Apr 16, 2023, 11:07:52 PM"}
