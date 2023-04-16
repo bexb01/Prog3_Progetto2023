@@ -65,7 +65,7 @@ public class ServerController implements Initializable {
         private ObjectOutputStream out;
 
         private String usernameClient;
-        private static int idcounter = 0;
+        static int id;
         private static final Object idLock = new Object();
         private String clientInboxFile;
 
@@ -108,9 +108,8 @@ public class ServerController implements Initializable {
             } catch (ClassNotFoundException e) {
                 System.out.println("Error while reading object from client: " + e.getMessage());
             }
-            // Close the client socket and streams
-            //closeConnection();
         }
+
         private void getUsername()
                 throws IOException, ClassNotFoundException {
             Object username;
@@ -119,8 +118,22 @@ public class ServerController implements Initializable {
                     this.usernameClient= (String)username;
                 }
             }
-
         }
+        synchronized public static int getId(){
+            try{
+                BufferedReader br = new BufferedReader(new FileReader("files/id.txt" ));
+                String linea = br.readLine();
+                id = Integer.parseInt(linea);
+                FileWriter fw = new FileWriter("files/id.txt" );
+                id++;
+                fw.write(Integer.toUnsignedString(id));
+                fw.close();
+            } catch(IOException e){
+                System.err.println("Errore get ID: " + e);
+            }
+            return(id-1);
+        }
+
         private void sendEmail()
                 throws IOException, ClassNotFoundException {
             Object addEmail;
@@ -134,10 +147,7 @@ public class ServerController implements Initializable {
                         //send email to receivers (scrive email sul file del receiver)
                         String FileReceiver = "files/" + s + "/inbox.txt";
                         if(!email.getSender().equals(s)) {
-                            synchronized (idLock) {
-                                idcounter= idcounter+1;
-                            }
-                            email.setID(idcounter);
+                            email.setID(getId());
                             try (FileWriter writer = new FileWriter(FileReceiver, true)) {
                                 writer.write(email.toJson() + "\n");
                                 writer.close();//rilascio la risorsa utilizzata dal writer, inoltre notifica al so che il  file non e' piu in uso
@@ -148,10 +158,7 @@ public class ServerController implements Initializable {
                             }
                         }
                     }
-                    synchronized (idLock) {
-                        idcounter= idcounter+1;
-                    }
-                    email.setID(idcounter);
+                    email.setID(getId());
                     try (FileWriter writer = new FileWriter(fileSander, true)) {
                         writer.write(email.toJson()+"\n");
                         writer.close();//rilascio la risorsa utilizzata dal writer, inoltre notifica al so che il  file non e' piu in uso
