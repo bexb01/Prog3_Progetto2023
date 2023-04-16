@@ -16,13 +16,13 @@ public class ClientCommunication implements Runnable{
     private ObjectOutputStream out;
     private ObjectInputStream in;
     private String username;
-    private int numberEmail;
+    private static int numberEmail;
     private InboxHandler inboxMail;
 
     public ClientCommunication(String username, InboxHandler inbx) {
         this.username = username;
         this.inboxMail = inbx;
-        this.numberEmail = 0;
+        numberEmail = 0;
     }
 
     public ClientCommunication() {
@@ -39,14 +39,14 @@ public class ClientCommunication implements Runnable{
             this.socket = new Socket("127.0.0.1", 8189);    //gestire connessione in assenza del server
             out = new ObjectOutputStream(socket.getOutputStream());
             in = new ObjectInputStream(socket.getInputStream());
-            System.out.println("returno true");
+            System.out.println("return true");
             return true;
         }catch (SocketException e) {
-            System.out.println("returno false");
+            System.out.println("return false");
             System.err.println("Connection closed by server: " + e.getMessage());
             return false;
         } catch (Exception e) {
-            System.out.println("returno false");
+            System.out.println("return false");
             System.err.println("Error while opening clientcommunication connection: " + e.getMessage());
             return false;
         }
@@ -72,7 +72,9 @@ public class ClientCommunication implements Runnable{
                     int oldNumEmail=numberEmail;
                     ArrayList<Email> list = (ArrayList<Email>)serverObject;
                     for(int i = 0; i < list.size(); i++){
+                        System.out.println(numberEmail+ " prima request");
                         numberEmail++;
+                        System.out.println(numberEmail+ " dopo request");
                         Email e = list.get(i);
                         Platform.runLater(() -> {inboxMail.addEmailToInbox(e);});
 
@@ -143,7 +145,6 @@ public class ClientCommunication implements Runnable{
         try {
             out.writeObject("send");
             out.writeObject(newEmail);
-            numberEmail++;
             closeConnection();
 
         }catch (Exception ex){

@@ -142,8 +142,9 @@ public class ServerController implements Initializable {
                     Email email = (Email) addEmail;
                     System.out.println(email.getId());
                     String fileSander = "files/" + email.getSender() + "/inbox.txt";
+                    //RECEIVERS
                     for (String s : email.getReceivers()) {
-                        logList.add("Inviata email da " + email.getSender() + " a " + s);
+                        Platform.runLater(() -> {logList.add("Inviata email da " + email.getSender() + " a " + s);});
                         //send email to receivers (scrive email sul file del receiver)
                         String FileReceiver = "files/" + s + "/inbox.txt";
                         if(!email.getSender().equals(s)) {
@@ -235,12 +236,10 @@ public class ServerController implements Initializable {
                         }
                         reader.close();
                         fr.close();
-                        try {       //iniziato ad implementare finestra dialogo ricezione email. da problemi
+                        try {
                             if(listaEmail.size()==0){
-                                System.out.println(listaEmail.size());
                                 out.writeObject(666);
                             }else {
-                                System.out.println(listaEmail.size());
                                 out.writeObject(listaEmail);
                             }
                             Platform.runLater(() -> {logList.add("Ho inviato tutte le mail a " + usernameClient+ ".");});
