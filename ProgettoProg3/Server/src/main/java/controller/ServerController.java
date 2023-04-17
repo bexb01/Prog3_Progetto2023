@@ -202,18 +202,18 @@ public class ServerController implements Initializable {
                                 email.setID(getId());
                                 //ho gia il lock
                                 //setto la mail madata dal sistema
-                                //creare anche il file per Sistema di recapito posta? se vogliamo tenere traccia delle email con receiver sbagliato allora si
+                                Email SisRecPosta=new Email();
                                 ArrayList<String> rec= new ArrayList<String>();
                                 rec.add(email.getSender());
-                                email.setReceivers(rec);
-                                email.setSender("Sistema di recapito posta");
+                                SisRecPosta.setReceivers(rec);
+                                SisRecPosta.setSender("Sistema di recapito posta");
                                 String oldText= "\t"+email.getText()+"\n\t"+email.getDate()+"\n\n";
                                 String fileNFoundText= "Il tuo messaggio non è stato recapitato a " + s + " perchè l'indirizzo risulta inesistente. Prova a ricontrollare l'indirizzo email per eventuali errori.\n\n Sei pregato di non rispondere a questa mail in quanto \"Sistema di recapito posta\" non è un indirizzo valido.";
-                                email.setText(oldText+fileNFoundText);
-                                email.setDate(new Date());
-                                email.setSubject(email.getSubject());
+                                SisRecPosta.setText(oldText+fileNFoundText);
+                                SisRecPosta.setDate(new Date());
+                                SisRecPosta.setSubject(email.getSubject());
                                 try (FileWriter writer = new FileWriter(fileSander, true)) {
-                                    writer.write(email.toJson()+"\n");
+                                    writer.write(SisRecPosta.toJson()+"\n");
                                     writer.close(); //rilascio la risorsa utilizzata dal writer, inoltre notifica al so che il file non è piu in uso
                                 } catch (IOException er) {
                                     System.out.println("An error occurred while writing to the file.");
