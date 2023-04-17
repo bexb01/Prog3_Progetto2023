@@ -210,8 +210,7 @@ public class ClientController {
      */
     @FXML
     protected void onDeleteButtonClick() {
-        inbxHandler.deleteEmail(selectedEmail);
-        updateDetailView(emptyEmail);
+
         txtDateSent.setVisible(false);
         btnDelete.setVisible(false);
         btnReply.setVisible(false);
@@ -223,6 +222,9 @@ public class ClientController {
                     "Attenzione!", JOptionPane.WARNING_MESSAGE);
             System.out.println("Il client non è connesso al server");
             return;
+        }else{
+            inbxHandler.deleteEmail(selectedEmail);
+            updateDetailView(emptyEmail);
         }
     }
 
