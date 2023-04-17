@@ -36,6 +36,9 @@ public class MailClient extends Application {
         });
     }
 
+    /**
+     * Genera nomi utente per il client
+     */
     private String generaUsername() {
         String[] Names = {"Jake.Peralta", "Alphonse.Elric", "Amy.Santiago", "Chuck.Bartowski", "Sarah.Walker", "Tony.Stark", "Edward.Elric", "Pepper.Potts"};
         String username = "";

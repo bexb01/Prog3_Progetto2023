@@ -10,3 +10,6 @@
 {"id":1010,"sender":"Tony.Stark@unito.it","receivers":["Amy.Santiago@unito.it","Jake.Peralta@unito.it"],"subject":"Re: reply try 21452467","text":"zfdxgchfhj\nEmail inviata in data: Sat Apr 15 20:28:22 CEST 2023\n","date":"Apr 15, 2023, 8:28:45 PM"}
 {"id":1005,"sender":"Tony.Stark@unito.it","receivers":["Amy.Santiago@unito.it"],"subject":"saxsscfa","text":"cascsc","date":"Apr 15, 2023, 8:45:51 PM"}
 {"id":1008,"sender":"Tony.Stark@unito.it","receivers":["Amy.Santiago@unito.it"],"subject":"cadvad","text":"thjjdjddj","date":"Apr 15, 2023, 8:55:00 PM"}
+{"id":10,"sender":"Alphonse.Elric@unito.it","receivers":["Jake.Peralta@unito.it","Amy.Santiago@unito.it"],"subject":"lock final try","text":"lockete","date":"Apr 17, 2023, 2:16:04 AM"}
+{"id":27,"sender":"Amy.Santiago@unito.it","receivers":["Alphonse.Elric@unito.it"],"subject":"Re: lock final try","text":"Re:Alphonse.Elric@unito.it\n\tlockete\n\tEmail inviata in data: Mon Apr 17 02:16:04 CEST 2023\n\nlockino","date":"Apr 17, 2023, 2:53:10 AM"}
+{"id":28,"sender":"Amy.Santiago@unito.it","receivers":["Amy.Santiago@unito.it"],"subject":"Re: Re: lock final try","text":"Re:Amy.Santiago@unito.it\n\tRe:Alphonse.Elric@unito.it\n\tlockete\n\tEmail inviata in data: Mon Apr 17 02:16:04 CEST 2023\n\nlockino\n\tEmail inviata in data: Mon Apr 17 02:53:10 CEST 2023\nketto\n","date":"Apr 17, 2023, 2:53:54 AM"}

@@ -32,6 +32,9 @@ public class InboxHandler {
         return emailAddress;
     }
 
+    /**
+     * Rimuove una Email dalla lista presente nella vista
+     */
     public void deleteEmail(Email email) {
         inboxContent.remove(email);
     }
@@ -61,15 +64,20 @@ public class InboxHandler {
             inboxContent.add(email);
         }
     }*/
-
+    /**
+     * Aggiunge una email dalla lista di email
+     */
     public void addNewEmail(int id,String sender, String receivers, String subject, String text, Date d){
-        ArrayList<String> list = new ArrayList<>();  //gestire ciclo per aggiungere molteplici receivers
+        ArrayList<String> list = new ArrayList<>();
         list.add(receivers);
         Email newEmail = new Email(id, sender, list, subject, text, d);
     }
 
-    public void addEmailToInbox(Email e){     //TEMPORANEO!!!!!
-        inboxContent.add(e);    //DA ERRORE: CORREGGERE
+    /**
+     * Aggiunge una email alla vista
+     */
+    public void addEmailToInbox(Email e){
+        inboxContent.add(e);
     }
 }
 

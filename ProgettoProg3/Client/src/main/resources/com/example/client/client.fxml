@@ -7,7 +7,6 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -36,14 +35,6 @@
                               <Insets left="20.0" />
                            </HBox.margin>
                         </Label>
-                        <ToggleButton fx:id="onOff" mnemonicParsing="false" prefHeight="26.0" prefWidth="64.0" text="ToggleButton">
-                           <HBox.margin>
-                              <Insets right="10.0" />
-                           </HBox.margin>
-                           <padding>
-                              <Insets right="10.0" />
-                           </padding>
-                        </ToggleButton>
                      </children>
                      <padding>
                         <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
@@ -75,8 +66,8 @@
                               <Label fx:id="lblFrom" text="Label" GridPane.columnIndex="1" />
                               <Label fx:id="lblTo" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <Label fx:id="lblSubject" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <TextField fx:id="txtNewEmailReceivers" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <TextField fx:id="txtNewEmailSubject" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField fx:id="txtNewEmailReceivers" disable="true" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="txtNewEmailSubject" disable="true" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                            </children>
                            <padding>
                               <Insets left="12.0" right="12.0" />
@@ -138,7 +129,7 @@
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="77.0" prefWidth="450.0" SplitPane.resizableWithParent="false">
                                  <children>
-                                    <TextArea fx:id="txtDateSent" layoutY="-1.0" prefHeight="29.0" prefWidth="450.0" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <TextArea fx:id="txtDateSent" editable="false" layoutY="-1.0" prefHeight="29.0" prefWidth="450.0" visible="false" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                  </children>
                               </AnchorPane>
                           </items>

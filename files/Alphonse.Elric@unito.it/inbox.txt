@@ -8,4 +8,8 @@
 {"id":6432,"sender":"Edward.Elric@unito.it","receivers":["Tony.Stark@unito.it","Alphonse.Elric@unito.it","Sara.Walker@unito.it","Edward.Elric@unito.it"],"subject":"Re: reply all try","text":"vedemo se va\nEmail inviata in data: Thu Apr 13 23:54:22 CEST 2023\n\nrisposta","date":"Apr 14, 2023, 10:41:49 PM"}
 {"id":1007,"sender":"Chuck.Bartowski@unito.it","receivers":["Alphonse.Elric@unito.it"],"subject":"accccc","text":"bcd","date":"Apr 15, 2023, 6:36:12 PM"}
 {"id":1007,"sender":"Tony.Stark@unito.it","receivers":["Alphonse.Elric@unito.it"],"subject":"dff","text":"fdfafa","date":"Apr 15, 2023, 8:51:07 PM"}
-{"id":1011,"sender":"Alphonse.Elric@unito.it","receivers":["Jake.Peralta@unito.it"],"subject":"asccccccccc","text":"asccccccccccccc","date":"Apr 15, 2023, 8:58:57 PM"}
+{"id":6,"sender":"Alphonse.Elric@unito.it","receivers":["Jake.Peralta@unito.it"],"subject":"lock ","text":"gucd","date":"Apr 17, 2023, 1:46:14 AM"}
+{"id":11,"sender":"Alphonse.Elric@unito.it","receivers":["Jake.Peralta@unito.it","Amy.Santiago@unito.it"],"subject":"lock final try","text":"lockete","date":"Apr 17, 2023, 2:16:04 AM"}
+{"id":23,"sender":"Alphonse.Elric@unito.it","receivers":["Alphonse.Elric@unito.it"],"subject":"Re: lock final try","text":"\tRe:Alphonse.Elric@unito.it\n\tlockete\n\tEmail inviata in data: Mon Apr 17 02:16:04 CEST 2023\n\t","date":"Apr 17, 2023, 2:50:26 AM"}
+{"id":24,"sender":"Alphonse.Elric@unito.it","receivers":["Alphonse.Elric@unito.it"],"subject":"Re: Re: lock final try","text":"\tRe:Alphonse.Elric@unito.it\n\tlockete\n\tEmail inviata in data: Mon Apr 17 02:16:04 CEST 2023\n\t\nEmail inviata in data: Mon Apr 17 02:50:26 CEST 2023\n\nciao","date":"Apr 17, 2023, 2:50:36 AM"}
+{"id":26,"sender":"Amy.Santiago@unito.it","receivers":["Alphonse.Elric@unito.it"],"subject":"Re: lock final try","text":"Re:Alphonse.Elric@unito.it\n\tlockete\n\tEmail inviata in data: Mon Apr 17 02:16:04 CEST 2023\n\nlockino","date":"Apr 17, 2023, 2:53:10 AM"}

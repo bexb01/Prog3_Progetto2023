@@ -6,3 +6,5 @@
 {"id":1007,"sender":"Chuck.Bartowski@unito.it","receivers":["Amy.Santiago@unito.it"],"subject":"prova id email","text":"vediamo se lo setta a più di 1000","date":"Apr 15, 2023, 2:45:19 AM"}
 {"id":1007,"sender":"Chuck.Bartowski@unito.it","receivers":["Alphonse.Elric@unito.it"],"subject":"accccc","text":"bcd","date":"Apr 15, 2023, 6:36:12 PM"}
 {"id":1,"sender":"Chuck.Bartowski@unito.it","receivers":["Edward.Elric@unito.it"],"subject":"as","text":"saas","date":"Apr 16, 2023, 8:58:01 PM"}
+{"id":8,"sender":"Chuck.Bartowski@unito.it","receivers":["Jake.Peralta@unito.it"],"subject":"as","text":"sa","date":"Apr 17, 2023, 2:01:41 AM"}
+{"id":25,"sender":"Chuck.Bartowski@unito.it","receivers":["Chuck.Bartowski@unito.it"],"subject":"Re: as","text":"\tRe:Chuck.Bartowski@unito.it\n\tsa\n\tEmail inviata in data: Mon Apr 17 02:01:41 CEST 2023\nprova","date":"Apr 17, 2023, 2:51:59 AM"}

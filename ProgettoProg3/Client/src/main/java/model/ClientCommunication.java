@@ -34,6 +34,9 @@ public class ClientCommunication implements Runnable{
         requestEmail(); //asks all emails to server
     }
 
+    /**
+     * Apre la connessione con il server
+     */
     private boolean openConnection(){
         try {
             this.socket = new Socket("127.0.0.1", 8189);    //gestire connessione in assenza del server
@@ -51,6 +54,24 @@ public class ClientCommunication implements Runnable{
         }
     }
 
+    /**
+     * Chiude la connessione con il server
+     */
+    private void closeConnection() {
+        try{
+            this.socket.close();    //gestire connessione in assenza del server
+            out.close();
+            in.close();
+            System.out.println("connessione chiusa T_T");
+
+        } catch(IOException e){
+            System.out.println("Error while closing client socket and streams: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Manda al server la richiesta della inbox
+     */
     private void requestEmail() {
         if(!openConnection()){
             System.out.println("connessione fallita: retry");
@@ -111,30 +132,9 @@ public class ClientCommunication implements Runnable{
         closeConnection();
     }
 
-    private void closeConnection() {
-        try{
-            this.socket.close();    //gestire connessione in assenza del server
-            out.close();
-            in.close();
-            System.out.println("connessione chiusa T_T");
-
-        } catch(IOException e){
-            System.out.println("Error while closing client socket and streams: " + e.getMessage());
-        }
-    }
-
-    public ArrayList<String> parseReceivers(String receivers){
-        //qui mi arriva una string contenete tutti i receivers non distinti
-        ArrayList<String> arrLReceivers = new ArrayList<>(); //creo arrayList
-        if (receivers.endsWith(";")) {
-            receivers = receivers.substring(0, receivers.length() - 1);  // rimuove l'ultimo carattere solo se è ";"
-        }else if (receivers.endsWith("; ")) {
-            receivers = receivers.substring(0, receivers.length() - 2);  // rimuove ultimi caratteri solo se è "; "
-        }
-        String[] arrReceivers = receivers.split("(; |;)"); //creo e popolo array di stringhe coin i receivers divisi con "; " o ";"
-        arrLReceivers.addAll(Arrays.asList(arrReceivers));  //aggiuno all'arrL l'array come Lista
-        return arrLReceivers;
-    }
+    /**
+     * Invia al server l'email da spedire
+     */
     public boolean sendEmailToServer(int id, String sender, String receivers, String subject, String text, Date d){
 
         if(!openConnection())
@@ -154,6 +154,9 @@ public class ClientCommunication implements Runnable{
 
     }
 
+    /**
+     * Invia al server la email da rimuovere dalla inbox
+     */
     public boolean deleteEmail(int id, String sender, String receivers, String subject, String text, Date d){   //COMPLETA parte server
         if(!openConnection())
             return false;
@@ -170,6 +173,22 @@ public class ClientCommunication implements Runnable{
         }
         closeConnection();
         return true;
+    }
+
+    /**
+     * Crea un array contenente tutti i destinatari presenti nella stringa
+     */
+    public ArrayList<String> parseReceivers(String receivers){
+        //qui mi arriva una string contenete tutti i receivers non distinti
+        ArrayList<String> arrLReceivers = new ArrayList<>(); //creo arrayList
+        if (receivers.endsWith(";")) {
+            receivers = receivers.substring(0, receivers.length() - 1);  // rimuove l'ultimo carattere solo se è ";"
+        }else if (receivers.endsWith("; ")) {
+            receivers = receivers.substring(0, receivers.length() - 2);  // rimuove ultimi caratteri solo se è "; "
+        }
+        String[] arrReceivers = receivers.split("(; |;)"); //creo e popolo array di stringhe coin i receivers divisi con "; " o ";"
+        arrLReceivers.addAll(Arrays.asList(arrReceivers));  //aggiuno all'arrL l'array come Lista
+        return arrLReceivers;
     }
 
 }

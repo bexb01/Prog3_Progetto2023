@@ -79,32 +79,28 @@ public class ClientController {
         this.ClientComm = new ClientCommunication(username, inbx);
     }
 
+    /**
+     * Inizializza la vista all'avvio
+     */
     @FXML
     public void initialize(){
-        //model.generateRandomEmails(10);
         selectedEmail = null;
 
         //binding tra lstEmails e inboxProperty
         lstEmails.itemsProperty().bind(inbxHandler.inboxProperty());
         lstEmails.setOnMouseClicked(this::showSelectedEmail);
         lblUsername.textProperty().bind(inbxHandler.emailAddressProperty());
-
-        txtNewEmailReceivers.setVisible(false);
-        txtNewEmailReceivers.setDisable(true);
-        txtNewEmailSubject.setVisible(false);
-        txtNewEmailSubject.setDisable(true);
-        txtDateSent.setEditable(false);
-        txtDateSent.setVisible(false);
-
         emptyEmail = null;
-
         updateDetailView(emptyEmail);
+
         //REFRESH
         RefreshClient = Executors.newSingleThreadScheduledExecutor();
         RefreshClient.scheduleAtFixedRate(new ClientCommunication(username, inbxHandler), 0, 10, TimeUnit.SECONDS);
-
     }
 
+    /**
+     * Predispone la vista per la creazione di una nuova mail
+     */
     @FXML
     protected void onCreateNewEmailButton(){
         lstEmails.setMouseTransparent(true);
@@ -126,6 +122,9 @@ public class ClientController {
         //lstEmails.;
     }
 
+    /**
+     * Invia la mail scritta nella vista
+     */
     @FXML
     protected void onSendNewEmail(){
         String ragexEmail="^([\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,})(;\\s?[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,})*(;\s?|$)";
@@ -183,6 +182,9 @@ public class ClientController {
         }
     }
 
+    /**
+     * ?
+     */
     @FXML
     protected void onDiscardMouseClick(){
         txtNewEmailReceivers.setVisible(false);
@@ -208,6 +210,9 @@ public class ClientController {
         lstEmails.getSelectionModel().select(-1);
     }
 
+    /**
+     * Elimina la mail selezionata nella vista
+     */
     @FXML
     protected void onDeleteButtonClick() {
         inbxHandler.deleteEmail(selectedEmail);
@@ -226,6 +231,9 @@ public class ClientController {
         }
     }
 
+    /**
+     * Rispondi
+     */
     @FXML
     protected void onReplyButtonClick(){
         lstEmails.setMouseTransparent(true);
@@ -233,7 +241,7 @@ public class ClientController {
         txtNewEmailReceivers.setDisable(false);
         txtEmailContent.setEditable(true);
         //replaceAll(\n,\t\n); CAMBIARE COSI
-        txtEmailContent.setText("Re:" + lblFrom.getText() + "\n\t" + txtEmailContent.getText() + "\n\t" + txtDateSent.getText() + "\n");   //sistema visualizzazione testo
+        txtEmailContent.setText("Re:" + lblFrom.getText() + "\n\t" + txtEmailContent.getText()+ "\n\t" + txtDateSent.getText() + "\n");   //sistema visualizzazione testo
         txtNewEmailReceivers.setText(lblFrom.getText());    //CONTROLLARE
         lblFrom.setText(username);
         txtNewEmailSubject.setVisible(true);
@@ -249,6 +257,9 @@ public class ClientController {
         txtDateSent.setVisible(false);
     }
 
+    /**
+     * Rispondi a tutti
+     */
     @FXML
     protected void onReplyAllButtonClick(){
         lstEmails.setMouseTransparent(true);
@@ -291,6 +302,9 @@ public class ClientController {
 
     }
 
+    /**
+     * Inoltra
+     */
     @FXML
     protected void onForwardButtonClick(){
         lblFrom.setText(username);
