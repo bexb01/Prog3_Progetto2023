@@ -168,9 +168,23 @@ public class ServerController implements Initializable {
                 if(addEmail instanceof Email email) {
                     System.out.println(email.getId());
                     String fileSander = "files/" + email.getSender() + "/inbox.txt";
+                    //SENDER
+                    email.setID(getId());
+                    int lockIndex = getLockIndex(email.getSender());
+                    System.out.println("lock index: " + lockIndex);
+                    server.getLocks().get(lockIndex).writeLock().lock();
+                    try (FileWriter writer = new FileWriter(fileSander, true)) {
+                        writer.write(email.toJson()+"\n");
+                        writer.close(); //rilascio la risorsa utilizzata dal writer, inoltre notifica al so che il file non è piu in uso
+                    } catch (IOException e) {
+                        System.out.println("An error occurred while writing to the file.");
+                        e.printStackTrace();
+                    }
+                    server.getLocks().get(lockIndex).writeLock().unlock();
+                    System.out.println("email scritta su file del sender: " + fileSander);
                     //RECEIVERS
                     for (String s : email.getReceivers()) {
-                        int lockIndex = getLockIndex(s);
+                        lockIndex = getLockIndex(s);
                         System.out.println("lock index: " + lockIndex);
                         Platform.runLater(() -> {logList.add("Inviata email da " + email.getSender() + " a " + s);});
                         //send email to receivers (scrive email sul file del receiver)
@@ -183,27 +197,33 @@ public class ServerController implements Initializable {
                                     writer.write(email.toJson() + "\n");
                                     writer.close();//rilascio la risorsa utilizzata dal writer, inoltre notifica al so che il  file non e' piu in uso
                                     System.out.println("email scritta su file del receiver: " + FileReceiver);
-                            } catch (IOException e) {
+                            } catch (FileNotFoundException e) {
+                                System.out.println("file del receiver non trovato. controllare sander client per maggiori informazioni");
+                                email.setID(getId());
+                                //ho gia il lock
+                                //setto la mail madata dal sistema
+                                //creare anche il file per Sistema di recapito posta? se vogliamo tenere traccia delle email con receiver sbagliato allora si
+                                ArrayList<String> rec= new ArrayList<String>();
+                                rec.add(email.getSender());
+                                email.setReceivers(rec);
+                                email.setSender("Sistema di recapito posta");
+                                String oldText= "\t"+email.getText()+"\n\t"+email.getDate()+"\n\n";
+                                String fileNFoundText= "Il tuo messaggio non è stato recapitato a " + s + " perchè l'indirizzo risulta inesistente. Prova a ricontrollare l'indirizzo email per eventuali errori.\n\n Sei pregato di non rispondere a questa mail in quanto \"Sistema di recapito posta\" non è un indirizzo valido.";
+                                email.setText(oldText+fileNFoundText);
+                                email.setDate(new Date());
+                                email.setSubject(email.getSubject());
+                                try (FileWriter writer = new FileWriter(fileSander, true)) {
+                                    writer.write(email.toJson()+"\n");
+                                    writer.close(); //rilascio la risorsa utilizzata dal writer, inoltre notifica al so che il file non è piu in uso
+                                } catch (IOException er) {
                                     System.out.println("An error occurred while writing to the file.");
-                                    e.printStackTrace();
-                            }//manipolare l'errore nell'invio di una mail al sander che dice l'accaduto cosi ch potra reinviare la mai con indirizzo email corretto
+                                    er.printStackTrace();
+                                }
+                                System.out.println("email di sistema scritta su file del sender: " + fileSander);
+                            }
                             server.getLocks().get(lockIndex).writeLock().unlock();
                         }
                     }
-                    //SENDER
-                    email.setID(getId());
-                    int lockIndex = getLockIndex(email.getSender());
-                    System.out.println("lock index: " + lockIndex);
-                    server.getLocks().get(lockIndex).writeLock().lock();
-                    try (FileWriter writer = new FileWriter(fileSander, true)) {
-                        writer.write(email.toJson()+"\n");
-                        writer.close(); //rilascio la risorsa utilizzata dal writer, inoltre notifica al so che il file non è piu in uso
-                    } catch (FileNotFoundException e) {
-                        System.out.println("An error occurred while writing to the file.");
-                        e.printStackTrace();
-                    }
-                    server.getLocks().get(lockIndex).writeLock().unlock();
-                    System.out.println("email scritta su file del sender: " + fileSander);
                 }
             }
         }

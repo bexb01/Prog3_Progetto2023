@@ -92,14 +92,12 @@ public class ClientCommunication implements Runnable{
                     int oldNumEmail=numberEmail;
                     ArrayList<Email> list = (ArrayList<Email>)serverObject;
                     for(int i = 0; i < list.size(); i++){
-                        System.out.println(numberEmail+ " prima request");
                         numberEmail++;
-                        System.out.println(numberEmail+ " dopo request");
                         Email e = list.get(i);
                         Platform.runLater(() -> {inboxMail.addEmailToInbox(e);});
 
                     }
-                        if(oldNumEmail!=0 && list.size()==1){ //se nella inbox c'erano piu di 0 email e ne ggiungiamo una
+                        if(oldNumEmail!=0 && list.size()==1){ //se nella inbox c'erano + di 0 email e ne ggiungiamo 1
                             Email es = list.get(0);
                             if(!(es.getSender().equals(username))) {//con sander diverso dal quello del client allora nuova email
                                 Platform.runLater(() -> {
@@ -116,7 +114,7 @@ public class ClientCommunication implements Runnable{
                                 });
                             }
 
-                        }else if(oldNumEmail==0 ){//se avevi 0 email e ne ricevi piu di una allora in teoria e' la prima volta che aggiorni la inbox?
+                        }else if(list.size()>1){//se ricevi piu di una allora in teoria o stai caricando la inbox o hai ricevuto piu di una mail o hai inviato una mail con receiver sbagliato e il server ti ha risposto
                             Platform.runLater(() -> {JOptionPane.showMessageDialog(null, "tutte le email aggiunte alla posta",
                                     username, JOptionPane.INFORMATION_MESSAGE);});
                         }
