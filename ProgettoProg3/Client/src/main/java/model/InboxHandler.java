@@ -39,31 +39,6 @@ public class InboxHandler {
         inboxContent.remove(email);
     }
 
-    /*public void generateRandomEmails(int n) {
-        String[] people = new String[] {"Paolo", "Alessandro", "Enrico", "Giulia", "Gaia", "Simone"};
-        String[] subjects = new String[] {
-                "Importante", "A proposito della nostra ultima conversazione", "Tanto va la gatta al lardo",
-                "Non dimenticare...", "Domani scuola" };
-        String[] texts = new String[] {
-                "È necessario che ci parliamo di persona, per mail rischiamo sempre fraintendimenti",
-                "Ricordati di comprare il latte tornando a casa",
-                "L'appuntamento è per domani alle 9, ci vediamo al solito posto",
-                "Ho sempre pensato valesse 42, tu sai di cosa parlo"
-        };
-        Random r = new Random();
-
-        for (int i=0; i<n; i++) {
-            ArrayList<String> list = new ArrayList<>();
-            list.add(people[r.nextInt(0, 5)]);
-            list.add(people[r.nextInt(0, 5)]);
-            list.add(people[r.nextInt(0, 5)]);
-            Email email = new Email(0, people[r.nextInt(people.length)],
-                    list, null,
-                    subjects[r.nextInt(subjects.length)],
-                    texts[r.nextInt(texts.length)], new Date(), "");
-            inboxContent.add(email);
-        }
-    }*/
     /**
      * Aggiunge una email dalla lista di email
      */

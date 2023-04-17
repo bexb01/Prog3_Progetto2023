@@ -198,7 +198,7 @@ public class ServerController implements Initializable {
                                     writer.close();//rilascio la risorsa utilizzata dal writer, inoltre notifica al so che il  file non e' piu in uso
                                     System.out.println("email scritta su file del receiver: " + FileReceiver);
                             } catch (FileNotFoundException e) {
-                                System.out.println("file del receiver non trovato. controllare sander client per maggiori informazioni");
+                                System.out.println("file del receiver non trovato. controllare il client del mittente per maggiori informazioni");
                                 email.setID(getId());
                                 //ho gia il lock
                                 //setto la mail madata dal sistema
@@ -235,8 +235,7 @@ public class ServerController implements Initializable {
                 throws IOException, ClassNotFoundException{
             Object deleteEmail;
             if((deleteEmail = in.readObject()) != null) {
-                if(deleteEmail instanceof Email) {
-                    Email ToDelEmail = (Email) deleteEmail;
+                if(deleteEmail instanceof Email ToDelEmail) {
                     int idFromFile=0;
                     int idToDelEm= ToDelEmail.getId();
                     String jsonToDelEm= ToDelEmail.toJson();

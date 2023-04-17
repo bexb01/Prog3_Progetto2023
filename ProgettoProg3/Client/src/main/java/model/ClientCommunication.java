@@ -25,13 +25,9 @@ public class ClientCommunication implements Runnable{
         numberEmail = 0;
     }
 
-    public ClientCommunication() {
-    }
-
     @Override
     public void run() {
-        //sends their username to server
-        requestEmail(); //asks all emails to server
+        requestEmail();
     }
 
     /**
@@ -59,7 +55,7 @@ public class ClientCommunication implements Runnable{
      */
     private void closeConnection() {
         try{
-            this.socket.close();    //gestire connessione in assenza del server
+            this.socket.close();
             out.close();
             in.close();
             System.out.println("connessione chiusa T_T");
@@ -155,11 +151,11 @@ public class ClientCommunication implements Runnable{
     /**
      * Invia al server la email da rimuovere dalla inbox
      */
-    public boolean deleteEmail(int id, String sender, String receivers, String subject, String text, Date d){   //COMPLETA parte server
+    public boolean deleteEmail(int id, String sender, String receivers, String subject, String text, Date d){
         if(!openConnection())
             return false;
         ArrayList<String> arrLReceivers = parseReceivers(receivers);
-        System.out.println("clientCommunication deleteEmail email inviata al server per cancellare"); //da togliere
+        System.out.println("clientCommunication deleteEmail email inviata al server per cancellare");
         Email newEmail = new Email(id, sender, arrLReceivers, subject, text, d);
         try {
             out.writeObject("delete");

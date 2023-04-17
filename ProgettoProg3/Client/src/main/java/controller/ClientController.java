@@ -6,6 +6,8 @@ import model.InboxHandler;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import model.Email;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
@@ -111,14 +113,7 @@ public class ClientController {
         txtNewEmailSubject.setDisable(false);
         txtEmailContent.setEditable(true);
         txtEmailContent.setText("");
-        btnSendEmail.setVisible(true);
-        btnDiscard.setVisible(true);
-        btnDelete.setVisible(false);
-        btnReply.setVisible(false);
-        btnReplyAll.setVisible(false);
-        btnForward.setVisible(false);
-        btnNewEmail.setDisable(true);
-        txtDateSent.setVisible(false);
+        setButtonsStandard();
         //lstEmails.;
     }
 
@@ -240,13 +235,16 @@ public class ClientController {
         txtNewEmailReceivers.setVisible(true);
         txtNewEmailReceivers.setDisable(false);
         txtEmailContent.setEditable(true);
-        //replaceAll(\n,\t\n); CAMBIARE COSI
-        txtEmailContent.setText("Re:" + lblFrom.getText() + "\n\t" + txtEmailContent.getText()+ "\n\t" + txtDateSent.getText() + "\n");   //sistema visualizzazione testo
+        txtEmailContent.setText("Re: " + lblFrom.getText() + "\n\t" + txtEmailContent.getText().replaceAll("\n", "\n\t") + "\n\t" + txtDateSent.getText() + "\n");   //sistema visualizzazione testo
         txtNewEmailReceivers.setText(lblFrom.getText());    //CONTROLLARE
         lblFrom.setText(username);
         txtNewEmailSubject.setVisible(true);
         txtNewEmailSubject.setDisable(false);
         txtNewEmailSubject.setText("Re: " + lblSubject.getText());
+        setButtonsStandard();
+    }
+
+    private void setButtonsStandard() {
         btnSendEmail.setVisible(true);
         btnDiscard.setVisible(true);
         btnDelete.setVisible(false);
@@ -290,15 +288,8 @@ public class ClientController {
         txtNewEmailSubject.setDisable(false);
         txtNewEmailSubject.setText("Re: " + lblSubject.getText());
         txtEmailContent.setEditable(true);
-        txtEmailContent.setText(txtEmailContent.getText() + "\n" + txtDateSent.getText() + "\n");   //sistema visualizzazione testo
-        btnSendEmail.setVisible(true);
-        btnDiscard.setVisible(true);
-        btnDelete.setVisible(false);
-        btnReply.setVisible(false);
-        btnReplyAll.setVisible(false);
-        btnForward.setVisible(false);
-        btnNewEmail.setDisable(true);
-        txtDateSent.setVisible(false);
+        txtEmailContent.setText("Re: " + lblFrom.getText() + "\n\t" + txtEmailContent.getText().replaceAll("\n", "\n\t") + "\n\t" + txtDateSent.getText() + "\n");  //sistema visualizzazione testo
+        setButtonsStandard();
 
     }
 
@@ -315,14 +306,7 @@ public class ClientController {
         txtNewEmailSubject.setText(lblSubject.getText());
         txtEmailContent.setEditable(true);
         txtEmailContent.setText(txtEmailContent.getText()+ "\n" + txtDateSent.getText() + "\n");
-        btnSendEmail.setVisible(true);
-        btnDiscard.setVisible(true);
-        btnDelete.setVisible(false);
-        btnReply.setVisible(false);
-        btnReplyAll.setVisible(false);
-        btnForward.setVisible(false);
-        btnNewEmail.setDisable(true);
-        txtDateSent.setVisible(false);
+        setButtonsStandard();
     }
 
      /**
@@ -344,7 +328,6 @@ public class ClientController {
     protected void updateDetailView(Email email) {
         if(email != null) {
             lblFrom.setText(email.getSender());
-            //lblTo.setText(String.join(", ", email.getReceivers()));
             ArrayList<String> list;
             list = email.getReceivers();
             lblTo.setText("");
@@ -358,7 +341,8 @@ public class ClientController {
             lblSubject.setText(email.getSubject());
             txtEmailContent.setText(email.getText());
             txtDateSent.setVisible(true);
-            txtDateSent.setText("Email inviata in data: " + email.getDate().toString());
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy - hh:mm");
+            txtDateSent.setText("Email inviata in data: " + sdf.format(email.getDate()));
         }else{
             lblFrom.setText("");
             lblTo.setText("");
