@@ -175,7 +175,8 @@ public class ServerController implements Initializable {
                     server.getLocks().get(lockIndex).writeLock().lock();
                     try (FileWriter writer = new FileWriter(fileSander, true)) {
                         writer.write(email.toJson()+"\n");
-                        writer.close(); //rilascio la risorsa utilizzata dal writer, inoltre notifica al so che il file non è piu in uso
+                        writer.close(); //rilascio la risorsa
+                        Platform.runLater(() -> {logList.add(email.getSender() + " ha inviato un email a: " + String.join(", ", email.getReceivers()));});
                     } catch (IOException e) {
                         System.out.println("An error occurred while writing to the file.");
                         e.printStackTrace();
@@ -186,7 +187,6 @@ public class ServerController implements Initializable {
                     for (String s : email.getReceivers()) {
                         lockIndex = getLockIndex(s);
                         System.out.println("lock index: " + lockIndex);
-                        Platform.runLater(() -> {logList.add("Inviata email da " + email.getSender() + " a " + s);});
                         //send email to receivers (scrive email sul file del receiver)
                         String FileReceiver = "files/" + s + "/inbox.txt";
                         if(!email.getSender().equals(s)) {
@@ -194,15 +194,14 @@ public class ServerController implements Initializable {
                             server.getLocks().get(lockIndex).writeLock().lock();
                             //lock.lock();__> lock del receiver (nel ciclo for quindi fatto per ogni receiver)
                             try(FileWriter writer = new FileWriter(FileReceiver, true)) {
-                                    writer.write(email.toJson() + "\n");
-                                    writer.close();//rilascio la risorsa utilizzata dal writer, inoltre notifica al so che il  file non e' piu in uso
-                                    System.out.println("email scritta su file del receiver: " + FileReceiver);
+                                writer.write(email.toJson() + "\n");
+                                writer.close();//rilascio la risorsa utilizzata dal writer, inoltre notifica al so che il  file non e' piu in uso
+                                Platform.runLater(() -> {logList.add(s + " ha ricevuto una mail da " + email.getSender());});
+                                System.out.println("email scritta su file del receiver: " + FileReceiver);
                             } catch (FileNotFoundException e) {
-                                System.out.println("file del receiver non trovato. controllare il client del mittente per maggiori informazioni");
-                                email.setID(getId());
-                                //ho gia il lock
-                                //setto la mail madata dal sistema
-                                Email SisRecPosta=new Email();
+                                System.out.println("file del receiver non trovato. controllare sander client per maggiori informazioni");
+                                Email SisRecPosta=new Email();  //setto la mail madata dal sistema
+                                SisRecPosta.setID(getId());
                                 ArrayList<String> rec= new ArrayList<String>();
                                 rec.add(email.getSender());
                                 SisRecPosta.setReceivers(rec);
@@ -214,7 +213,8 @@ public class ServerController implements Initializable {
                                 SisRecPosta.setSubject(email.getSubject());
                                 try (FileWriter writer = new FileWriter(fileSander, true)) {
                                     writer.write(SisRecPosta.toJson()+"\n");
-                                    writer.close(); //rilascio la risorsa utilizzata dal writer, inoltre notifica al so che il file non è piu in uso
+                                    writer.close(); //rilascio la risorsa
+                                    Platform.runLater(() -> {logList.add("Impossibile inviare email da "+ email.getSender()+" a "+s+". Email receiver inesistente ");});
                                 } catch (IOException er) {
                                     System.out.println("An error occurred while writing to the file.");
                                     er.printStackTrace();
