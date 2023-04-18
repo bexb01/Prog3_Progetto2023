@@ -42,7 +42,6 @@ public class MailClient extends Application {
     private String generaUsername() {
         String[] Names = {"Jake.Peralta", "Alphonse.Elric", "Amy.Santiago", "Chuck.Bartowski", "Sarah.Walker", "Tony.Stark", "Edward.Elric", "Pepper.Potts"};
         String username = "";
-
         Random r = new Random();
         username = Names[r.nextInt(0, Names.length-1)] + "@unito.it";
         //username = "Alphonse.Elric@unito.it";

@@ -86,13 +86,13 @@ public class Email implements Serializable {
      */
     public String toJson() {
         Gson gson = new Gson();
-        Type fooType = new TypeToken<Email>() {}.getType(); //definisco il tipo di oggetto da serializzare tramite classe Type, specificando tra <> la classe del nostro oggetto
-        String json = gson.toJson(this,fooType); //lancio metodo gson.toJson(mio_ogetto,ogetto_tipo) con nostro oggetto instanziato e il tipo, ci restituirà la stringa JSON.
+        Type fooType = new TypeToken<Email>() {}.getType();
+        String json = gson.toJson(this,fooType);
         return json;
     }
 
     /**
-     * ?
+     * Trasforma la stringa Json in un oggetto Email
      */
     public static Email fromJson(String jsString){
         Gson gson = new Gson();

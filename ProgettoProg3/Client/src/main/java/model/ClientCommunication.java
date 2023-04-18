@@ -35,17 +35,15 @@ public class ClientCommunication implements Runnable{
      */
     private boolean openConnection(){
         try {
-            this.socket = new Socket("127.0.0.1", 8189);    //gestire connessione in assenza del server
+            this.socket = new Socket("127.0.0.1", 8189);
             out = new ObjectOutputStream(socket.getOutputStream());
             in = new ObjectInputStream(socket.getInputStream());
             return true;
         }catch (SocketException e) {
-            System.out.println("return false");
-            System.err.println("Connection closed by server: " + e.getMessage());
+            System.out.println("Connection with server not found");
             return false;
         } catch (Exception e) {
-            System.out.println("return false");
-            System.err.println("Error while opening clientcommunication connection: " + e.getMessage());
+            System.err.println("Error while opening Clientcommunication connection: " + e.getMessage());
             return false;
         }
     }
@@ -58,10 +56,9 @@ public class ClientCommunication implements Runnable{
             this.socket.close();
             out.close();
             in.close();
-            System.out.println("connessione chiusa T_T");
-
+            //System.out.println("Connessione chiusa");
         } catch(IOException e){
-            System.out.println("Error while closing client socket and streams: " + e.getMessage());
+            System.err.println("Error while closing client socket and streams: " + e.getMessage());
         }
     }
 
@@ -70,7 +67,6 @@ public class ClientCommunication implements Runnable{
      */
     private void requestEmail() {
         if(!openConnection()){
-            System.out.println("connessione fallita: retry");
             return;
         }
         try {
@@ -82,39 +78,28 @@ public class ClientCommunication implements Runnable{
         }
         try {
             Object serverObject;
-            //IMPLEMENT server sends array of emails on opening
             if ((serverObject = in.readObject()) != null) {
                 if (serverObject instanceof ArrayList<?>){
-                    int oldNumEmail=numberEmail;
                     ArrayList<Email> list = (ArrayList<Email>)serverObject;
                     for(int i = 0; i < list.size(); i++){
                         numberEmail++;
                         Email e = list.get(i);
                         Platform.runLater(() -> {inboxMail.addEmailToInbox(e);});
-
                     }
-                        if(oldNumEmail!=0 && list.size()==1){ //se nella inbox c'erano + di 0 email e ne ggiungiamo 1
-                            Email es = list.get(0);
-                            if(!(es.getSender().equals(username))) {//con sander diverso dal quello del client allora nuova email
-                                Platform.runLater(() -> {
-                                    JOptionPane.showMessageDialog(null, "Hai ricevuto una nuova Email da:\n" + es.getSender(),
-                                            username, JOptionPane.INFORMATION_MESSAGE);
-                                });
-                            }
-                        }else if(oldNumEmail==0 && list.size()==1){//se nella inbox c'erano 0 email e ne riceviamo 1
-                            Email es = list.get(0);
-                            if(!(es.getSender().equals(username))) {//con sander diverso dal quello del client allora nuova email
-                                Platform.runLater(() -> {
-                                    JOptionPane.showMessageDialog(null, "Hai ricevuto una nuova Email da:\n" + es.getSender(),
-                                            username, JOptionPane.INFORMATION_MESSAGE);
-                                });
-                            }
-
-                        }else if(list.size()>1){//se ricevi piu di una allora in teoria o stai caricando la inbox o hai ricevuto piu di una mail o hai inviato una mail con receiver sbagliato e il server ti ha risposto
-                            Platform.runLater(() -> {JOptionPane.showMessageDialog(null, "tutte le email aggiunte alla posta",
-                                    username, JOptionPane.INFORMATION_MESSAGE);});
+                    //se ricevi un email
+                    if(list.size()==1){
+                        Email es = list.get(0);
+                        if(!(es.getSender().equals(username))) {
+                            Platform.runLater(() -> {
+                                JOptionPane.showMessageDialog(null, "Hai ricevuto una nuova Email da:\n" + es.getSender(),
+                                        username, JOptionPane.INFORMATION_MESSAGE);
+                            });
                         }
-                        //in ogni caso in cui il client ne invia una non fa uscire nessun messaggio
+                    }else if(list.size()>1){//carica la inbox, hai ricevuto piu di una mail o hai inviato una mail con receiver sbagliato e il server ti ha risposto
+                        Platform.runLater(() -> {JOptionPane.showMessageDialog(null, "tutte le email aggiunte alla posta",
+                                username, JOptionPane.INFORMATION_MESSAGE);});
+                    }
+                    //il client manda un messaggio quindi non visualizzi niente
                 }
             }
         }catch(IOException e) {
@@ -130,7 +115,6 @@ public class ClientCommunication implements Runnable{
      * Invia al server l'email da spedire
      */
     public boolean sendEmailToServer(int id, String sender, String receivers, String subject, String text, Date d){
-
         if(!openConnection())
             return false;
         ArrayList<String> arrLReceivers = parseReceivers(receivers);
@@ -139,13 +123,11 @@ public class ClientCommunication implements Runnable{
             out.writeObject("send");
             out.writeObject(newEmail);
             closeConnection();
-
         }catch (Exception ex){
             System.err.println("Error while sending email to the server: " + ex.getMessage());
             return false;
         }
         return true;
-
     }
 
     /**
@@ -155,7 +137,6 @@ public class ClientCommunication implements Runnable{
         if(!openConnection())
             return false;
         ArrayList<String> arrLReceivers = parseReceivers(receivers);
-        System.out.println("clientCommunication deleteEmail email inviata al server per cancellare");
         Email newEmail = new Email(id, sender, arrLReceivers, subject, text, d);
         try {
             out.writeObject("delete");
@@ -173,15 +154,16 @@ public class ClientCommunication implements Runnable{
      * Crea un array contenente tutti i destinatari presenti nella stringa
      */
     public ArrayList<String> parseReceivers(String receivers){
-        //qui mi arriva una string contenete tutti i receivers non distinti
-        ArrayList<String> arrLReceivers = new ArrayList<>(); //creo arrayList
+        ArrayList<String> arrLReceivers = new ArrayList<>();
+        //rimuove gli ultimi caratteri
         if (receivers.endsWith(";")) {
-            receivers = receivers.substring(0, receivers.length() - 1);  // rimuove l'ultimo carattere solo se è ";"
+            receivers = receivers.substring(0, receivers.length() - 1);
         }else if (receivers.endsWith("; ")) {
-            receivers = receivers.substring(0, receivers.length() - 2);  // rimuove ultimi caratteri solo se è "; "
+            receivers = receivers.substring(0, receivers.length() - 2);
         }
-        String[] arrReceivers = receivers.split("(; |;)"); //creo e popolo array di stringhe coin i receivers divisi con "; " o ";"
-        arrLReceivers.addAll(Arrays.asList(arrReceivers));  //aggiuno all'arrL l'array come Lista
+        //rimuove dalla stringa i divisori utilizzati nella vista e popola l'array
+        String[] arrReceivers = receivers.split("(; |;)");
+        arrLReceivers.addAll(Arrays.asList(arrReceivers));
         return arrLReceivers;
     }
 

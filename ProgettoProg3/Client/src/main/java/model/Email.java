@@ -51,7 +51,6 @@ public class Email implements Serializable {
         this.receivers = receivers;
     }
 
-
     public String getSubject() {
         return subject;
     }

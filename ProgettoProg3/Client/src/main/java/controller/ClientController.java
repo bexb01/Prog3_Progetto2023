@@ -6,7 +6,6 @@ import model.InboxHandler;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import model.Email;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -87,14 +86,12 @@ public class ClientController {
     @FXML
     public void initialize(){
         selectedEmail = null;
-
         //binding tra lstEmails e inboxProperty
         lstEmails.itemsProperty().bind(inbxHandler.inboxProperty());
         lstEmails.setOnMouseClicked(this::showSelectedEmail);
         lblUsername.textProperty().bind(inbxHandler.emailAddressProperty());
         emptyEmail = null;
         updateDetailView(emptyEmail);
-
         //REFRESH
         RefreshClient = Executors.newSingleThreadScheduledExecutor();
         RefreshClient.scheduleAtFixedRate(new ClientCommunication(username, inbxHandler), 0, 10, TimeUnit.SECONDS);
@@ -114,7 +111,6 @@ public class ClientController {
         txtEmailContent.setEditable(true);
         txtEmailContent.setText("");
         setButtonsStandard();
-        //lstEmails.;
     }
 
     /**
@@ -126,12 +122,9 @@ public class ClientController {
         if(!Objects.equals(txtNewEmailReceivers.getText(), "")){ //controllo indirizzo email non vuoto
             if(Pattern.matches(ragexEmail, txtNewEmailReceivers.getText())){ //controllo sintattico dell'indirizzo email del receiver (non controlla se esiste)
                 if(!Objects.equals(txtNewEmailSubject.getText(), "")){
-                    double idd=0;
-                    //idd=(Math.random()*10000);
-                    int id=(int)idd;            //creo il paramentro id dove vengono creati anche gli altri paramentri
+                    int id = 0; //verrà assegnato dal server
                     inbxHandler.addNewEmail(id, lblFrom.getText(), txtNewEmailReceivers.getText(), txtNewEmailSubject.getText(), txtEmailContent.getText(), new Date());    //PROBLEMA LO FA PIù VOLTE
                     System.out.println("Nuova email aggiunta alla inbox!");
-                    //Inviare email a server
                     boolean flag = ClientComm.sendEmailToServer(id, lblFrom.getText(), txtNewEmailReceivers.getText(), txtNewEmailSubject.getText(), txtEmailContent.getText(), new Date());
                     if(!flag){
                         JOptionPane.showMessageDialog(null, "Il client non è connesso al server",
@@ -139,7 +132,6 @@ public class ClientController {
                         System.out.println("Il client non è connesso al server");
                         return;
                     }
-                    //cosi qui^ non devo usare getId()
                     txtNewEmailReceivers.setVisible(false);
                     txtNewEmailReceivers.setDisable(true);
                     txtNewEmailReceivers.setText("");
@@ -151,7 +143,6 @@ public class ClientController {
                     lblTo.setText("");
                     lblSubject.setText("");
                     lblFrom.setText("");
-
                     btnSendEmail.setVisible(false);
                     btnDiscard.setVisible(false);
                     btnDelete.setVisible(false);
@@ -178,7 +169,7 @@ public class ClientController {
     }
 
     /**
-     * ?
+     *  Annulla qualsiasi operazione iniziata
      */
     @FXML
     protected void onDiscardMouseClick(){
@@ -193,7 +184,6 @@ public class ClientController {
         lblTo.setText("");
         lblSubject.setText("");
         lblFrom.setText("");
-
         btnDiscard.setVisible(false);
         btnDelete.setVisible(false);
         btnReply.setVisible(false);
@@ -210,7 +200,6 @@ public class ClientController {
      */
     @FXML
     protected void onDeleteButtonClick() {
-
         txtDateSent.setVisible(false);
         btnDelete.setVisible(false);
         btnReply.setVisible(false);
@@ -221,7 +210,6 @@ public class ClientController {
             JOptionPane.showMessageDialog(null, "Il client non è connesso al server",
                     "Attenzione!", JOptionPane.WARNING_MESSAGE);
             System.out.println("Il client non è connesso al server");
-            return;
         }else{
             inbxHandler.deleteEmail(selectedEmail);
             updateDetailView(emptyEmail);
@@ -229,7 +217,7 @@ public class ClientController {
     }
 
     /**
-     * Rispondi
+     * Dispone i campi per rispondere a una email
      */
     @FXML
     protected void onReplyButtonClick(){
@@ -237,8 +225,8 @@ public class ClientController {
         txtNewEmailReceivers.setVisible(true);
         txtNewEmailReceivers.setDisable(false);
         txtEmailContent.setEditable(true);
-        txtEmailContent.setText("Re: " + lblFrom.getText() + "\n\t" + txtEmailContent.getText().replaceAll("\n", "\n\t") + "\n\t" + txtDateSent.getText() + "\n");   //sistema visualizzazione testo
-        txtNewEmailReceivers.setText(lblFrom.getText());    //CONTROLLARE
+        txtEmailContent.setText("Re: " + lblFrom.getText() + "\n\t" + txtEmailContent.getText().replaceAll("\n", "\n\t") + "\n\t" + txtDateSent.getText() + "\n");
+        txtNewEmailReceivers.setText(lblFrom.getText());
         lblFrom.setText(username);
         txtNewEmailSubject.setVisible(true);
         txtNewEmailSubject.setDisable(false);
@@ -246,6 +234,9 @@ public class ClientController {
         setButtonsStandard();
     }
 
+    /**
+     * Riporta i bottoni nella fase iniziale
+     */
     private void setButtonsStandard() {
         btnSendEmail.setVisible(true);
         btnDiscard.setVisible(true);
@@ -258,7 +249,7 @@ public class ClientController {
     }
 
     /**
-     * Rispondi a tutti
+     * Dispone i campi per rispondere a tutti
      */
     @FXML
     protected void onReplyAllButtonClick(){
@@ -279,10 +270,9 @@ public class ClientController {
                 }
             }  else{
                 int nextIndex = receivers.indexOf(";", index);
-                String after = receivers.substring(nextIndex + 1);
-                receivers = after;
+                receivers = receivers.substring(nextIndex + 1);
             }
-            txtNewEmailReceivers.setText(lblFrom.getText() + ";" + receivers + ";"); //DEVI PRENDERE TUTTI I receivers escluso te stesso
+            txtNewEmailReceivers.setText(lblFrom.getText() + ";" + receivers + ";");
         } else
             txtNewEmailReceivers.setText(lblTo.getText());
         lblFrom.setText(username);
@@ -290,13 +280,12 @@ public class ClientController {
         txtNewEmailSubject.setDisable(false);
         txtNewEmailSubject.setText("Re: " + lblSubject.getText());
         txtEmailContent.setEditable(true);
-        txtEmailContent.setText("Re: " + lblFrom.getText() + "\n\t" + txtEmailContent.getText().replaceAll("\n", "\n\t") + "\n\t" + txtDateSent.getText() + "\n");  //sistema visualizzazione testo
+        txtEmailContent.setText("Re: " + lblFrom.getText() + "\n\t" + txtEmailContent.getText().replaceAll("\n", "\n\t") + "\n\t" + txtDateSent.getText() + "\n");
         setButtonsStandard();
-
     }
 
     /**
-     * Inoltra
+     * Dispone i campi per inoltrare il messaggio
      */
     @FXML
     protected void onForwardButtonClick(){
@@ -312,7 +301,7 @@ public class ClientController {
     }
 
      /**
-     * Mostra la mail selezionata nella vista
+     * Aggiorna la vista con l'email selezionata nella inbox
      */
     protected void showSelectedEmail(MouseEvent mouseEvent) {
         btnDelete.setVisible(true);
@@ -325,7 +314,7 @@ public class ClientController {
     }
 
      /**
-     * Aggiorna la vista con la mail selezionata
+     * Aggiorna la vista con l'email passata come parametro
      */
     protected void updateDetailView(Email email) {
         if(email != null) {
@@ -350,7 +339,6 @@ public class ClientController {
             lblTo.setText("");
             lblSubject.setText("");
             txtEmailContent.setText("");
-
         }
     }
 }
