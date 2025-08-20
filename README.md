@@ -58,7 +58,8 @@ javac -d bin src/client/*.java
 java -cp bin client.MailClient
 ```
 
-> Il client è associato a un solo account e non richiede autenticazione.
+> Il client può essere avviato più volte, ciascuno associato a un account diverso, e si connette al server in modo indipendente. Il server gestisce più client in parallelo tramite thread.
+
 
 ---
 
