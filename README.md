@@ -1,5 +1,13 @@
 # 📧 Sistema di Posta Elettronica in Java
 
+[![Java](https://img.shields.io/badge/Java-17-blue?logo=java&logoColor=white&style=for-the-badge)](https://www.java.com/)
+[![JavaFX](https://img.shields.io/badge/JavaFX-GUI-61DAFB?logo=java&logoColor=white&style=for-the-badge)](https://openjfx.io/)
+[![TCP Sockets](https://img.shields.io/badge/TCP%20Sockets-Network-orange?style=for-the-badge)]()
+[![MVC](https://img.shields.io/badge/MVC-Pattern-green?style=for-the-badge)]()
+[![Threading](https://img.shields.io/badge/Threading-Concurrency-red?style=for-the-badge)]()
+[![File Persistence](https://img.shields.io/badge/File%20Persistence-Storage-yellow?style=for-the-badge)]()
+[![License MIT](https://img.shields.io/badge/License-MIT-brightgreen?style=for-the-badge)]()
+
 ## Descrizione
 Progetto Java distribuito con **Mail Server** e **Mail Client**. Permette di inviare, ricevere, rispondere e inoltrare messaggi tramite interfacce grafiche **JavaFX**.
 
